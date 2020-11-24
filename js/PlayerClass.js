@@ -5,7 +5,7 @@ class Player extends Phaser.GameObjects.Sprite{
 		scene.add.existing(this);
         this.setOrigin(0.5,0);
         this.maxHearts = 3;
-        this.hearts = this.maxHearts*4;
+        this.health = this.maxHearts*4;
         this.defense = 1;
         this.attack = 1;
         this.speed = 1;
@@ -13,6 +13,7 @@ class Player extends Phaser.GameObjects.Sprite{
         this.assignA = "";
         this.assignB = "";
         this.isJumping = false;
+        this.atkCharged = false;
         //this.nave.anims.play('stand');
         //this.anims.play('standEnemy');
         //this.checkWorldBounds = true;
@@ -24,23 +25,28 @@ class Player extends Phaser.GameObjects.Sprite{
         }*/
 	}
     
-    GetDamaged(_dmg)
+    GetDamaged(_player, _enemy)
     {
-        this.hearts -= _dmg/this.defense;       //Add death
+        if(!_player.isJumping){
+            _player.health -= _enemy.attack/this.defense;       //Add death          
+        }
+        
     }
     
     AddMaxHeart()
     {
         this.maxHearts++;
-        this.hearts = this.maxHearts * 4;
+        this.health = this.maxHearts * 4;
     }
     
     Heal()
     {
-        this.hearts+=4;
-        if(this.hearts > this.maxHearts*4)
-            this.hearts = this.maxHearts * 4;
+        this.health+=4;
+        if(this.health > this.maxHearts*4)
+            this.health = this.maxHearts * 4;
     }
+    
+    
     UpdateMovement(){}
     
     
