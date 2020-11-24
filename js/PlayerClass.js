@@ -3,6 +3,8 @@ class Player extends Phaser.GameObjects.Sprite{
     constructor(scene, positionX, positionY){
 		super(scene, positionX, positionY, 'player');
 		scene.add.existing(this);
+        scene.physics.add.existing(this);
+        scene.events.on('updatePlayer', this.Update, this);
         this.setOrigin(0.5,0);
         this.maxHearts = 3;
         this.health = this.maxHearts*4;
@@ -49,6 +51,10 @@ class Player extends Phaser.GameObjects.Sprite{
     
     UpdateMovement(){}
     
+    
+    Update(){
+        
+    }
     
     
 }

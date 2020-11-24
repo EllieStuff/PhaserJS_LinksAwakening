@@ -1,16 +1,16 @@
 class Vector2{
-    constructor(){
+    /*constructor(){
         this.x = 0;
         this.y = 0;
-    }
+    }*/
     constructor(positionX, positionY){
         this.x = positionX;
         this.y = positionY;
     }  
-    constructor(vector2){
+    /*constructor(vector2){
         this.x = vector2.x;
         this.y = vector2.y;
-    }
+    }*/
     
     Module()
     {

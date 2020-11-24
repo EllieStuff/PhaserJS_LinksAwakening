@@ -4,6 +4,8 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     {
 		super(scene, positionX, positionY, sprite);
 		scene.add.existing(this);
+        scene.physics.add.existing(this);
+        scene.events.on('updateEnemy', this.Update, this);
         this.setOrigin(0.5,0);
         this.damage = 1;
         this.repulsionForce = 1;
@@ -18,7 +20,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
 	}
     
     GetRepeled(_enemy, _shield){
-        Vector2 dir = new Vector2(_enemy.body.x - scene.player.body.x, _enemy.body.y - scene.player.body.y).Normalize();
+        var dir = new Vector2(_enemy.body.x - scene.player.body.x, _enemy.body.y - scene.player.body.y).Normalize();
         dir *= repulsionForce;
         
         _enemy.body.velocity.x += dir.x;
@@ -31,3 +33,5 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     }
     Update(){}
 }
+
+//export default EnemyBase;
