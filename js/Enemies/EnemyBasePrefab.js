@@ -6,8 +6,9 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
 		scene.add.existing(this);
         this.setOrigin(0.5,0);
         this.damage = 1;
+        this.repulsionForce = 1;
         this.health = 1;
-        this.isVulnerable = TRUE;
+        this.isVulnerable = true;
         this.speed = 1;
     }  
     preUpdate(){
@@ -16,7 +17,15 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         }*/
 	}
     
-    GetDamaged(_dmg)
+    GetRepeled(_enemy, _shield){
+        Vector2 dir = new Vector2(_enemy.body.x - scene.player.body.x, _enemy.body.y - scene.player.body.y).Normalize();
+        dir *= repulsionForce;
+        
+        _enemy.body.velocity.x += dir.x;
+        _enemy.body.velocity.y += dir.y;
+    }
+    
+    GetDamaged(_enemy, _sword)
     {
         heatlh -= _dmg;
     }
