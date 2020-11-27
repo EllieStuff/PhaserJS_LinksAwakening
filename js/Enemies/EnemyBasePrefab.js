@@ -31,6 +31,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     {
         heatlh -= _dmg;
     }
+    
     Update(){}
 }
 

@@ -1,16 +1,8 @@
-class Vector2{
-    /*constructor(){
-        this.x = 0;
-        this.y = 0;
-    }*/
+/*class Vector2{
     constructor(positionX, positionY){
         this.x = positionX;
         this.y = positionY;
     }  
-    /*constructor(vector2){
-        this.x = vector2.x;
-        this.y = vector2.y;
-    }*/
     
     Module()
     {
@@ -22,4 +14,9 @@ class Vector2{
         var module = Module();
         return new Vector2(this.x / module, this.y / module);
     }
-}
+    
+    Distance(v1, v2){
+        return Math.sqrt(Math.pow(this.x, 2) + Math.pow(this.y, 2));
+    }
+    
+}*/

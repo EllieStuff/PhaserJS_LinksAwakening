@@ -4,18 +4,24 @@ class gameState extends Phaser.Scene{
 	 	super({key: 'gameState'});
 	}
 	preload(){
-        var rutaImg = 'assets/img/';
+        var rutaImgEnemies = 'assets/img/enemies/';
+        var rutaImgLink = 'assets/img/link/';
         //Load Images
-        this.load.spritesheet('player',rutaImg+'Link_IdleWalking.png', {frameWidth: 16, frameHeight: 16});
-        this.load.image('HardHat',rutaImg+'HardHatAnim.png');//,{frameWidth: 67, frameHeight: 65});
+        this.load.spritesheet('player',rutaImgLink + 'Link_IdleWalking.png', {frameWidth: 16, frameHeight: 16});
+        this.load.image('HardHat',rutaImgEnemies + 'HardHatAnim.png',{frameWidth: 67, frameHeight: 65});
+        this.load.spritesheet('enemySkeleton', rutaImgEnemies + 'EsqueletoAnim.png', {frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('auxSkeleton', rutaImgEnemies + 'EsqueletoJumpAnim.png', {frameWidth: 16, frameHeight: 16});
         //Load Audios
         
         
 	}
 	create(){
         //SetOrigin
+        
+        
 		//hardhat =  new HardHatPrefab(this,0,0,'HardHat');
         this.hardhat = this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
+        this.skeleton = new SkeletonPrefab(this, config.width/4, config.height/4, 'enemySkeleton', 'auxSkeleton');
         
         
         //add.sprite & anims.create
