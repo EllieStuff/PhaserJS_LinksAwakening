@@ -10,18 +10,18 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('player',rutaImgLink + 'Link_IdleWalking.png', {frameWidth: 16, frameHeight: 16});
         this.load.image('HardHat',rutaImgEnemies + 'HardHatAnim.png',{frameWidth: 67, frameHeight: 65});
         this.load.spritesheet('enemySkeleton', rutaImgEnemies + 'EsqueletoAnim.png', {frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('auxSkeleton', rutaImgEnemies + 'EsqueletoJumpAnim.png', {frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('auxSkeleton', rutaImgEnemies + 'EsqueletoJumpAnim.png', {frameWidth: 16, frameHeight: 32});
+        this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
         //Load Audios
         
         
 	}
 	create(){
+        //Init Physics
+        //juego.physics.startSystem(Phaser.Physics.ARCADE);
+        
         //SetOrigin
         
-        
-		//hardhat =  new HardHatPrefab(this,0,0,'HardHat');
-        this.hardhat = this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
-        this.skeleton = new SkeletonPrefab(this, config.width/4, config.height/4, 'enemySkeleton', 'auxSkeleton');
         
         
         //add.sprite & anims.create
@@ -44,15 +44,46 @@ class gameState extends Phaser.Scene{
             repeat: 0
         });
         
+        //Skeleton
+        this.anims.create({
+            key: 'skeletonWalk',
+            frames: this.anims.generateFrameNumbers('enemySkeleton', { start: 0, end: 1 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'skeletonJump',
+            frames: this.anims.generateFrameNumbers('enemySkeleton', { start: 3, end: 3 }),
+            frameRate: 10,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'auxSkeletonJump',
+            frames: this.anims.generateFrameNumbers('auxSkeleton', { start: 0, end: 3 }),
+            frameRate: 20,
+            repeat: 0,
+            yoyo: true
+        });
         
+        //ToDo: Agafar inputs be
         //Variables
+        //this.InitInputs();
+        this.inputs = new InputManager(this, 'emptySprite');
         
         
         //LoadGroups
         this.player = new Player(this, 10, 10);
         this.player.body.collideWorldBounds = true;
+        //hardhat =  new HardHatPrefab(this,0,0,'HardHat');
+        this.hardhat = this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
+        this.skeleton = new SkeletonPrefab(this, config.width/4, config.height/4, 'enemySkeleton', 'auxSkeleton');
+        
+        this.skeleton.anims.play('skeletonWalk', true);
         
 		
+        
+        
+        
         
         //time.addEvent
         
@@ -78,7 +109,27 @@ class gameState extends Phaser.Scene{
     //
     
 	update(){
+        timeStep.step();
         
+        this.skeleton.Update(this.player, this.inputs);
+        
+        
+        /*
+        if(this.inputs.GetKeyUp(this.inputs.KeyCodes.K)){
+            console.log('in');
+        }
+        */
         
 	}
 }
+
+
+
+
+
+
+
+
+
+
+

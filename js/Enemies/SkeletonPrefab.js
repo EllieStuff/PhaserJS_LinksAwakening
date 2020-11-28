@@ -6,38 +6,25 @@ class SkeletonPrefab extends EnemyBase{
     constructor(scene, positionX, positionY, mainSprite, secondSprite)
     {
 		super(scene, positionX, positionY, mainSprite);
-        this.scene = scene;
+        this.anims.setTimeScale(0.3);
         
         this.damage = 2;
         this.health = 2;
         this.isVulnerable = true;
-        this.speed = 1;
+        this.canJump = true;
+        this.speed = 30;
+        this.fleeSpeed = -this.speed * 4;
         this.seeRange = 10;
         this.auxSkeleton = new AuxSkeleton(scene, positionX, positionY, secondSprite);
+        this.auxSkeleton.visible = false;
         this.auxSkeleton.active = false;
+        this.started = false;
+        
+        
         
         //this.init();
     }
     
-    create(){
-        //this.setFrame(0);
-        
-        this.anims.create({
-            key: 'walk',
-            frames: scene.anims.generateFrameNumbers('enemySkeleton', { start: 0, end: 1 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'jump',
-            frames: scene.anims.generateFrameNumbers('enemySkeleton', { start: 3, end: 3 }),
-            frameRate: 10,
-            repeat: 0
-        });
-        
-        this.anims.play("walk");
-        
-    }
     
     preUpdate()
     {
@@ -46,23 +33,45 @@ class SkeletonPrefab extends EnemyBase{
         }*/
 	}
     
-    Update()
+    Update(_player, _inputs)
     {
-        if(/*this.body.distance(this.scene.player.body) > this.seeRange //Phaser.Types.Math.Vector2Like.BetweenPoints(scene.player.body, this.body) > this.seeRange
-            &&*/ (this.input.keyboard.isDown(Phaser.Keyboard.K) || this.input.keyboard.isDown(Phaser.Keyboard.L))
-            && this.isVulnerable)
-        {
-            this.isVulnerable = false;
-            this.auxSkeleton.active = true;
-            this.play('jump', true);
-        }
+        var currentPos = new Phaser.Math.Vector2(this.body);
         
-        if(this.auxSkeleton.active){
-            this.auxSkeleton.position = this.position;
-        }
-        else if(!this.auxSkeleton.active && !this.isVulnerable){
-            this.isVulnerable=true;
-            this.setFrame(0);
+        if(currentPos.distance(_player.body) > this.seeRange){
+            if(this.canJump && this.isVulnerable){
+                this.MoveTowards(_player, this.speed);
+                //this.anims.play('skeletonWalk', true);
+                if(!this.started){
+                    this.started = true;
+                    this.anims.play('skeletonWalk', true);
+                }
+                
+                if(_inputs.GetKeyDown(_inputs.KeyCodes.K) || _inputs.GetKeyDown(_inputs.KeyCodes.L))
+                {
+                    this.isVulnerable = false;
+                    this.canJump = false;
+                    this.auxSkeleton.active = true;
+                    this.anims.play('skeletonJump');
+                }
+                
+            }
+
+            if(this.auxSkeleton.active){
+                //this.MoveTowards(_player, this.fleeSpeed);
+                //this.auxSkeleton.position = this.position;
+                this.auxSkeleton.Update(this, _player);
+                //this.body.getBounds(this.auxSkeleton);
+                this.body.x = this.auxSkeleton.body.x;
+                this.body.y = this.auxSkeleton.body.y + this.body.height;
+            }
+            else if(!this.auxSkeleton.active && !this.isVulnerable){
+                //this.scene.physics.pause();
+                this.body.stop();
+                this.isVulnerable = true;
+                this.setFrame(0);
+                this.scene.time.addEvent({delay: 1000, callback: function(){this.canJump=true;}, callbackScope: this, repeat: 0});
+            }
+
         }
         
     }
@@ -74,35 +83,32 @@ class AuxSkeleton extends Phaser.GameObjects.Sprite{
     constructor(scene, positionX, positionY, sprite)
     {
 		super(scene, positionX, positionY, sprite);
+        scene.add.existing(this);
+        scene.physics.add.existing(this);
+        this.anims.setTimeScale(0.5);
+        
+        //this.physics.add.collider(this, this.scene.walls); //Prq colisioni amb les parets, necessito el mapa per a posar-ho
+        
         this.jumping = false;
     }
     
-    create(){
-        this.anims.create({
-            key: 'auxSkeletonJump',
-            frames: scene.anims.generateFrameNumbers('auxSkeleton', { start: 0, end: 3 }),
-            frameRate: 20,
-            repeat: 0,
-            yoyo: true
-        });
-        /*this.anims.create({
-            key: 'auxSkeletonFall',
-            frames: scene.anims.generateFrameNumbers('auxSkeleton', { start: 3, end: 0 }),
-            frameRate: 20,
-            repeat: 0
-        });*/
-    }
     
-    Update(){
+    Update(_father, _player){
         if(this.active){
-            if(!jumping){
-                jumping = true;
+            if(!this.jumping){
+                this.jumping = true;
+                this.body.x = _father.body.x;
+                this.body.y = _father.body.y - _father.body.height;
+                this.visible = true;
                 this.anims.play('auxSkeletonJump');
+                
+                //Mirar si aixo funciona o el this.scene ja esta tara, tb mirar com fer que les animacions vagin mes lentes
+                this.scene.time.addEvent({delay: 800, callback: function(){this.jumping = false; this.body.stop(); this.visible = false; this.active = false;}, callbackScope: this, repeat: 0});
             }
-            else if(!this.anims.isPlaying){
-                jumping = false;
-                this.active = false;
-            }
+            
+            this.scene.physics.moveToObject(this, _player, _father.fleeSpeed);
+            //_father.position = this.position;
+            
         }
         
     }
