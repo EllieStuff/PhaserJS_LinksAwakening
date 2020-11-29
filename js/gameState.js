@@ -5,13 +5,13 @@ class gameState extends Phaser.Scene{
 	}
 	preload(){
         var rutaImgEnemies = 'assets/img/enemies/';
-        var rutaImgLink = 'assets/img/Link/';
+        var rutaImgLink = 'assets/img/link/';
         //Load Images
         this.load.spritesheet('playerMove'      ,rutaImgLink + 'WAnim.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerMoveShield',rutaImgLink + 'WShieldAnim.png' ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerShieldUp'  ,rutaImgLink + 'shieldAnim.png'  ,{frameWidth: 16, frameHeight: 16});
         
-        //this.load.image('HardHat',rutaImgEnemies + 'HardHatAnim.png',{frameWidth: 67, frameHeight: 65});
+        this.load.spritesheet('HardHat',rutaImgEnemies + 'HardHatAnim.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('enemySkeleton', rutaImgEnemies + 'EsqueletoAnim.png', {frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('auxSkeleton', rutaImgEnemies + 'EsqueletoJumpAnim.png', {frameWidth: 16, frameHeight: 32});
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
@@ -26,80 +26,86 @@ class gameState extends Phaser.Scene{
 		//hardhat =  new HardHatPrefab(this,0,0,'HardHat');
         this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0.5).setScale(2);
         //this.hardhat = this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
-        this.skeleton = new SkeletonPrefab(this, config.width/4, config.height/4, 'enemySkeleton', 'auxSkeleton');
+        //this.skeleton = new SkeletonPrefab(this, config.width/4, config.height/4, 'enemySkeleton', 'auxSkeleton');
         
         //add.sprite & anims.create
         //MOVEMENT WITHOUT SHIELD
         this.anims.create({
-            key: 'walkdown',
+            key: 'idleDown',
+            frames: this.anims.generateFrameNumbers('playerMove', { start: 0, end: 0 }),
+            framerate: 1,
+            repeat: 0
+        });
+        this.anims.create({
+            key: 'walkDown',
             frames: this.anims.generateFrameNumbers('playerMove', { start: 0, end: 1 }),
             frameRate: 8,
             repeat: -1
         });
         this.anims.create({
-            key: 'walkleft',
+            key: 'walkLeft',
             frames: this.anims.generateFrameNumbers('playerMove', { start: 2, end: 3 }),
             frameRate: 8,
             repeat: -1
         });
         this.anims.create({
-            key: 'walkright',
+            key: 'walkRight',
             frames: this.anims.generateFrameNumbers('playerMove', { start: 4, end: 5 }),
             frameRate: 8,
             repeat: -1
         });
         this.anims.create({
-            key: 'walkup',
+            key: 'walkUp',
             frames: this.anims.generateFrameNumbers('playerMove', { start: 6, end: 7 }),
             frameRate: 8,
             repeat: -1
         });
         //MOVEMENT WITH SHIELD
         this.anims.create({
-            key: 'walkdownS',
+            key: 'walkDownS',
             frames: this.anims.generateFrameNumbers('playerMoveShield', { start: 0, end: 1 }),
             frameRate: 8,
             repeat: -1
         });
         this.anims.create({
-            key: 'walkleftS',
+            key: 'walkLeftS',
             frames: this.anims.generateFrameNumbers('playerMoveShield', { start: 2, end: 3 }),
             frameRate: 8,
             repeat: -1
         });
         this.anims.create({
-            key: 'walkrightS',
+            key: 'walkRightS',
             frames: this.anims.generateFrameNumbers('playerMoveShield', { start: 4, end: 5 }),
             frameRate: 8,
             repeat: -1
         });
         this.anims.create({
-            key: 'walkupS',
+            key: 'walkUpS',
             frames: this.anims.generateFrameNumbers('playerMoveShield', { start: 6, end: 7 }),
             frameRate: 8,
             repeat: -1
         });
         //MOVEMENT WITH SHIELD UP
         this.anims.create({
-            key: 'walkdownSU',
+            key: 'walkDownSU',
             frames: this.anims.generateFrameNumbers('playerShieldUp', { start: 0, end: 1 }),
             frameRate: 8,
             repeat: -1
         });
         this.anims.create({
-            key: 'walkleftSU',
+            key: 'walkLeftSU',
             frames: this.anims.generateFrameNumbers('playerShieldUp', { start: 2, end: 3 }),
             frameRate: 8,
             repeat: -1
         });
         this.anims.create({
-            key: 'walkrightSU',
+            key: 'walkRightSU',
             frames: this.anims.generateFrameNumbers('playerShieldUp', { start: 4, end: 5 }),
             frameRate: 8,
             repeat: -1
         });
         this.anims.create({
-            key: 'walkupSU',
+            key: 'walkUpSU',
             frames: this.anims.generateFrameNumbers('playerShieldUp', { start: 6, end: 7 }),
             frameRate: 8,
             repeat: -1
@@ -111,7 +117,7 @@ class gameState extends Phaser.Scene{
         //LoadGroups
         this.player.body.collideWorldBounds = true;
         //hardhat =  new HardHatPrefab(this,0,0,'HardHat');
-        this.hardhat = this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
+        //this.hardhat = this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
         //this.hardhat.anims.play('walk');
         
         this.createEnemies();
@@ -154,18 +160,6 @@ class gameState extends Phaser.Scene{
         
 	}
     
-    UpdateEnemies(){
-        for (var i = 0; i < this.enemies.getLength(); i++) {
-            //Mirar com funciona el getChildren()
-            this.enemies.get(i).getChildren().Update(this.player, this.inputs);
-        }
-        
-        /*this.enemies.forEach(function(item){
-            item.Update(this.player, this.inputs);
-        }.bind(this));*/
-        
-    }
-    
     
     //Functions
     LoadMap(){
@@ -181,6 +175,7 @@ class gameState extends Phaser.Scene{
 	update()
     {
         //MOVEMENT
+        
         if(this.cursors.shift.isDown)   //MOVE WITH SHIELD UP
         {
             this.shieldUp = true;
@@ -188,25 +183,25 @@ class gameState extends Phaser.Scene{
             if(this.cursors.left.isDown)
             {
             
-                this.player.anims.play('walkleftSU',true);
+                this.player.anims.play('walkLeftSU',true);
                 this.player.body.velocity.x = -64;
                 this.player.body.velocity.y = 0;
             }
             else if(this.cursors.right.isDown)
             {
-                this.player.anims.play('walkrightSU',true);
+                this.player.anims.play('walkRightSU',true);
                 this.player.body.velocity.x = 64;
                 this.player.body.velocity.y = 0;
             }
             else if(this.cursors.down.isDown)
             {
-                this.player.anims.play('walkdownSU',true);
+                this.player.anims.play('walkDownSU',true);
                 this.player.body.velocity.x = 0;
                 this.player.body.velocity.y = 64;
             }
             else if(this.cursors.up.isDown)
             {
-                this.player.anims.play('walkupSU',true);
+                this.player.anims.play('walkUpSU',true);
                 this.player.body.velocity.x = 0;
                 this.player.body.velocity.y = -64;
             }
@@ -219,47 +214,56 @@ class gameState extends Phaser.Scene{
         }
         else                            //MOVE WITH SHIELD DOWN
         {
+            
             this.shieldUp = false;
             
             if(this.cursors.left.isDown)
             {
             
-                this.player.anims.play('walkleftS',true);
+                this.player.anims.play('walkLeftS',true);
                 this.player.body.velocity.x = -64;
                 this.player.body.velocity.y = 0;
             }
             else if(this.cursors.right.isDown)
             {
-                this.player.anims.play('walkrightS',true);
+                this.player.anims.play('walkRightS',true);
                 this.player.body.velocity.x = 64;
                 this.player.body.velocity.y = 0;
             }
             else if(this.cursors.down.isDown)
             {
-                this.player.anims.play('walkdownS',true);
+                this.player.anims.play('walkDownS',true);
                 this.player.body.velocity.x = 0;
                 this.player.body.velocity.y = 64;
+                
             }
             else if(this.cursors.up.isDown)
             {
-                this.player.anims.play('walkupS',true);
+                this.player.anims.play('walkUpS',true);
                 this.player.body.velocity.x = 0;
                 this.player.body.velocity.y = -64;
             }
             else
             {
-                this.player.anims.play();
+                //this.player.anims.play('idleDown');
                 this.player.body.velocity.x = 0;
                 this.player.body.velocity.y = 0;
             }
+            
+            if(Phaser.Input.Keyboard.JustUp(this.cursors.down)){
+                    this.player.anims.play('idleDown');
+            }
+            
         }
         //ATTACK
         if(this.cursors.space.isDown)
         {
             //Attack need animations
         }
+        
 
 	}
+    
 }
 
 

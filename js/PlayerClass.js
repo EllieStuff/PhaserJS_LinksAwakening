@@ -129,7 +129,7 @@ class Player extends Phaser.GameObjects.Sprite{
     UpdateMovement(_player,_cursor)
     {
         //MOVEMENT
-        
+        /*
         if(this.cursors.left.isDown)
         {
             this.player.anims.play('walkleft',true);
@@ -160,6 +160,7 @@ class Player extends Phaser.GameObjects.Sprite{
             this.player.body.velocity.x = 0;
             this.player.body.velocity.y = 0;
         }
+        */
         ////
         
         //ATTACK

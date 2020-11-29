@@ -10,12 +10,6 @@ class HardHatPrefab extends EnemyBase{
         this.damage = 4;
     }  
     
-    preUpdate()
-    {
-		/*if(this.y <= 0){
-            this.active = false;
-        }*/
-	}
     
     Update(_playerPos)
     {

@@ -56,10 +56,13 @@ class SkeletonPrefab extends EnemyBase{
 
                     if(this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) || this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.L))
                     {
+                        console.log('in 1');
                         this.isVulnerable = false;
                         this.canJump = false;
                         this.auxSkeleton.active = true;
                         this.anims.play('skeletonJump');
+                        
+                        this.auxSkeleton.Init(this);
                     }
 
                 }
@@ -72,12 +75,13 @@ class SkeletonPrefab extends EnemyBase{
                     this.body.x = this.auxSkeleton.body.x;
                     this.body.y = this.auxSkeleton.body.y + this.body.height;
                 }
-                else if(!this.auxSkeleton.active && !this.isVulnerable){
+                else if(!this.auxSkeleton.active && !this.isVulnerable && !this.canJump){
                     //this.scene.physics.pause();
+                    console.log('in 2');
                     this.body.stop();
                     this.isVulnerable = true;
                     this.setFrame(0);
-                    this.scene.time.addEvent({delay: 1000, callback: function(){this.canJump=true;}, callbackScope: this, repeat: 0});
+                    this.scene.time.addEvent({delay: 1000, callback: function(){console.log('in 3'); this.canJump=true;}, callbackScope: this, repeat: 0});
                 }
 
             }
@@ -98,13 +102,22 @@ class AuxSkeleton extends Phaser.GameObjects.Sprite{
         
         //this.physics.add.collider(this, this.scene.walls); //Prq colisioni amb les parets, necessito el mapa per a posar-ho
         
-        this.jumping = false;
+        //this.jumping = false;
     }
     
+    Init(_father){
+        this.body.x = _father.body.x;
+        this.body.y = _father.body.y - _father.body.height;
+        this.visible = true;
+        this.anims.play('auxSkeletonJump');
+        
+        this.scene.time.addEvent({delay: 700, callback: function(){this.body.stop(); this.visible = false; this.active = false;}, callbackScope: this, repeat: 0});
+        
+    }
     
     Update(_father, _player){
         if(this.active){
-            if(!this.jumping){
+            /*if(!this.jumping){
                 this.jumping = true;
                 this.body.x = _father.body.x;
                 this.body.y = _father.body.y - _father.body.height;
@@ -112,7 +125,7 @@ class AuxSkeleton extends Phaser.GameObjects.Sprite{
                 this.anims.play('auxSkeletonJump');
                 
                 this.scene.time.addEvent({delay: 700, callback: function(){this.jumping = false; this.body.stop(); this.visible = false; this.active = false;}, callbackScope: this, repeat: 0});
-            }
+            }*/
             
             this.scene.physics.moveToObject(this, _player, _father.fleeSpeed);
             //_father.position = this.position;
