@@ -5,14 +5,13 @@ class gameState extends Phaser.Scene{
 	}
 	preload(){
         var rutaImgEnemies = 'assets/img/enemies/';
-        var rutaImgLink = 'assets/img/link/';
+        var rutaImgLink = 'assets/img/Link/';
         //Load Images
-        this.load.spritesheet('playerMove'      ,'assets/img/Link/WAnim.png'       ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('playerMoveShield','assets/img/Link/WShieldAnim.png' ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('playerShieldUp'  ,'assets/img/Link/shieldAnim.png'  ,{frameWidth: 16, frameHeight: 16});
-       // this.load.image('HardHat','assets/img/Enemy/HardHatAnim.png');//,{frameWidth: 67, frameHeight: 65});
-        this.load.spritesheet('player',rutaImgLink + 'Link_IdleWalking.png', {frameWidth: 16, frameHeight: 16});
-        this.load.image('HardHat',rutaImgEnemies + 'HardHatAnim.png',{frameWidth: 67, frameHeight: 65});
+        this.load.spritesheet('playerMove'      ,rutaImgLink + 'WAnim.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerMoveShield',rutaImgLink + 'WShieldAnim.png' ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerShieldUp'  ,rutaImgLink + 'shieldAnim.png'  ,{frameWidth: 16, frameHeight: 16});
+        
+        //this.load.image('HardHat',rutaImgEnemies + 'HardHatAnim.png',{frameWidth: 67, frameHeight: 65});
         this.load.spritesheet('enemySkeleton', rutaImgEnemies + 'EsqueletoAnim.png', {frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('auxSkeleton', rutaImgEnemies + 'EsqueletoJumpAnim.png', {frameWidth: 16, frameHeight: 16});
         //Load Audios
@@ -24,9 +23,8 @@ class gameState extends Phaser.Scene{
         
         
 		//hardhat =  new HardHatPrefab(this,0,0,'HardHat');
-        // this.hardhat = this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
         this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0.5).setScale(2);
-        this.hardhat = this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
+        //this.hardhat = this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
         this.skeleton = new SkeletonPrefab(this, config.width/4, config.height/4, 'enemySkeleton', 'auxSkeleton');
         
         //add.sprite & anims.create
@@ -55,7 +53,7 @@ class gameState extends Phaser.Scene{
             frameRate: 8,
             repeat: -1
         });
-        //MOVEMENT WITH SIELD
+        //MOVEMENT WITH SHIELD
         this.anims.create({
             key: 'walkdownS',
             frames: this.anims.generateFrameNumbers('playerMoveShield', { start: 0, end: 1 }),
@@ -80,6 +78,7 @@ class gameState extends Phaser.Scene{
             frameRate: 8,
             repeat: -1
         });
+        //MOVEMENT WITH SHIELD UP
         this.anims.create({
             key: 'walkdownSU',
             frames: this.anims.generateFrameNumbers('playerShieldUp', { start: 0, end: 1 }),
@@ -108,7 +107,6 @@ class gameState extends Phaser.Scene{
         
         
         //LoadGroups
-        this.player = new Player(this, 10, 10);
         this.player.body.collideWorldBounds = true;
         
 		
