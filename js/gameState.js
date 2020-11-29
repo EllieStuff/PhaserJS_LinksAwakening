@@ -120,7 +120,7 @@ class gameState extends Phaser.Scene{
         //this.physics.add.collider(this.enemies, this.player.shield, this.EnemyBase.GetRepeled, null, this);   //Prq l'escut repeli una mica els enemics, l'impuls dependra d'una variable del enemy
         //this.physics.add.collider(this.enemies, this.player.sword, this.EnemyBase.GetDamaged, null, this);    //Prq l'espasa danyi els enemics, el mal dependra del attack del player i de si ha carregat l'atac giratori
 		this.cursors = this.input.keyboard.createCursorKeys();
-        
+        this.shieldUp = false;
 	}
     
     
@@ -140,6 +140,8 @@ class gameState extends Phaser.Scene{
         //MOVEMENT
         if(this.cursors.shift.isDown)   //MOVE WITH SHIELD UP
         {
+            this.shieldUp = true;
+            
             if(this.cursors.left.isDown)
             {
             
@@ -174,6 +176,8 @@ class gameState extends Phaser.Scene{
         }
         else                            //MOVE WITH SHIELD DOWN
         {
+            this.shieldUp = false;
+            
             if(this.cursors.left.isDown)
             {
             
