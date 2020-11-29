@@ -21,11 +21,7 @@ class Player extends Phaser.GameObjects.Sprite{
         //this.checkWorldBounds = true;
         //this.outOfBoundsKill = true;
     }  
-    preUpdate(){
-		/*if(this.y <= 0){
-            this.active = false;
-        }*/
-	}
+    
     
     GetDamaged(_player, _enemy)
     {

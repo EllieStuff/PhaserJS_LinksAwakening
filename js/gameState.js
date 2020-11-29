@@ -13,7 +13,8 @@ class gameState extends Phaser.Scene{
         
         //this.load.image('HardHat',rutaImgEnemies + 'HardHatAnim.png',{frameWidth: 67, frameHeight: 65});
         this.load.spritesheet('enemySkeleton', rutaImgEnemies + 'EsqueletoAnim.png', {frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('auxSkeleton', rutaImgEnemies + 'EsqueletoJumpAnim.png', {frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('auxSkeleton', rutaImgEnemies + 'EsqueletoJumpAnim.png', {frameWidth: 16, frameHeight: 32});
+        this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
         //Load Audios
         
         
@@ -104,14 +105,16 @@ class gameState extends Phaser.Scene{
             repeat: -1
         });
         //Variables
+        this.inputs = new InputManager(this, 'emptySprite');
         
         
         //LoadGroups
         this.player.body.collideWorldBounds = true;
+        //hardhat =  new HardHatPrefab(this,0,0,'HardHat');
+        this.hardhat = this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
+        //this.hardhat.anims.play('walk');
         
-		
-        
-        //time.addEvent
+        this.createEnemies();
         
         
         //Colisiones
@@ -122,6 +125,46 @@ class gameState extends Phaser.Scene{
 		this.cursors = this.input.keyboard.createCursorKeys();
         this.shieldUp = false;
 	}
+    
+    createEnemies(){
+        this.enemies = this.physics.add.group();
+        
+        //Afegir els enemics un per un aqui si no no es que ho hem de fer diferent per tema del tilemap
+        this.createEnemy(SkeletonPrefab, config.width/4, config.height/4, true);
+        
+        
+    }
+    
+    createEnemy(_enemyType, _posX, _posY, _startActive){
+        var enemy = new _enemyType(this, _posX, _posY);
+        this.enemies.add(enemy);
+        enemy.visible = enemy.active = _startActive;
+        
+		/*var enemy = this.enemies.getFirst(false);
+        if(!enemy){
+			//console.log('create enemy'); 
+			enemy = new _enemyType(this, _posX, _posY);
+            this.enemies.add(enemy);
+		} else{
+			//reset
+            enemy.active = true;
+            enemy.body.reset(_posX, _posY);
+            enemy.health = 2;
+		}*/
+        
+	}
+    
+    UpdateEnemies(){
+        for (var i = 0; i < this.enemies.getLength(); i++) {
+            //Mirar com funciona el getChildren()
+            this.enemies.get(i).getChildren().Update(this.player, this.inputs);
+        }
+        
+        /*this.enemies.forEach(function(item){
+            item.Update(this.player, this.inputs);
+        }.bind(this));*/
+        
+    }
     
     
     //Functions
@@ -218,3 +261,14 @@ class gameState extends Phaser.Scene{
 
 	}
 }
+
+
+
+
+
+
+
+
+
+
+

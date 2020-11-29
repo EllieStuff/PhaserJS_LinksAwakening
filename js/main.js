@@ -13,11 +13,14 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: {y: 0},
-			debug: true
+			debug: false
         }
     }
 
 
 };
 
-var juego = new Phaser.Game(config);
+var game = new Phaser.Game(config);
+
+//var timeStep = new Phaser.Core.TimeStep(juego, config);
+//var physics = new Phaser.Physics.Arcade.ArcadePhysics(this);

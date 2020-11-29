@@ -17,7 +17,7 @@ class HardHatPrefab extends EnemyBase{
         }*/
 	}
     
-    Update()
+    Update(_playerPos)
     {
         
     }
