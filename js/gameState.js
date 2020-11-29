@@ -17,17 +17,10 @@ class gameState extends Phaser.Scene{
         
 	}
 	create(){
-        //Init Physics
-        //juego.physics.startSystem(Phaser.Physics.ARCADE);
-        
         //SetOrigin
-        //this.skeleton = new SkeletonPrefab(this, config.width/4, config.height/4, 'enemySkeleton', 'auxSkeleton');
-        //this.skeleton = new EnemyBase(this, config.width/4, config.height/4, 'enemySkeleton');
-        
-        //this.smt = this.add.sprite(50, 50, 'enemySkeleton');
         
         
-        //add.sprite & anims.create
+        //anims.create
         this.anims.create(config);
         this.anims.create({
             key: 'walk',
@@ -48,33 +41,8 @@ class gameState extends Phaser.Scene{
             repeat: 0
         });
         
-        //Skeleton
-        this.anims.create({
-            key: 'skeletonWalk',
-            frames: this.anims.generateFrameNumbers('enemySkeleton', { start: 0, end: 1 }),
-            frameRate: 20,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'skeletonJump',
-            frames: this.anims.generateFrameNumbers('enemySkeleton', { start: 3, end: 3 }),
-            frameRate: 20,
-            repeat: 0
-        });
-        this.anims.create({
-            key: 'auxSkeletonJump',
-            frames: this.anims.generateFrameNumbers('auxSkeleton', { start: 0, end: 3 }),
-            frameRate: 20,
-            repeat: 0,
-            yoyo: true
-        });
         
-        //this.anims.create(config);
-        //this.smt.anims.play('skeletonWalk');
-        
-        //ToDo: Agafar inputs be
         //Variables
-        //this.InitInputs();
         this.inputs = new InputManager(this, 'emptySprite');
         
         
@@ -85,16 +53,7 @@ class gameState extends Phaser.Scene{
         this.hardhat = this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
         //this.hardhat.anims.play('walk');
         
-        
-        //this.skeleton.anims.play('skeletonWalk', true);
-        
-		
         this.createEnemies();
-        //this.enemies = this.physics.add.group();
-        //this.createEnemy(config.width/4, config.height/4);
-        
-        
-        //time.addEvent
         
         
         //Colisiones
@@ -109,12 +68,15 @@ class gameState extends Phaser.Scene{
         this.enemies = this.physics.add.group();
         
         //Afegir els enemics un per un aqui si no no es que ho hem de fer diferent per tema del tilemap
-        this.createEnemy(SkeletonPrefab, config.width/4, config.height/4);
+        this.createEnemy(SkeletonPrefab, config.width/4, config.height/4, true);
+        
+        
     }
     
-    createEnemy(_enemyType, _posX, _posY){
-        var enemy = new SkeletonPrefab(this, _posX, _posY);
+    createEnemy(_enemyType, _posX, _posY, _startActive){
+        var enemy = new _enemyType(this, _posX, _posY);
         this.enemies.add(enemy);
+        enemy.visible = enemy.active = _startActive;
         
 		/*var enemy = this.enemies.getFirst(false);
         if(!enemy){
@@ -156,17 +118,6 @@ class gameState extends Phaser.Scene{
     
 	update(){
         
-        this.UpdateEnemies();
-        
-        
-        //this.skeleton.Update(this.player, this.inputs);
-        //this.skeleton.anims.play('skeletonWalk');
-        
-        /*
-        if(this.inputs.GetKeyUp(this.inputs.KeyCodes.K)){
-            console.log('in');
-        }
-        */
         
 	}
 }
