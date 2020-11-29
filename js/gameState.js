@@ -176,30 +176,30 @@ class gameState extends Phaser.Scene{
     {
         //MOVEMENT
         
-        if(this.cursors.shift.isDown)   //MOVE WITH SHIELD UP
+        if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.L))   //MOVE WITH SHIELD UP
         {
             this.shieldUp = true;
             
-            if(this.cursors.left.isDown)
+            if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.A))
             {
             
                 this.player.anims.play('walkLeftSU',true);
                 this.player.body.velocity.x = -64;
                 this.player.body.velocity.y = 0;
             }
-            else if(this.cursors.right.isDown)
+            else if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.D))
             {
                 this.player.anims.play('walkRightSU',true);
                 this.player.body.velocity.x = 64;
                 this.player.body.velocity.y = 0;
             }
-            else if(this.cursors.down.isDown)
+            else if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.S))
             {
                 this.player.anims.play('walkDownSU',true);
                 this.player.body.velocity.x = 0;
                 this.player.body.velocity.y = 64;
             }
-            else if(this.cursors.up.isDown)
+            else if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.W))
             {
                 this.player.anims.play('walkUpSU',true);
                 this.player.body.velocity.x = 0;
@@ -217,27 +217,27 @@ class gameState extends Phaser.Scene{
             
             this.shieldUp = false;
             
-            if(this.cursors.left.isDown)
+            if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.A))
             {
             
                 this.player.anims.play('walkLeftS',true);
                 this.player.body.velocity.x = -64;
                 this.player.body.velocity.y = 0;
             }
-            else if(this.cursors.right.isDown)
+            else if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.D))
             {
                 this.player.anims.play('walkRightS',true);
                 this.player.body.velocity.x = 64;
                 this.player.body.velocity.y = 0;
             }
-            else if(this.cursors.down.isDown)
+            else if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.S))
             {
                 this.player.anims.play('walkDownS',true);
                 this.player.body.velocity.x = 0;
                 this.player.body.velocity.y = 64;
                 
             }
-            else if(this.cursors.up.isDown)
+            else if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.W))
             {
                 this.player.anims.play('walkUpS',true);
                 this.player.body.velocity.x = 0;
@@ -250,13 +250,14 @@ class gameState extends Phaser.Scene{
                 this.player.body.velocity.y = 0;
             }
             
-            if(Phaser.Input.Keyboard.JustUp(this.cursors.down)){
-                    this.player.anims.play('idleDown');
+            //NOTA: Per acabar l'animacio i que es quedi mirant on vulguis crec que el millor seria algo aixi amb totes les direccions
+            if(this.inputs.GetKeyUp(this.inputs.KeyCodes.S)){
+                this.player.anims.play('idleDown');
             }
             
         }
         //ATTACK
-        if(this.cursors.space.isDown)
+        if(this.inputs.GetKeyDown(this.inputs.KeyCodes.K))
         {
             //Attack need animations
         }

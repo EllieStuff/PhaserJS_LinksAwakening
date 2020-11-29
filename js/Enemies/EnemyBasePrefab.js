@@ -6,6 +6,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
 		scene.add.existing(this);
         //this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
         scene.physics.add.existing(this);
+        this.body.collideWorldBounds = true;
         scene.events.on('update', this.Update, this);
         //this.ourKeyCodes = scene.ourKeyCodes;
         this.setOrigin(0.5,0).setScale(1);
