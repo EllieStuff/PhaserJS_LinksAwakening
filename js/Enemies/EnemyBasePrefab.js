@@ -4,10 +4,11 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     {
 		super(scene, positionX, positionY, sprite);
 		scene.add.existing(this);
+        //this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
         scene.physics.add.existing(this);
         //scene.events.on('updateEnemy', this.Update, this);
         this.ourKeyCodes = scene.ourKeyCodes;
-        this.setOrigin(0.5,0);
+        this.setOrigin(0.5,0).setScale(1);
         this.initPositionX = this.body.x;
         this.initPositionY = this.body.y;
         this.damage = 1;
@@ -17,11 +18,13 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         this.isVulnerable = true;
         this.speed = 1;
     }  
+    
     preUpdate(){
 		/*if(this.y <= 0){
             this.active = false;
         }*/
 	}
+    
     
     MoveTowards(_target, _speed){
         this.scene.physics.moveToObject(this, _target, _speed);
@@ -53,11 +56,11 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     
     
     GetRepeled(_enemy, _shield){
-        var dir = new Vector2(_enemy.body.x - scene.player.body.x, _enemy.body.y - scene.player.body.y).Normalize();
+        /*var dir = new Vector2(_enemy.body.x - scene.player.body.x, _enemy.body.y - scene.player.body.y).Normalize();
         dir *= repulsionForce;
         
         _enemy.body.velocity.x += dir.x;
-        _enemy.body.velocity.y += dir.y;
+        _enemy.body.velocity.y += dir.y;*/
     }
     
     GetDamaged(_enemy, _sword)
@@ -68,4 +71,4 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     Update(_playerPos){}
 }
 
-//export default EnemyBase;
+

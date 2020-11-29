@@ -3,9 +3,9 @@
 
 class SkeletonPrefab extends EnemyBase{
     
-    constructor(scene, positionX, positionY, mainSprite, secondSprite)
+    constructor(scene, positionX, positionY)
     {
-		super(scene, positionX, positionY, mainSprite);
+		super(scene, positionX, positionY, 'enemySkeleton');
         this.anims.setTimeScale(0.3);
         
         this.damage = 2;
@@ -15,12 +15,13 @@ class SkeletonPrefab extends EnemyBase{
         this.speed = 30;
         this.fleeSpeed = -this.speed * 4;
         this.seeRange = 10;
-        this.auxSkeleton = new AuxSkeleton(scene, positionX, positionY, secondSprite);
+        this.auxSkeleton = new AuxSkeleton(scene, positionX, positionY, 'auxSkeleton');
         this.auxSkeleton.visible = false;
         this.auxSkeleton.active = false;
-        this.started = false;
+        //this.started = false;
         
-        
+        this.stepManager = true;
+        //this.scene.time.addEvent({delay: 1000, callback: this.Walk, callbackScope: this, repeat: -1});
         
         //this.init();
     }
@@ -33,6 +34,18 @@ class SkeletonPrefab extends EnemyBase{
         }*/
 	}
     
+    Walk(){
+        if(this.IsMoving() && this.isVulnerable){
+            console.log(this.stepManager);
+            if(this.stepManager)
+                this.setFrame(1);
+            else
+                this.setFrame(0);
+            
+            this.stepManager = !this.stepManager;
+        }
+    }
+    
     Update(_player, _inputs)
     {
         var currentPos = new Phaser.Math.Vector2(this.body);
@@ -40,11 +53,12 @@ class SkeletonPrefab extends EnemyBase{
         if(currentPos.distance(_player.body) > this.seeRange){
             if(this.canJump && this.isVulnerable){
                 this.MoveTowards(_player, this.speed);
-                //this.anims.play('skeletonWalk', true);
-                if(!this.started){
+                this.anims.play('skeletonWalk', true);
+                //console.log(this.anims.getProgress());
+                /*if(!this.started){
                     this.started = true;
-                    this.anims.play('skeletonWalk', true);
-                }
+                    this.anims.play('skeletonWalk');
+                }*/
                 
                 if(_inputs.GetKeyDown(_inputs.KeyCodes.K) || _inputs.GetKeyDown(_inputs.KeyCodes.L))
                 {
