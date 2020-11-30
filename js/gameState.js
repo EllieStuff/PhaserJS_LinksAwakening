@@ -18,9 +18,9 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
         
         //Dungeon
-        this.load.image('dungeonBlockSheet', rutaImgTiles + 'DungeonBlockSheet.png');
-        this.load.image('dungeonTiles', rutaImgTiles + 'dungeonTiles1.png');
-        this.load.image('vallas', rutaImgTiles + 'vallas.png');
+        this.load.image('blocks', rutaImgTiles + 'DungeonBlockSheet.png');
+        this.load.image('objects', rutaImgTiles + 'dungeonTiles1.png');
+        this.load.image('fences', rutaImgTiles + 'vallas.png');
         this.load.tilemapTiledJSON('dungeon', 'maps/insideMap.json');
         
         //Load Audios
@@ -31,12 +31,11 @@ class gameState extends Phaser.Scene{
         //Load Map
         this.LoadMap();
         
-        
         //SetOrigin
         
         
 		//hardhat =  new HardHatPrefab(this,0,0,'HardHat');
-        this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0.5).setScale(2);
+        this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0.5).setScale(1);
         //this.hardhat = this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
         //this.skeleton = new SkeletonPrefab(this, config.width/4, config.height/4, 'enemySkeleton', 'auxSkeleton');
         
@@ -136,7 +135,7 @@ class gameState extends Phaser.Scene{
         
         
         //Colisiones
-		//this.physics.add.collider(this.player, this.walls); //Prq choqui amb les parets
+		this.physics.add.collider(this.player, this.walls); //Prq choqui amb les parets
         //this.physics.add.collider(this.player, this.enemies, this.Player.GetDamaged, null, this); //Prq el player rebi mal, la quantitat dependra de la variable attack del enemy tocat
         //this.physics.add.collider(this.enemies, this.player.shield, this.EnemyBase.GetRepeled, null, this);   //Prq l'escut repeli una mica els enemics, l'impuls dependra d'una variable del enemy
         //this.physics.add.collider(this.enemies, this.player.sword, this.EnemyBase.GetDamaged, null, this);    //Prq l'espasa danyi els enemics, el mal dependra del attack del player i de si ha carregat l'atac giratori
@@ -175,17 +174,49 @@ class gameState extends Phaser.Scene{
     
     //Functions
     LoadMap(){
-        //this.load.image('dungeonBlockSheet', rutaImgeTiles + 'DungeonBlockSheet.png');
-        //this.load.tilemapTiledJSON('dungeon', 'maps/insideMap.json');
-        
+        //TODO: Treure el bloc ab candau de doors ja que ak provenir d'un sprite sheet diferent dona problemes
         
         this.map = this.add.tilemap('dungeon');
-        this.map.addTilesetImage('walls');
-        this.map.addTilesetImage('dungeonTiles');
-        this.map.addTilesetImage('vallas');
-        this.walls1 = this.map.createStaticLayer('walls', 'walls1');
-        this.walls2 = this.map.createStaticLayer('walls2', 'walls2');
+        this.map.addTilesetImage('blocks');
+        this.map.addTilesetImage('objects');
+        this.map.addTilesetImage('fences');
         
+        //Init blocks
+        this.walls = this.physics.add.group();
+        let walls1 = this.map.createStaticLayer('walls', 'blocks');
+        let walls2 = this.map.createStaticLayer('walls2', 'blocks');
+        //walls1.setCollisionByProperty({collides: true});
+        //walls2.setCollisionByProperty({collides: true});
+        this.walls.add(walls1); this.walls.add(walls2);
+        this.map.createStaticLayer('floor', 'blocks');
+        this.movableBlock = this.map.createStaticLayer('movableobject', 'blocks');
+        this.stairs = this.map.createStaticLayer('stairs', 'blocks');
+        //this.voids = 
+        this.void1 = this.map.createStaticLayer('void', 'blocks');
+        this.void2 = this.map.createStaticLayer('void2', 'blocks');
+        this.map.createStaticLayer('cliff', 'blocks');
+        this.breakableFloor = this.map.createStaticLayer('breakblefloor', 'blocks');
+        this.tpStairs = this.map.createStaticLayer('stairstp', 'blocks');
+        this.doors = this.map.createStaticLayer('doors', 'blocks');
+        
+        
+        //Init objects
+        this.floorButton = this.map.createStaticLayer('button', 'objects');
+        this.bonfires = this.map.createStaticLayer('hoguera', 'objects');
+        this.map.createStaticLayer('antorchas', 'objects');
+        this.chests = this.map.createStaticLayer('chests', 'objects');
+        this.crystals = this.map.createStaticLayer('crystals', 'objects');
+        //this.blockDoors = this.map.createStaticLayer('doors', 'objects');
+        
+        
+        //Init fences
+        this.fences = this.map.createStaticLayer('fences', 'fences');
+        
+        
+        //Check collisions off...
+        //7, 16
+        this.map.setCollisionBetween(0,18,true,false,'layer_walls');
+        //this.map.setCollision(2, true, false, 'layer_walls');
         
     }
     
