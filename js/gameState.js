@@ -6,6 +6,7 @@ class gameState extends Phaser.Scene{
 	preload(){
         var rutaImgEnemies = 'assets/img/enemies/';
         var rutaImgLink = 'assets/img/link/';
+        var rutaImgTiles = 'assets/img/tiles/';
         //Load Images
         this.load.spritesheet('playerMove'      ,rutaImgLink + 'WAnim.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerMoveShield',rutaImgLink + 'WShieldAnim.png' ,{frameWidth: 16, frameHeight: 16});
@@ -15,11 +16,22 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('enemySkeleton', rutaImgEnemies + 'EsqueletoAnim.png', {frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('auxSkeleton', rutaImgEnemies + 'EsqueletoJumpAnim.png', {frameWidth: 16, frameHeight: 32});
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
+        
+        //Dungeon
+        this.load.image('dungeonBlockSheet', rutaImgTiles + 'DungeonBlockSheet.png');
+        this.load.image('dungeonTiles', rutaImgTiles + 'dungeonTiles1.png');
+        this.load.image('vallas', rutaImgTiles + 'vallas.png');
+        this.load.tilemapTiledJSON('dungeon', 'maps/insideMap.json');
+        
         //Load Audios
         
         
 	}
 	create(){
+        //Load Map
+        this.LoadMap();
+        
+        
         //SetOrigin
         
         
@@ -163,9 +175,17 @@ class gameState extends Phaser.Scene{
     
     //Functions
     LoadMap(){
-        //Llegir el mapa i assignar parets
-        //...
-        //...
+        //this.load.image('dungeonBlockSheet', rutaImgeTiles + 'DungeonBlockSheet.png');
+        //this.load.tilemapTiledJSON('dungeon', 'maps/insideMap.json');
+        
+        
+        this.map = this.add.tilemap('dungeon');
+        this.map.addTilesetImage('walls');
+        this.map.addTilesetImage('dungeonTiles');
+        this.map.addTilesetImage('vallas');
+        this.walls1 = this.map.createStaticLayer('walls', 'walls1');
+        this.walls2 = this.map.createStaticLayer('walls2', 'walls2');
+        
         
     }
     
