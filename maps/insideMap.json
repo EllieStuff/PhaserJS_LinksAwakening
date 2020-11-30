@@ -219,7 +219,7 @@
          "name":"Capa de Imagen 1",
          "opacity":0.5,
          "type":"imagelayer",
-         "visible":true,
+         "visible":false,
          "x":0,
          "y":0
         }],

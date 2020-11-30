@@ -896,7 +896,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <imagelayer id="2" name="Capa de Imagen 1" opacity="0.5">
+ <imagelayer id="2" name="Capa de Imagen 1" visible="0" locked="1" opacity="0.5">
   <image source="../assets/img/InsideMap.png" width="1120" height="768"/>
  </imagelayer>
 </map>
