@@ -1,7 +1,7 @@
 
 class InputManager extends Phaser.GameObjects.Sprite {
-    constructor(_scene, _sprite){
-        super(_scene, 0, 0, _sprite);
+    constructor(_scene){
+        super(_scene, 0, 0, 'emptySprite');
         //this.phaserInputManager = _phaserInputManager;
         
         this.KeyCodes = { 
