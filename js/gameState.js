@@ -137,7 +137,7 @@ class gameState extends Phaser.Scene{
         //Colisiones
 		this.physics.add.collider(this.player, this.walls); //Prq choqui amb les parets
         //this.physics.add.collider(this.player, this.enemies, this.Player.GetDamaged, null, this); //Prq el player rebi mal, la quantitat dependra de la variable attack del enemy tocat
-        //this.physics.add.collider(this.enemies, this.player.shield, this.EnemyBase.GetRepeled, null, this);   //Prq l'escut repeli una mica els enemics, l'impuls dependra d'una variable del enemy
+        this.physics.add.collider(this.enemies, this.player, this.enemies.GetRepeled, null, this);   //Prq l'escut repeli una mica els enemics, l'impuls dependra d'una variable del enemy
         //this.physics.add.collider(this.enemies, this.player.sword, this.EnemyBase.GetDamaged, null, this);    //Prq l'espasa danyi els enemics, el mal dependra del attack del player i de si ha carregat l'atac giratori
 		this.cursors = this.input.keyboard.createCursorKeys();
         this.shieldUp = false;
@@ -148,7 +148,7 @@ class gameState extends Phaser.Scene{
         
         //Afegir els enemics un per un aqui si no no es que ho hem de fer diferent per tema del tilemap
         this.createEnemy(SkeletonPrefab, config.width/4, config.height/4, true);
-        
+        this.createEnemy(HardHatPrefab , config.width/2, config.height/4, true);
         
     }
     

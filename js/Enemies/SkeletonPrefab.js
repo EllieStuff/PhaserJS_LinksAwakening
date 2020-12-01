@@ -12,7 +12,7 @@ class SkeletonPrefab extends EnemyBase{
         this.canJump = true;
         this.speed = 30;
         this.fleeSpeed = -this.speed * 4;
-        this.seeRange = 150;
+        this.seeRange = 100;
         this.auxSkeleton = new AuxSkeleton(scene, positionX, positionY);
         this.auxSkeleton.visible = false;
         this.auxSkeleton.active = false;
@@ -63,6 +63,10 @@ class SkeletonPrefab extends EnemyBase{
                     
                     this.auxSkeleton.Init(this);
                 }
+            }
+            else
+            {
+                this.body.stop();
             }
             
             if(this.auxSkeleton.active){

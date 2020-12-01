@@ -60,12 +60,9 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     
     
     
-    GetRepeled(_enemy, _shield){
-        /*var dir = new Vector2(_enemy.body.x - scene.player.body.x, _enemy.body.y - scene.player.body.y).Normalize();
-        dir *= repulsionForce;
-        
-        _enemy.body.velocity.x += dir.x;
-        _enemy.body.velocity.y += dir.y;*/
+    GetRepeled()
+    {
+       
     }
     
     GetDamaged(_enemy, _sword)
