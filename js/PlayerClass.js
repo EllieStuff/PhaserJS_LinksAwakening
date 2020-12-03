@@ -143,30 +143,28 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
             {
                 this.scene.player.anims.play('walkLeftSU',true);
                 this.scene.hitboxPlayer.body.velocity.x = -64;
-                this.scene.hitboxPlayer.body.velocity.y = 0;
             }
             else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.D))
             {
                 this.scene.player.anims.play('walkRightSU',true);
                 this.scene.hitboxPlayer.body.velocity.x = 64;
-                this.scene.hitboxPlayer.body.velocity.y = 0;
             }
-            else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.S))
+            else
+            {
+                this.scene.hitboxPlayer.body.velocity.x = 0;
+            }
+            if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.S))
             {
                 this.scene.player.anims.play('walkDownSU',true);
-                this.scene.hitboxPlayer.body.velocity.x = 0;
                 this.scene.hitboxPlayer.body.velocity.y = 64;
             }
             else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.W))
             {
                 this.scene.player.anims.play('walkUpSU',true);
-                this.scene.hitboxPlayer.body.velocity.x =0;
                 this.scene.hitboxPlayer.body.velocity.y = -64;
             }
             else
             {
-                this.scene.player.anims.play();
-                this.scene.hitboxPlayer.body.velocity.x =0;
                 this.scene.hitboxPlayer.body.velocity.y = 0;
             }
         }
@@ -180,31 +178,30 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
             
                 this.anims.play('walkLeftS',true);
                 this.scene.hitboxPlayer.body.velocity.x = -64;
-                this.scene.hitboxPlayer.body.velocity.y = 0;
             }
             else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.D))
             {
                 this.scene.player.anims.play('walkRightS',true);
                 this.scene.hitboxPlayer.body.velocity.x = 64;
-                this.scene.hitboxPlayer.body.velocity.y = 0;
             }
-            else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.S))
+            else
+            {
+                this.scene.hitboxPlayer.body.velocity.x = 0;
+            }
+            if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.S))
             {
                 this.scene.player.anims.play('walkDownS',true);
-                this.scene.hitboxPlayer.body.velocity.x = 0;
                 this.scene.hitboxPlayer.body.velocity.y = 64;
                 
             }
             else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.W))
             {
                 this.scene.player.anims.play('walkUpS',true);
-                this.scene.hitboxPlayer.body.velocity.x = 0;
                 this.scene.hitboxPlayer.body.velocity.y = -64;
             }
             else
             {
                 //this.player.anims.play('idleDown');
-                this.scene.hitboxPlayer.body.velocity.x = 0;
                 this.scene.hitboxPlayer.body.velocity.y = 0;
             }
             /*
