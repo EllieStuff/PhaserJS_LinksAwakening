@@ -56,25 +56,25 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
             key: 'walkdown',
             frames: this.scene.anims.generateFrameNumbers('playerMove', { start: 0, end: 1 }),
             frameRate: 8,
-            repeat: -1
+            repeat: 0
         });
         this.scene.anims.create({
             key: 'walkleft',
             frames: this.scene.anims.generateFrameNumbers('playerMove', { start: 2, end: 3 }),
             frameRate: 8,
-            repeat: -1
+            repeat: 0
         });
         this.scene.anims.create({
             key: 'walkright',
             frames: this.scene.anims.generateFrameNumbers('playerMove', { start: 4, end: 5 }),
             frameRate: 8,
-            repeat: -1
+            repeat: 0
         });
         this.scene.anims.create({
             key: 'walkup',
             frames: this.scene.anims.generateFrameNumbers('playerMove', { start: 6, end: 7 }),
             frameRate: 8,
-            repeat: -1
+            repeat: 0
         });
         
         //PLAYER WITH SHIELD
@@ -82,51 +82,51 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
             key: 'walkdownS',
             frames: this.scene.anims.generateFrameNumbers('playerMoveShield', { start: 0, end: 1 }),
             frameRate: 8,
-            repeat: -1
+            repeat: 0
         });
         this.scene.anims.create({
             key: 'walkleftS',
             frames: this.scene.anims.generateFrameNumbers('playerMoveShield', { start: 2, end: 3 }),
             frameRate: 8,
-            repeat: -1
+            repeat: 0
         });
         this.scene.anims.create({
             key: 'walkrightS',
             frames: this.scene.anims.generateFrameNumbers('playerMoveShield', { start: 4, end: 5 }),
             frameRate: 8,
-            repeat: -1
+            repeat: 0
         });
         this.scene.anims.create({
             key: 'walkupS',
             frames: this.scene.anims.generateFrameNumbers('playerMoveShield', { start: 6, end: 7 }),
             frameRate: 8,
-            repeat: -1
+            repeat: 0
         });
         
         //PLAYER USE SHIELD
         this.scene.anims.create({
             key: 'shieldDown',
-            frames: this.scene.anims.generateFrameNumbers('playerMoveShield', { start: 0, end: 1 }),
+            frames: this.scene.anims.generateFrameNumbers('playerShieldUp', { start: 0, end: 1 }),
             frameRate: 8,
-            repeat: -1
+            repeat: 0
         });
         this.scene.anims.create({
             key: 'shieldLeft',
-            frames: this.scene.anims.generateFrameNumbers('playerMoveShield', { start: 2, end: 3 }),
+            frames: this.scene.anims.generateFrameNumbers('playerShieldUp', { start: 2, end: 3 }),
             frameRate: 8,
-            repeat: -1
+            repeat: 0
         });
         this.scene.anims.create({
             key: 'shieldRight',
-            frames: this.scene.anims.generateFrameNumbers('playerMoveShield', { start: 4, end: 5 }),
+            frames: this.scene.anims.generateFrameNumbers('playerShieldUp', { start: 4, end: 5 }),
             frameRate: 8,
-            repeat: -1
+            repeat: 0
         });
         this.scene.anims.create({
             key: 'shieldUp',
-            frames: this.scene.anims.generateFrameNumbers('playerMoveShield', { start: 6, end: 7 }),
+            frames: this.scene.anims.generateFrameNumbers('playerShieldUp', { start: 6, end: 7 }),
             frameRate: 8,
-            repeat: -1
+            repeat: 0
         });
     }
     
@@ -141,26 +141,27 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
             
             if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.A))
             {
-                this.scene.player.anims.play('walkLeftSU',true);
+                this.anims.play('shieldLeft',true);
                 this.scene.hitboxPlayer.body.velocity.x = -64;
             }
             else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.D))
             {
-                this.scene.player.anims.play('walkRightSU',true);
+                this.anims.play('shieldRight',true);
                 this.scene.hitboxPlayer.body.velocity.x = 64;
             }
             else
             {
                 this.scene.hitboxPlayer.body.velocity.x = 0;
             }
+            
             if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.S))
             {
-                this.scene.player.anims.play('walkDownSU',true);
+                this.anims.play('shieldDown',true);
                 this.scene.hitboxPlayer.body.velocity.y = 64;
             }
             else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.W))
             {
-                this.scene.player.anims.play('walkUpSU',true);
+                this.anims.play('shieldUp',true);
                 this.scene.hitboxPlayer.body.velocity.y = -64;
             }
             else
@@ -176,27 +177,28 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
             if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.A))
             {
             
-                this.anims.play('walkLeftS',true);
+                this.anims.play('walkleftS',true);
                 this.scene.hitboxPlayer.body.velocity.x = -64;
             }
             else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.D))
             {
-                this.scene.player.anims.play('walkRightS',true);
+                this.anims.play('walkrightS',true);
                 this.scene.hitboxPlayer.body.velocity.x = 64;
             }
             else
             {
                 this.scene.hitboxPlayer.body.velocity.x = 0;
             }
+            
             if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.S))
             {
-                this.scene.player.anims.play('walkDownS',true);
+                this.anims.play('walkdownS',true);
                 this.scene.hitboxPlayer.body.velocity.y = 64;
                 
             }
             else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.W))
             {
-                this.scene.player.anims.play('walkUpS',true);
+                this.anims.play('walkupS',true);
                 this.scene.hitboxPlayer.body.velocity.y = -64;
             }
             else
