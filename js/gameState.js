@@ -16,7 +16,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('enemySkeleton', rutaImgEnemies + 'EsqueletoAnim.png', {frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('auxSkeleton', rutaImgEnemies + 'EsqueletoJumpAnim.png', {frameWidth: 16, frameHeight: 32});
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
-        
+        this.load.image('hitbox', rutaImgLink + 'HitboxLink.png');
         //Dungeon
         this.load.image('blocks', rutaImgTiles + 'DungeonBlockSheet.png');
         this.load.image('objects', rutaImgTiles + 'dungeonTiles1.png');
@@ -32,111 +32,23 @@ class gameState extends Phaser.Scene{
         this.LoadMap();
         
         //SetOrigin
+        this.CreatePlayer();
         
-        
-		//hardhat =  new HardHatPrefab(this,0,0,'HardHat');
-        this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0.5).setScale(1);
-        //this.hardhat = this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
-        //this.skeleton = new SkeletonPrefab(this, config.width/4, config.height/4, 'enemySkeleton', 'auxSkeleton');
         
         //add.sprite & anims.create
-        //MOVEMENT WITHOUT SHIELD
-        this.anims.create({
-            key: 'idleDown',
-            frames: this.anims.generateFrameNumbers('playerMove', { start: 0, end: 0 }),
-            framerate: 1,
-            repeat: 0
-        });
-        this.anims.create({
-            key: 'walkDown',
-            frames: this.anims.generateFrameNumbers('playerMove', { start: 0, end: 1 }),
-            frameRate: 8,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'walkLeft',
-            frames: this.anims.generateFrameNumbers('playerMove', { start: 2, end: 3 }),
-            frameRate: 8,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'walkRight',
-            frames: this.anims.generateFrameNumbers('playerMove', { start: 4, end: 5 }),
-            frameRate: 8,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'walkUp',
-            frames: this.anims.generateFrameNumbers('playerMove', { start: 6, end: 7 }),
-            frameRate: 8,
-            repeat: -1
-        });
-        //MOVEMENT WITH SHIELD
-        this.anims.create({
-            key: 'walkDownS',
-            frames: this.anims.generateFrameNumbers('playerMoveShield', { start: 0, end: 1 }),
-            frameRate: 8,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'walkLeftS',
-            frames: this.anims.generateFrameNumbers('playerMoveShield', { start: 2, end: 3 }),
-            frameRate: 8,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'walkRightS',
-            frames: this.anims.generateFrameNumbers('playerMoveShield', { start: 4, end: 5 }),
-            frameRate: 8,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'walkUpS',
-            frames: this.anims.generateFrameNumbers('playerMoveShield', { start: 6, end: 7 }),
-            frameRate: 8,
-            repeat: -1
-        });
-        //MOVEMENT WITH SHIELD UP
-        this.anims.create({
-            key: 'walkDownSU',
-            frames: this.anims.generateFrameNumbers('playerShieldUp', { start: 0, end: 1 }),
-            frameRate: 8,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'walkLeftSU',
-            frames: this.anims.generateFrameNumbers('playerShieldUp', { start: 2, end: 3 }),
-            frameRate: 8,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'walkRightSU',
-            frames: this.anims.generateFrameNumbers('playerShieldUp', { start: 4, end: 5 }),
-            frameRate: 8,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'walkUpSU',
-            frames: this.anims.generateFrameNumbers('playerShieldUp', { start: 6, end: 7 }),
-            frameRate: 8,
-            repeat: -1
-        });
+       
         //Variables
         this.inputs = new InputManager(this, 'emptySprite');
         
         
         //LoadGroups
-        this.player.body.collideWorldBounds = true;
-        //hardhat =  new HardHatPrefab(this,0,0,'HardHat');
-        //this.hardhat = this.physics.add.sprite(config.width/2,config.height/2,'HardHat').setOrigin(0.5).setScale(1);
-        //this.hardhat.anims.play('walk');
-        
+        //this.player.body.collideWorldBounds = true;
         this.CreateEnemies();
         
         
         // COLISIONES
         //Colliders
-		this.physics.add.collider(this.player, this.walls);
+		this.physics.add.collider(this.hitboxPlayer, this.walls);
         //this.physics.add.collider(this.player, this.enemies, this.Player.GetDamaged, null, this); //Prq el player rebi mal, la quantitat dependra de la variable attack del enemy tocat
         //this.physics.add.collider(this.enemies, this.player.shield, this.enemies.GetRepeled, null, this);   //Prq l'escut repeli una mica els enemics, l'impuls dependra d'una variable del enemy
         //this.physics.add.collider(this.enemies, this.player.sword, this.EnemyBase.GetDamaged, null, this);    //Prq l'espasa danyi els enemics, el mal dependra del attack del player i de si ha carregat l'atac giratori
@@ -153,10 +65,16 @@ class gameState extends Phaser.Scene{
         //this.physics.add.overlap(this.player, this.tpStairs, this.tpStairs.ChangePlayerLocation, null, this);
         //this.physics.add.overlap(this.player, this.floorButton, this.floorButton.Trigger, null, this);
         
-        
-        this.cursors = this.input.keyboard.createCursorKeys();
-        this.shieldUp = false;
 	}
+    
+    CreatePlayer()
+    {
+        //this.player = this.physics.add;
+        this.player = new PlayerPrefab(this,config.width/2,config.height/2);
+        //this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0,5).setScale(1);
+        this.hitboxPlayer = this.physics.add.sprite(config.width/2,config.height/2,'hitbox').setOrigin(0.5).setScale(1);
+        
+    }
     
     CreateEnemies(){
         this.enemies = this.physics.add.group();
@@ -246,91 +164,8 @@ class gameState extends Phaser.Scene{
     {
         //MOVEMENT
         
-        if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.L))   //MOVE WITH SHIELD UP
-        {
-            this.shieldUp = true;
-            
-            if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.A))
-            {
-            
-                this.player.anims.play('walkLeftSU',true);
-                this.player.body.velocity.x = -64;
-                this.player.body.velocity.y = 0;
-            }
-            else if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.D))
-            {
-                this.player.anims.play('walkRightSU',true);
-                this.player.body.velocity.x = 64;
-                this.player.body.velocity.y = 0;
-            }
-            else if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.S))
-            {
-                this.player.anims.play('walkDownSU',true);
-                this.player.body.velocity.x = 0;
-                this.player.body.velocity.y = 64;
-            }
-            else if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.W))
-            {
-                this.player.anims.play('walkUpSU',true);
-                this.player.body.velocity.x = 0;
-                this.player.body.velocity.y = -64;
-            }
-            else
-            {
-                this.player.anims.play();
-                this.player.body.velocity.x = 0;
-                this.player.body.velocity.y = 0;
-            }
-        }
-        else                            //MOVE WITH SHIELD DOWN
-        {
-            
-            this.shieldUp = false;
-            
-            if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.A))
-            {
-            
-                this.player.anims.play('walkLeftS',true);
-                this.player.body.velocity.x = -64;
-                this.player.body.velocity.y = 0;
-            }
-            else if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.D))
-            {
-                this.player.anims.play('walkRightS',true);
-                this.player.body.velocity.x = 64;
-                this.player.body.velocity.y = 0;
-            }
-            else if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.S))
-            {
-                this.player.anims.play('walkDownS',true);
-                this.player.body.velocity.x = 0;
-                this.player.body.velocity.y = 64;
-                
-            }
-            else if(this.inputs.GetKeyPressed(this.inputs.KeyCodes.W))
-            {
-                this.player.anims.play('walkUpS',true);
-                this.player.body.velocity.x = 0;
-                this.player.body.velocity.y = -64;
-            }
-            else
-            {
-                //this.player.anims.play('idleDown');
-                this.player.body.velocity.x = 0;
-                this.player.body.velocity.y = 0;
-            }
-            
-            //NOTA: Per acabar l'animacio i que es quedi mirant on vulguis crec que el millor seria algo aixi amb totes les direccions
-            if(this.inputs.GetKeyUp(this.inputs.KeyCodes.S)){
-                this.player.anims.play('idleDown');
-            }
-            
-        }
+        
         //ATTACK
-        if(this.inputs.GetKeyDown(this.inputs.KeyCodes.K))
-        {
-            //Attack need animations
-        }
         
 
 	}
