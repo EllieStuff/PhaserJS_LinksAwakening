@@ -6,7 +6,6 @@ class Key extends ItemsBase{
     
     StartEffect(){
         this.scene.player.keyAmmount++;
-        console.log(this.scene.player.keyAmmount);
         
         this.destroy();
     }
@@ -16,6 +15,7 @@ class Key extends ItemsBase{
 
 class MasterKey extends ItemsBase{
     constructor(scene, positionX, positionY){
+        super(scene, positionX, positionY, 'masterKey');
         
     }
     
