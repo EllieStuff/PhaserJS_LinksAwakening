@@ -4,26 +4,37 @@ class gameState extends Phaser.Scene{
 	 	super({key: 'gameState'});
 	}
 	preload(){
-        var rutaImgEnemies = 'assets/img/enemies/';
         var rutaImgLink = 'assets/img/link/';
+        var rutaImgEnemies = 'assets/img/enemies/';
+        var rutaImgItems = 'assets/img/items/';
         var rutaImgTiles = 'assets/img/tiles/';
-        //Load Images
+        
+        // Load Images
+        //Player
         this.load.spritesheet('playerMove'      ,rutaImgLink + 'WAnim.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerMoveShield',rutaImgLink + 'WShieldAnim.png' ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerShieldUp'  ,rutaImgLink + 'shieldAnim.png'  ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerSlash'  ,rutaImgLink + 'LinkSlash.png'  ,{frameWidth: 16, frameHeight: 16});
+        //Enemies
         this.load.spritesheet('HardHat',rutaImgEnemies + 'HardHatAnim.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('enemySkeleton', rutaImgEnemies + 'EsqueletoAnim.png', {frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('auxSkeleton', rutaImgEnemies + 'EsqueletoJumpAnim.png', {frameWidth: 16, frameHeight: 32});
+        //Items
+        this.load.spritesheet('atkPowerUp',rutaImgItems + 'PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('defPowerUp',rutaImgItems + 'PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('key',rutaImgItems + 'Key.png',{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('masterKey',rutaImgItems + 'MasterKey.png',{frameWidth: 16, frameHeight: 16});
+        //Others
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
         this.load.image('hitbox', rutaImgLink + 'HitboxLink.png');
-        //Dungeon
+        
+        // Dungeon
         this.load.image('blocks', rutaImgTiles + 'DungeonBlockSheet.png');
         this.load.image('objects', rutaImgTiles + 'dungeonTiles1.png');
         this.load.image('fences', rutaImgTiles + 'vallas.png');
         this.load.tilemapTiledJSON('dungeon', 'maps/insideMap.json');
         
-        //Load Audios
+        // Load Audios
         
         
 	}
@@ -46,9 +57,20 @@ class gameState extends Phaser.Scene{
         this.CreateEnemies();
         
         
+        this.items = this.physics.add.group();
+        this.items.add(new PowerUpAtk(this,config.width/2 - 20,config.height/2 - 20));
+        this.items.add(new PowerUpDef(this,config.width/2 + 10,config.height/2 + 10));
+        this.items.add(new Key(this,config.width/2 - 20,config.height/2 + 10));
+        this.items.add(new MasterKey(this,config.width/2 + 10,config.height/2 -20));
+        
+        
+        //this.atkPU = new PowerUpsBase(this,config.width/2 - 10,config.height/2 - 10, 'atkPowerUp');
+        
+        
         // COLISIONES
         //Colliders
-		this.physics.add.collider(this.hitboxPlayer, this.walls);
+		this.physics.add.collider(this.player, this.walls);
+        this.physics.add.overlap(this.player, this.items, this.StartItemEffect, null, this);
         //this.physics.add.collider(this.player, this.enemies, this.Player.GetDamaged, null, this); //Prq el player rebi mal, la quantitat dependra de la variable attack del enemy tocat
         //this.physics.add.collider(this.enemies, this.player.shield, this.enemies.GetRepeled, null, this);   //Prq l'escut repeli una mica els enemics, l'impuls dependra d'una variable del enemy
         //this.physics.add.collider(this.enemies, this.player.sword, this.EnemyBase.GetDamaged, null, this);    //Prq l'espasa danyi els enemics, el mal dependra del attack del player i de si ha carregat l'atac giratori
@@ -72,7 +94,6 @@ class gameState extends Phaser.Scene{
         //this.player = this.physics.add;
         this.player = new PlayerPrefab(this,config.width/2,config.height/2);
         //this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0,5).setScale(1);
-        this.hitboxPlayer = this.physics.add.sprite(config.width/2,config.height/2,'hitbox').setOrigin(0.5).setScale(1);
         
     }
     
@@ -91,6 +112,10 @@ class gameState extends Phaser.Scene{
         enemy.visible = enemy.active = _startActive;
         
 	}
+    
+    StartItemEffect(_player, _item){
+        _item.StartEffect();
+    }
     
     
     //Functions
