@@ -15,6 +15,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('playerMoveShield',rutaImgLink + 'WShieldAnim.png' ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerShieldUp'  ,rutaImgLink + 'shieldAnim.png'  ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerSlash'  ,rutaImgLink + 'LinkSlash.png'  ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerJump'  ,rutaImgLink + 'jumpAnim.png'  ,{frameWidth: 16, frameHeight: 32});
         //Enemies
         this.load.spritesheet('HardHat',rutaImgEnemies + 'HardHatAnim.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('enemySkeleton', rutaImgEnemies + 'EsqueletoAnim.png', {frameWidth: 16, frameHeight: 16});
@@ -24,6 +25,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('defPowerUp',rutaImgItems + 'PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('key',rutaImgItems + 'Key.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('masterKey',rutaImgItems + 'MasterKey.png',{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('rocFeather',rutaImgItems + 'RocFeather.png',{frameWidth: 16, frameHeight: 16});
         //Others
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
         this.load.image('hitbox', rutaImgLink + 'HitboxLink.png');
