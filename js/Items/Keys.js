@@ -8,6 +8,7 @@ class Key extends ItemsBase{
         this.scene.player.keyAmmount++;
         
         this.destroy();
+        
     }
     
     

@@ -8,6 +8,7 @@ class gameState extends Phaser.Scene{
         var rutaImgEnemies = 'assets/img/enemies/';
         var rutaImgItems = 'assets/img/items/';
         var rutaImgTiles = 'assets/img/tiles/';
+        var rutaImgInteractiveTiles = 'assets/img/InteractiveTiles/';
         
         // Load Images
         //Player
@@ -26,6 +27,8 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('key',rutaImgItems + 'Key.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('masterKey',rutaImgItems + 'MasterKey.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('rocFeather',rutaImgItems + 'RocFeather.png',{frameWidth: 16, frameHeight: 16});
+        //Interactive Tiles
+        this.load.spritesheet('movableBlock',rutaImgInteractiveTiles + 'Block.png',{frameWidth: 16, frameHeight: 16});
         //Others
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
         this.load.image('hitbox', rutaImgLink + 'HitboxLink.png');
