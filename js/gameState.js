@@ -21,6 +21,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('HardHat',rutaImgEnemies + 'HardHatAnim.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('enemySkeleton', rutaImgEnemies + 'EsqueletoAnim.png', {frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('auxSkeleton', rutaImgEnemies + 'EsqueletoJumpAnim.png', {frameWidth: 16, frameHeight: 32});
+        this.load.spritesheet('batEnemy', rutaImgEnemies + 'KeeseAnim.png', {frameWidth: 16, frameHeight: 16});
         //Items
         this.load.spritesheet('atkPowerUp',rutaImgItems + 'PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('defPowerUp',rutaImgItems + 'PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
@@ -108,6 +109,7 @@ class gameState extends Phaser.Scene{
         //Afegir els enemics un per un aqui si no no es que ho hem de fer diferent per tema del tilemap
         this.CreateEnemy(SkeletonPrefab, config.width/4, config.height/4, true);
         this.CreateEnemy(HardHatPrefab , config.width/2, config.height/4, true);
+        this.CreateEnemy(BatPrefab, config.width/2, config.height/2, true);
         
     }
     

@@ -65,10 +65,20 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
        
     }
     
-    GetDamaged(_enemy, _sword)
+    GetDamaged()
     {
-        heatlh -= _dmg;
+        this.health -= this.scene.player.attack;
+        if(this.health <= 0)
+            this.Die();
     }
+    
+    Die(){
+        this.Reinit();
+        this.active = this.visible = false;
+        
+    }
+    
+    CollideWithPlayer(){}
     
     Update(){}
 }
