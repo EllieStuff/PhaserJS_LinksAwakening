@@ -10,16 +10,17 @@ class BatPrefab extends EnemyBase{
         this.damage = 2;
         this.health = 1;
         this.isVulnerable = true;
-        this.speed = 30;
+        this.speed = 40;
         //this.fleeSpeed = -this.speed * 4;
-        this.seeRange = 70;
-        this.waitingDelay = 1500;
+        this.seeRange = 50;
+        this.waitingDelay = 500;
         //this.onSlowStart = false;
         
         this.setFrame(1);
         
         this.BatStates = { IDLE: 0, WAITING: 1, FLYING_AROUND: 2 };
         this.currState = this.BatStates.IDLE;
+        this.rotatePoint;
         this.updating = true;
         
     }
@@ -53,7 +54,8 @@ class BatPrefab extends EnemyBase{
     }
     
     FlyingAroundUpdate(){
-        var targetDir = new Phaser.Math.Vector2(this.body.x - this.scene.player.body.x, this.body.y - this.scene.player.body.y);    //Gets the direction from the player to this enemy
+        var targetDir = new Phaser.Math.Vector2(this.body.x - this.rotatePoint.x, this.body.y - this.rotatePoint.y);    //Gets the direction from the player to this enemy
+        //var rotatePoint = targetDir.normalize() * (2 * lastPlayerPos(this.body) / 3);
         targetDir = new Phaser.Math.Vector2(-targetDir.y, targetDir.x);     //Gets the normal of the previous direction
         targetDir = new Phaser.Math.Vector2(targetDir.x + this.body.x, targetDir.y + this.body.y);  //Makes the normal pass by this enemy position
         
@@ -62,16 +64,24 @@ class BatPrefab extends EnemyBase{
         this.MoveTowards(targetDir, this.speed);
     }
     
-    CollideWithPlayer(){
+    /*CollideWithPlayer(){
         if(this.updating){
             this.updating = false;
             this.scene.time.addEvent({delay: this.waitingDelay, callback: this.StopFlying, callbackScope: this, repeat: 0});
         }
-    }
+    }*/
     
     StartFlying(){
         this.currState = this.BatStates.FLYING_AROUND;
         this.anims.play('batFlying');
+        
+        var lastPlayerPos = new Phaser.Math.Vector2(this.scene.player.body);
+        var targetDir = new Phaser.Math.Vector2(this.body.x - lastPlayerPos.x, this.body.y - lastPlayerPos.y).normalize();    //Gets the normalized direction from the player to this enemy
+        var rotatePointDist = lastPlayerPos.distance(this.body) / 3;
+        
+        this.rotatePoint = new Phaser.Math.Vector2(
+            targetDir.x * rotatePointDist + lastPlayerPos.x, 
+            targetDir.y * rotatePointDist + lastPlayerPos.y);
     }
     
     StopFlying(){
@@ -79,6 +89,15 @@ class BatPrefab extends EnemyBase{
         this.anims.play('batIdle');
     }
     
+    DamagePlayer(){
+        this.playerColManager.UpdateOnTrigger();
+        
+        if(this.playerColManager.colState == this.playerColManager.CollisionState.ENTERED_COLLISION){
+            this.scene.player.GetDamaged(this.attack);
+            this.updating = false;
+            this.scene.time.addEvent({delay: this.waitingDelay, callback: this.StopFlying, callbackScope: this, repeat: 0});
+        }
+    }
     
     Update()
     {
@@ -108,12 +127,12 @@ class BatPrefab extends EnemyBase{
                 
             }
             else{
-                if(this.updating){
+                //if(this.updating){
                     this.updating = false;
                     this.body.stop();
                     this.currState = this.BatStates.IDLE;
                     this.anims.play('batIdle', true);
-                }
+                //}
             }
         }
         

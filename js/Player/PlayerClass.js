@@ -36,14 +36,22 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         
         this.animator = new PlayerAnimator(scene, positionX, positionY);
         
-    }  
+        this.InitCollisions();
+        
+    }
+    
+    InitCollisions(){
+        this.scene.physics.add.collider(this, this.scene.walls);
+        
+    }
     
     
-    GetDamaged(_player, _enemy)
+    GetDamaged(_dmgTaken)
     {
         if(!this.isJumping){
-            this.health -= _enemy.attack/this.defense;
+            this.health -= _dmgTaken/this.defense;
             this.RefreshPowerUpBuffers();
+            console.log("Player Health: " + this.health);
             
             //Add death      
         }

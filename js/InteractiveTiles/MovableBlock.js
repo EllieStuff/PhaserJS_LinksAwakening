@@ -19,7 +19,12 @@ class MovableBlock extends Phaser.GameObjects.Sprite{
         //this.initPositionX = positionX;
         //this.initPositionY = positionY;
         
+        this.InitCollisions();
         
+    }
+    
+    InitCollisions(){
+        this.scene.physics.add.collider(this, this.scene.player, this.Move, null, this);
     }
     
     
@@ -31,7 +36,7 @@ class MovableBlock extends Phaser.GameObjects.Sprite{
     }
     
     
-    StartEffect(){}
+    Move(){}
     
     EndEffect(){}
     

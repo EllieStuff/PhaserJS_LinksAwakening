@@ -10,13 +10,19 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         this.setOrigin(0.5,0).setScale(1);
         this.initPositionX = this.body.x;
         this.initPositionY = this.body.y;
-        this.damage = 1;
+        this.attack = 1;
         this.repulsionForce = 1;
         this.initHealth = 1;
         this.health = this.initHealth;
         this.isVulnerable = true;
         this.speed = 1;
         
+        this.playerColManager = new CollisionManager(scene);
+        this.swordColManager = new CollisionManager(scene);
+        this.shieldColManager = new CollisionManager(scene);
+        
+        
+        this.InitCollisions();
         this.CreateAnims();
     }  
     
@@ -27,6 +33,12 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
             this.active = false;
         }
 	}*/
+    
+    InitCollisions(){
+        this.scene.physics.add.overlap(this, this.scene.player, this.DamagePlayer, null, this);
+        //this.scene.physics.add.collider(this, this.scene.player.shield, this.GetRepeled, null, this);   //Prq l'escut repeli una mica els enemics, l'impuls dependra d'una variable del enemy
+        //this.scene.physics.add.collider(this, this.scene.player.sword, this.GetDamaged, null, this);    //Prq l'espasa danyi els enemics, el mal dependra del attack del player i de si ha carregat l'atac giratori
+    }
     
     //Make your anims on each enemy type
     CreateAnims(){}
@@ -58,18 +70,33 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         this.isVulnerable = true;
     }
     
-    
+    DamagePlayer(){
+        this.playerColManager.UpdateOnTrigger();
+        
+        if(this.playerColManager.colState == this.playerColManager.CollisionState.ENTERED_COLLISION)
+            this.scene.player.GetDamaged(this.attack);
+    }
     
     GetRepeled()
     {
-       
+        this.shieldColManager.UpdateOnTrigger();
+        
+        if(this.shieldColManager.colState == this.shieldColManager.CollisionState.ENTERED_COLLISION){
+            //Do things
+        }
     }
     
     GetDamaged()
     {
-        this.health -= this.scene.player.attack;
-        if(this.health <= 0)
-            this.Die();
+        this.swordColManager.UpdateOnTrigger();
+        
+        if(this.swordColManager.colState == this.swordColManager.CollisionState.ENTERED_COLLISION){
+            this.health -= this.scene.player.attack;
+            if(this.health <= 0){
+                this.Die();
+            }
+        }
+    
     }
     
     Die(){
