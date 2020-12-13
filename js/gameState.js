@@ -21,6 +21,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('HardHat',rutaImgEnemies + 'HardHatAnim.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('enemySkeleton', rutaImgEnemies + 'EsqueletoAnim.png', {frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('auxSkeleton', rutaImgEnemies + 'EsqueletoJumpAnim.png', {frameWidth: 16, frameHeight: 32});
+        this.load.spritesheet('batEnemy', rutaImgEnemies + 'KeeseAnim.png', {frameWidth: 16, frameHeight: 16});
         //Items
         this.load.spritesheet('atkPowerUp',rutaImgItems + 'PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('defPowerUp',rutaImgItems + 'PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
@@ -73,13 +74,9 @@ class gameState extends Phaser.Scene{
         
         
         // COLISIONES
+        //Colliders And Overlaps will init on each enemy, item, etc. or wathever is needed.
+        
         //Colliders
-		this.physics.add.collider(this.player, this.walls);
-        this.physics.add.overlap(this.player, this.items, this.StartItemEffect, null, this);
-        //this.physics.add.collider(this.player, this.enemies, this.Player.GetDamaged, null, this); //Prq el player rebi mal, la quantitat dependra de la variable attack del enemy tocat
-        //this.physics.add.collider(this.enemies, this.player.shield, this.enemies.GetRepeled, null, this);   //Prq l'escut repeli una mica els enemics, l'impuls dependra d'una variable del enemy
-        //this.physics.add.collider(this.enemies, this.player.sword, this.EnemyBase.GetDamaged, null, this);    //Prq l'espasa danyi els enemics, el mal dependra del attack del player i de si ha carregat l'atac giratori
-		//this.physics.add.collider(this.player, this.movableBlock, this.movableBlock.Move, null, this);
         //this.physics.add.collider(this.player, this.doors, this.doors.Open, null, this);
         //this.physics.add.collider(this.player, this.bonfires);
         //this.physics.add.collider(this.player, this.chests, this.chests.Open, null, this);
@@ -108,6 +105,7 @@ class gameState extends Phaser.Scene{
         //Afegir els enemics un per un aqui si no no es que ho hem de fer diferent per tema del tilemap
         this.CreateEnemy(SkeletonPrefab, config.width/4, config.height/4, true);
         this.CreateEnemy(HardHatPrefab , config.width/2, config.height/4, true);
+        this.CreateEnemy(BatPrefab, config.width/2, config.height/2, true);
         
     }
     

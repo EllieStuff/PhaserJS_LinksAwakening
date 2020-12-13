@@ -11,7 +11,11 @@ class ItemsBase extends Phaser.GameObjects.Sprite{
         //this.initPositionY = positionY;
         
         this.CreateAnims();
-    }  
+    }
+    
+    InitCollisions(){
+        this.scene.physics.add.overlap(this, this.scene.player, this.StartEffect, null, this);
+    }
     
     //Make your anims on each powerUp type
     CreateAnims(){}
