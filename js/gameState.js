@@ -23,8 +23,8 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('auxSkeleton'  ,rutaImgEnemies + 'EsqueletoJumpAnim.png' ,{frameWidth: 16, frameHeight: 32});
         this.load.spritesheet('spikedBeetle' ,rutaImgEnemies + 'SpikedBeetle.png'      ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('pokerEnemy'   ,rutaImgEnemies + 'PokerEnemy.png'        ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('BladeTrap', rutaImgEnemies + 'BladeTrap.png', {frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('batEnemy', rutaImgEnemies + 'KeeseAnim.png', {frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('BladeTrap', rutaImgEnemies    + 'BladeTrap.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('batEnemy', rutaImgEnemies     + 'KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
         //Items
         this.load.spritesheet('atkPowerUp',rutaImgItems + 'PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('defPowerUp',rutaImgItems + 'PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
@@ -35,11 +35,11 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('redRupee'  ,rutaImgItems + 'RedRupee.png'   ,{frameWidth: 8,  frameHeight: 16});
         this.load.spritesheet('smallHeart',rutaImgItems + 'RocFeather.png' ,{frameWidth: 16, frameHeight: 16});
         //Interactive Tiles
-        this.load.spritesheet('movableBlock',rutaImgInteractiveTiles + 'Block.png',{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('keyDoor',rutaImgInteractiveTiles + 'KeyDoorAnim.png',{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('bossKeyDoor',rutaImgInteractiveTiles + 'BossKeyDoor.png',{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('eventDoor',rutaImgInteractiveTiles + 'EventDoor.png',{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('oneWayDoor',rutaImgInteractiveTiles + 'OneWayDoorAnim.png',{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('movableBlock',rutaImgInteractiveTiles        + 'Block.png'                  ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('keyDoor',rutaImgInteractiveTiles             + 'KeyDoorAnim.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('bossKeyDoor',rutaImgInteractiveTiles         + 'BossKeyDoor.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('eventDoor',rutaImgInteractiveTiles           + 'EventDoor.png'              ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('oneWayDoor',rutaImgInteractiveTiles          + 'OneWayDoorAnim.png'         ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('oneWayDoorBackwards',rutaImgInteractiveTiles + 'OneWayDoorBackwardsAnim.png',{frameWidth: 16, frameHeight: 16});
         //Others
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
