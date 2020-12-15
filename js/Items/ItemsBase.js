@@ -11,6 +11,7 @@ class ItemsBase extends Phaser.GameObjects.Sprite{
         //this.initPositionY = positionY;
         
         this.CreateAnims();
+        this.InitCollisions();
     }
     
     InitCollisions(){

@@ -2,7 +2,7 @@
 
 class MovableBlock extends Phaser.GameObjects.Sprite{
     
-    constructor(scene, positionX, positionY, functionToTrigger)
+    constructor(scene, positionX, positionY)
     {
 		super(scene, positionX, positionY, 'movableBlock');
         this.functionToTrigger = functionToTrigger;
