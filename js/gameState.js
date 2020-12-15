@@ -15,20 +15,25 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('playerMove'      ,rutaImgLink + 'WAnim.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerMoveShield',rutaImgLink + 'WShieldAnim.png' ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerShieldUp'  ,rutaImgLink + 'shieldAnim.png'  ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('playerSlash'  ,rutaImgLink + 'LinkSlash.png'  ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('playerJump'  ,rutaImgLink + 'jumpAnim.png'  ,{frameWidth: 16, frameHeight: 32});
+        this.load.spritesheet('playerSlash'     ,rutaImgLink + 'LinkSlash.png'   ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerJump'      ,rutaImgLink + 'jumpAnim.png'    ,{frameWidth: 16, frameHeight: 32});
         //Enemies
-        this.load.spritesheet('HardHat',rutaImgEnemies + 'HardHatAnim.png',{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('HardHat'      ,rutaImgEnemies + 'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('enemySkeleton',rutaImgEnemies + 'EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('auxSkeleton'  ,rutaImgEnemies + 'EsqueletoJumpAnim.png' ,{frameWidth: 16, frameHeight: 32});
+        this.load.spritesheet('spikedBeetle' ,rutaImgEnemies + 'SpikedBeetle.png'      ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('pokerEnemy'   ,rutaImgEnemies + 'PokerEnemy.png'        ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('BladeTrap', rutaImgEnemies + 'BladeTrap.png', {frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('enemySkeleton', rutaImgEnemies + 'EsqueletoAnim.png', {frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('auxSkeleton', rutaImgEnemies + 'EsqueletoJumpAnim.png', {frameWidth: 16, frameHeight: 32});
         this.load.spritesheet('batEnemy', rutaImgEnemies + 'KeeseAnim.png', {frameWidth: 16, frameHeight: 16});
         //Items
         this.load.spritesheet('atkPowerUp',rutaImgItems + 'PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('defPowerUp',rutaImgItems + 'PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('key',rutaImgItems + 'Key.png',{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('masterKey',rutaImgItems + 'MasterKey.png',{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('rocFeather',rutaImgItems + 'RocFeather.png',{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('key'       ,rutaImgItems + 'Key.png'        ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('masterKey' ,rutaImgItems + 'MasterKey.png'  ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('rocFeather',rutaImgItems + 'RocFeather.png' ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('blueRupee' ,rutaImgItems + 'BlueRupee.png'  ,{frameWidth: 8,  frameHeight: 16});
+        this.load.spritesheet('redRupee'  ,rutaImgItems + 'RedRupee.png'   ,{frameWidth: 8,  frameHeight: 16});
+        this.load.spritesheet('smallHeart',rutaImgItems + 'RocFeather.png' ,{frameWidth: 16, frameHeight: 16});
         //Interactive Tiles
         this.load.spritesheet('movableBlock',rutaImgInteractiveTiles + 'Block.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('keyDoor',rutaImgInteractiveTiles + 'KeyDoorAnim.png',{frameWidth: 16, frameHeight: 16});
