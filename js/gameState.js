@@ -4,10 +4,10 @@ class gameState extends Phaser.Scene{
 	 	super({key: 'gameState'});
 	}
 	preload(){
-        var rutaImgLink = 'assets/img/link/';
-        var rutaImgEnemies = 'assets/img/enemies/';
-        var rutaImgItems = 'assets/img/items/';
-        var rutaImgTiles = 'assets/img/tiles/';
+        var rutaImgLink             = 'assets/img/link/';
+        var rutaImgEnemies          = 'assets/img/enemies/';
+        var rutaImgItems            = 'assets/img/items/';
+        var rutaImgTiles            = 'assets/img/tiles/';
         var rutaImgInteractiveTiles = 'assets/img/InteractiveTiles/';
         
         // Load Images
