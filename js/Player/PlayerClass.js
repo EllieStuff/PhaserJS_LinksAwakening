@@ -11,7 +11,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.setOrigin(0.5).setScale(1);
         //this.hitbox = this.physics.add.sprite(config.width/2,config.height/2,'hitbox').setOrigin(0.5).setScale(1);
         
-        this.Directions = { RIGHT: 0, LEFT: 1, UP: 2, DOWN: 3 };
+        this.Directions = this.scene.Directions;
         this.moveDir = this.Directions.DOWN;
         
         this.maxHearts = 3;
@@ -31,6 +31,8 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         //this.anims.play('standEnemy');
         //this.checkWorldBounds = true;
         //this.outOfBoundsKill = true;
+        this.hasMasterKey = false;
+        this.keyAmmount = 0;
         this.shieldUp = false;
         this.currentAnim = 'walkdown';
         
@@ -152,9 +154,12 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     
     Update()
     {
+        console.log("dir " + this.moveDir);
+        
         //Jump
         if(!this.isJumping && this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K))
         {
+            console.log("in");
             this.isJumping = true;
             this.Jump();
             

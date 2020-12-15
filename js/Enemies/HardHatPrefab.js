@@ -29,7 +29,6 @@ class HardHatPrefab extends EnemyBase{
             this.body.stop();
         }
         
-        
         if((this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) || this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.L)) && !this.collided)
         {
             this.GetRepeled();
