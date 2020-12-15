@@ -256,7 +256,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
             }
             
             //Decide Idle anim if necessary
-            if(this.IsMoving())
+            if(!this.IsMoving())
                 this.SetIdleAnim();
         }
         
