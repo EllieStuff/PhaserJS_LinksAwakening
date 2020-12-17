@@ -7,6 +7,7 @@ class ItemsBase extends Phaser.GameObjects.Sprite{
         scene.physics.add.existing(this);
         this.body.collideWorldBounds = true;
         this.setOrigin(0.5,0).setScale(1);
+        this.setDepth(scene.DrawDepths.ITEMS);
         //this.initPositionX = positionX;
         //this.initPositionY = positionY;
         

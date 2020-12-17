@@ -1,5 +1,5 @@
 
-class CollisionManager extends Phaser.GameObjects.Sprite{
+class CollisionManager{
     
     //NOTA 1: 
     //  El collision Manager hauria de funcionar sempre que la classe es declari a sota el "super(,,,)" i del "scene.events.on('update',,)" (si es que en te) de la classe 
@@ -10,15 +10,15 @@ class CollisionManager extends Phaser.GameObjects.Sprite{
     
     constructor(scene)
     {
-		super(scene, 0, 0, 'emptySprite');
-		scene.add.existing(this);
-        scene.physics.add.existing(this);
-        scene.events.on('update', this.Update, this);
-        this.body.collideWorldBounds = true;
-        this.setOrigin(0.5,0).setScale(1);
+		//super(scene, 0, 0, 'emptySprite');
+        //this.scene = scene;
+		//this.scene.add.existing(this);
+        //this.scene.physics.add.existing(this);
+        //this.body.collideWorldBounds = true;
+        //this.setOrigin(0.5,0).setScale(1);
         
-        //this.collisionFlag2 = this.collisionFlag1 = false;
-        //this.collisionStarted = this.onCollision = this.collisionEnded = false;
+        scene.events.on('update', this.Update, this);
+        
         this.updatingCollision = false;
         this.delayOnUpdate = false;
         this.canExitUpdate = true;

@@ -9,6 +9,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         scene.physics.add.existing(this);
         scene.events.on('update', this.Update, this);
         this.setOrigin(0.5).setScale(1);
+        this.setDepth(scene.DrawDepths.PLAYER);
         //this.hitbox = this.physics.add.sprite(config.width/2,config.height/2,'hitbox').setOrigin(0.5).setScale(1);
         
         this.Directions = this.scene.Directions;
@@ -154,8 +155,6 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     
     Update()
     {
-        console.log("dir " + this.moveDir);
-        
         //Jump
         if(!this.isJumping && this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K))
         {

@@ -69,13 +69,15 @@ class gameState extends Phaser.Scene{
         this.inputs = new InputManager(this);
        
         //Variables
-        this.Directions = { RIGHT: 0, LEFT: 1, UP: 2, DOWN: 3 };
+        this.DrawDepths = { DEFAULT: 0, INTERACTIVE_TILES: 1, ITEMS: 2, ENEMIES: 3, PLAYER: 4 };
+        this.Directions = { RIGHT: 0, LEFT: 1, UP: 2, DOWN: 3, NONE: 4 };
         
         //Player
         this.CreatePlayer();
         
         //LoadGroups
-        //this.player.body.collideWorldBounds = true;
+        //this.movableBlock = new MovableBlock(this, config.width/2 - 24,config.height/2 + 48);
+        
         this.CreateEnemies();
         
         
@@ -84,6 +86,7 @@ class gameState extends Phaser.Scene{
         this.items.add(new PowerUpDef(this,config.width/2 + 10,config.height/2 + 10));
         this.items.add(new Key(this,config.width/2 - 20,config.height/2 + 10));
         this.items.add(new MasterKey(this,config.width/2 + 10,config.height/2 -20));
+        
         
         
         //this.atkPU = new PowerUpsBase(this,config.width/2 - 10,config.height/2 - 10, 'atkPowerUp');

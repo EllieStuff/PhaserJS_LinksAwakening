@@ -6,6 +6,7 @@ class DoorsPrefab extends Phaser.GameObjects.Sprite{
 		scene.add.existing(this);
         scene.physics.add.existing(this);
         this.setOrigin(0.5,0).setScale(1);
+        this.setDepth(scene.DrawDepths.INTERACTIVE_TILES);
         this.body.setImmovable(true);
         
         this.CreateAnims();

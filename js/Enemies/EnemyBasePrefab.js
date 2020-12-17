@@ -8,6 +8,8 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         this.body.collideWorldBounds = true;
         scene.events.on('update', this.Update, this);
         this.setOrigin(0.5,0).setScale(1);
+        this.setDepth(scene.DrawDepths.ENEMIES);
+        
         this.initPositionX = this.body.x;
         this.initPositionY = this.body.y;
         this.attack = 1;

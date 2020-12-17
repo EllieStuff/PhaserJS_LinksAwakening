@@ -9,6 +9,7 @@ class PlayerAnimator extends Phaser.GameObjects.Sprite{
         this.setOrigin(0.5).setScale(1);
         this.defaultMargin = new Phaser.Math.Vector2(-4, -8);   //Marge per defecte perque l'animator quedi ben centrat
         this.extraMargin = new Phaser.Math.Vector2(0, 0);       //Marge extra per animacions amb diferents dimensions, com ara la del salt
+        this.setDepth(scene.DrawDepths.PLAYER);
         
         this.CreateAnims();
     }
