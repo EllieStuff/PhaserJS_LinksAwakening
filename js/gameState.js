@@ -9,6 +9,7 @@ class gameState extends Phaser.Scene{
         var rutaImgItems            = 'assets/img/items/';
         var rutaImgTiles            = 'assets/img/tiles/';
         var rutaImgInteractiveTiles = 'assets/img/InteractiveTiles/';
+        var rutaImgHUD = 'assets/img/UI/';
         
         // Load Images
         //Player
@@ -41,6 +42,13 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('eventDoor',rutaImgInteractiveTiles           + 'EventDoor.png'              ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('oneWayDoor',rutaImgInteractiveTiles          + 'OneWayDoorAnim.png'         ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('oneWayDoorBackwards',rutaImgInteractiveTiles + 'OneWayDoorBackwardsAnim.png',{frameWidth: 16, frameHeight: 16});
+        //HUD
+        this.load.image('bgHUD',rutaImgHUD + 'HUD_bg.png');
+        this.load.image('rupieHUD',rutaImgHUD + 'Rupie_UI.png');
+        this.load.spritesheet('heartsUI',rutaImgHUD + 'Hearts_UI.png',{frameWidth: 8, frameHeight: 8});
+        this.load.spritesheet('numbersUI',rutaImgHUD + 'Numbers_UI.png',{frameWidth: 8, frameHeight: 8});
+        this.load.spritesheet('ObjectHUD',rutaImgHUD + 'Objects_HUD.png',{frameWidth: 24, frameHeight: 16});
+        
         //Others
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
         this.load.image('hitbox', rutaImgLink + 'HitboxLink.png');
@@ -201,6 +209,9 @@ class gameState extends Phaser.Scene{
         //Init fences
         this.fences = this.map.createStaticLayer('fences', 'fences');
         this.map.setCollisionBetween(79,886,true,false,'fences');
+        
+        //Init HUD
+        //this.hudBG = this.add.image(0,0,1120,128,false, 'bgHUD');
         
     }
     
