@@ -211,7 +211,8 @@ class gameState extends Phaser.Scene{
         this.map.setCollisionBetween(79,886,true,false,'fences');
         
         //Init HUD
-        //this.hudBG = this.add.image(0,0,1120,128,false, 'bgHUD');
+        this.hudBG = this.add.image(config.width,config.height,'bgHUD').setOrigin(1).setScale(7);
+        this.rupieHUD = this.add.image(config.width/2, config.height/1.17, 'rupieHUD').setOrigin(0).setScale(7);
         
     }
     
