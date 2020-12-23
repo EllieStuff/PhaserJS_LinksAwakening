@@ -25,6 +25,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('pokerEnemy'   ,rutaImgEnemies + 'PokerEnemy.png'        ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('BladeTrap', rutaImgEnemies    + 'BladeTrap.png'         ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('batEnemy', rutaImgEnemies     + 'KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('moldormEnemy', rutaImgEnemies + 'MiniMoldorm.png'       ,{frameWidth: 16, frameHeight: 16});
         //Items
         this.load.spritesheet('atkPowerUp',rutaImgItems + 'PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('defPowerUp',rutaImgItems + 'PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
@@ -125,7 +126,8 @@ class gameState extends Phaser.Scene{
         this.CreateEnemy(SkeletonPrefab, config.width/4, config.height/4, true);
         this.CreateEnemy(HardHatPrefab , config.width/2, config.height/4, true);
         this.CreateEnemy(BladePrefab, config.width/3, config.height/4, true);
-        this.CreateEnemy(BatPrefab, config.width/2, config.height/2, true);
+        //this.CreateEnemy(BatPrefab, config.width/2, config.height/2, true);
+        this.CreateEnemy(miniMoldormPrefab, config.width/2, config.height/2, true);
         
     }
     
