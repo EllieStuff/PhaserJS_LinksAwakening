@@ -26,6 +26,8 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('BladeTrap', rutaImgEnemies    + 'BladeTrap.png'         ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('batEnemy', rutaImgEnemies     + 'KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('moldormEnemy', rutaImgEnemies + 'MiniMoldorm.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('moldormEnemyBody1', rutaImgEnemies + 'MoldormBody1.png'       ,{frameWidth: 12, frameHeight: 12});
+        this.load.spritesheet('moldormEnemyBody2', rutaImgEnemies + 'MoldormBody2.png'       ,{frameWidth: 10, frameHeight: 10});
         //Items
         this.load.spritesheet('atkPowerUp',rutaImgItems + 'PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('defPowerUp',rutaImgItems + 'PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
