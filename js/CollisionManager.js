@@ -68,6 +68,45 @@ class CollisionManager{
         return this.colDir;
     }
     
+    GetRelativeDistanceOnOverlap(_father, _overlapObject){
+        //Aproximacio d'on estaria la posicio del pare si el body es comptes des del centre del gameObject
+        var centeredFather = new Phaser.Math.Vector2(_father.body.x + _father.width / 4, _father.body.y + _father.height / 4);
+        
+        //Vectors necessaris per a fer projeccio ortogonal
+        var fatherToObject = new Phaser.Math.Vector2(_overlapObject.body.x - centeredFather.x, _overlapObject.body.y - centeredFather.y);
+        var xVector = new Phaser.Math.Vector2(centeredFather.x + 1, centeredFather.y + 0);
+        var yVector = new Phaser.Math.Vector2(centeredFather.x + 0, centeredFather.y + 1);
+        
+        //Projeccio ortogonal en l'eix de la "x" i de la "y"
+        var xProj = new Phaser.Math.Vector2(
+            ( ((fatherToObject.x * xVector.x) / xVector.lengthSq()) * xVector.x ),
+            ( ((fatherToObject.y * xVector.y) / xVector.lengthSq()) * xVector.y ));
+        var yProj = new Phaser.Math.Vector2(
+            ( ((fatherToObject.x * yVector.x) / yVector.lengthSq()) * yVector.x ),
+            ( ((fatherToObject.y * yVector.y) / yVector.lengthSq()) * yVector.y ));
+        
+        
+        var relativeDistance = (xProj.length() + yProj.length()) / 2;
+        
+        return relativeDistance;
+    }
+    
+    ObjectOverlappingInside(_father, _overlapObject, _inPercentage = 0.8){
+        if(this.GetCollisionState() != this.CollisionState.COLLIDING){
+            return false;
+        }
+        else{
+            var outPercentage = 1 - _inPercentage;   //Significa que un 20% del personatge estara fora del father
+            outPercentage = Phaser.Math.Clamp(outPercentage, 0.1, 1);
+            var relativeDistance = this.GetRelativeDistanceOnOverlap(_father, _overlapObject);
+            var maxRelativeDistance = (_overlapObject.width / 2 + _father.width / 2 + _overlapObject.height / 2 + _father.height / 2) / 2;
+
+            //return fatherToObjectDistance <= relativeDistance;
+            return relativeDistance <= maxRelativeDistance * outPercentage;
+        }
+    }
+    
+    
     
     //En cas de fallar, cridar la funcio directament des del final de l'Update() de la classe pare.
     Update(){

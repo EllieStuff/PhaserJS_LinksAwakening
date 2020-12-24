@@ -13,6 +13,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         //this.hitbox = this.physics.add.sprite(config.width/2,config.height/2,'hitbox').setOrigin(0.5).setScale(1);
         
         this.Directions = this.scene.Directions;
+        this.currPhysics = this.scene.PhysicTypes.TOP_DOWN_VIEW;
         this.moveDir = this.Directions.DOWN;
         
         this.maxHearts = 3;
@@ -155,6 +156,28 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     
     Update()
     {
+        switch(this.currPhysics)
+        {
+            case this.scene.PhysicTypes.TOP_DOWN_VIEW:
+                console.log("1");
+                this.TopDownUpdate();
+                break;
+                
+            case this.scene.PhysicTypes.FRONT_VIEW:
+                console.log("2");
+                this.FrontViewUpdate();
+                break;
+                
+                
+            default:
+                console.log("something went wrong");
+                break;
+        }
+        
+        
+    }
+    
+    TopDownUpdate(){
         //Jump
         if(!this.isJumping && this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K))
         {
@@ -267,7 +290,11 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         
         //ATTACK
         
-        
+    }
+    
+    
+    FrontViewUpdate(){
+        this.TopDownUpdate();   //Esta aixi per fr proves
     }
     
 }
