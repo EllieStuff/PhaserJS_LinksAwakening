@@ -79,7 +79,7 @@ class gameState extends Phaser.Scene{
         
         //LoadGroups
         //this.movableBlock = new MovableBlock(this, config.width/2 - 24,config.height/2 + 48);
-        this.tpStairsPair = new TPStairsPair(this, config.width/2 - 24,config.height/2 + 48, config.width/2 - 24,config.height/2 + 70);
+        this.CreateInteractiveTiles();
         
         this.CreateEnemies();
         
@@ -118,6 +118,12 @@ class gameState extends Phaser.Scene{
         //this.player = this.physics.add;
         this.player = new PlayerPrefab(this,config.width/2,config.height/2);
         //this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0,5).setScale(1);
+        
+    }
+    
+    CreateInteractiveTiles(){
+        //TP Stairs
+        this.tpStairsPair = new TPStairsPair(this, config.width/2 - 24,config.height/2 + 48, config.width/2 - 24,config.height/2 + 70);
         
     }
     
