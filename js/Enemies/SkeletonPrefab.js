@@ -100,7 +100,7 @@ class AuxSkeleton extends Phaser.GameObjects.Sprite{
         scene.physics.add.existing(this);
         this.body.collideWorldBounds = true;
         
-        //this.physics.add.collider(this, this.scene.walls); //Prq colisioni amb les parets, necessito el mapa per a posar-ho
+        this.scene.physics.add.collider(this, this.scene.walls);
         
     }
     

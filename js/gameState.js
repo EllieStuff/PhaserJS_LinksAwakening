@@ -17,6 +17,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('playerShieldUp'  ,rutaImgLink + 'shieldAnim.png'  ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerSlash'     ,rutaImgLink + 'LinkSlash.png'   ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerJump'      ,rutaImgLink + 'jumpAnim.png'    ,{frameWidth: 16, frameHeight: 32});
+        this.load.spritesheet('playerPlatformerJump' ,rutaImgLink + 'platformerJumpAnim.png' ,{frameWidth: 16, frameHeight: 16});
         //Enemies
         this.load.spritesheet('HardHat'      ,rutaImgEnemies + 'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('enemySkeleton',rutaImgEnemies + 'EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
@@ -61,7 +62,7 @@ class gameState extends Phaser.Scene{
 	}
 	create(){
         //Load Map
-        //this.LoadMap();
+        this.LoadMap();
         this.LoadPlatformerMap();
         //this.LoadMap();
         
@@ -128,7 +129,12 @@ class gameState extends Phaser.Scene{
     
     CreateInteractiveTiles(){
         //TP Stairs
-        this.tpStairsPair = new TPStairsPair(this, config.width/2 - 24,config.height/2 + 48, config.width/2 - 24,config.height/2 + 70);
+        this.tpStairsPair = new TPStairsPair(this, 80, 800, 40, 0);
+        this.tpStairsPair = new TPStairsPair(this, 296, 144, 280, 0);
+        this.tpStairsPair = new TPStairsPair(this, 1048, 304, 600, 0);
+        
+        //Stairs per a provar el platformer mes rapidament
+        this.tpStairsPair = new TPStairsPair(this, config.width / 2 - 30, config.height / 2 + 50, 280, 16);
         
     }
     
@@ -225,6 +231,8 @@ class gameState extends Phaser.Scene{
         this.platformerMap.addTilesetImage('torches');
         
         //Init blocks
+        this.platformerMap.createStaticLayer('background', 'Blocks');
+        
         this.platWalls = this.platformerMap.createStaticLayer('walls', 'Blocks');
         this.platformerMap.setCollisionBetween(62,76,true,false,'walls');
         
@@ -234,11 +242,9 @@ class gameState extends Phaser.Scene{
         this.platLadders = this.platformerMap.createStaticLayer('ladders', 'Blocks');
         this.platformerMap.setCollision(61,true,false,'ladders');
         
-        this.platformerMap.createDynamicLayer('torchlights', 'torches');
+        this.platformerMap.createStaticLayer('torchlights', 'torches');
         
         this.platformerMap.createStaticLayer('decoration', 'Blocks');
-        
-        this.platformerMap.createStaticLayer('background', 'Blocks');
         
         
     }

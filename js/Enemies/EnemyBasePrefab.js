@@ -38,6 +38,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     
     InitCollisions(){
         this.scene.physics.add.overlap(this, this.scene.player, this.DamagePlayer, null, this);
+        this.scene.physics.add.collider(this, this.scene.walls);
         //this.scene.physics.add.collider(this, this.scene.player.shield, this.GetRepeled, null, this);   //Prq l'escut repeli una mica els enemics, l'impuls dependra d'una variable del enemy
         //this.scene.physics.add.collider(this, this.scene.player.sword, this.GetDamaged, null, this);    //Prq l'espasa danyi els enemics, el mal dependra del attack del player i de si ha carregat l'atac giratori
     }

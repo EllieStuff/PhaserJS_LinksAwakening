@@ -99,7 +99,7 @@ class TPStairPrefab extends Phaser.GameObjects.Sprite{
                 console.log(this.colManager.GetCollisionState());
             }*/
             
-            console.log(this.available);
+            //console.log(this.available);
             if(this.available && this.colManager.ObjectOverlappingInside(this, this.scene.player)){
                 this.scene.player.body.x = this.tpStairs.body.x;
                 if(this.physicsToUse == this.scene.PhysicTypes.FRONT_VIEW)
