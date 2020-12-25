@@ -20,3 +20,11 @@
     }
     
 }*/
+
+class Utils{
+    static GetDiagonal(object){
+        
+        return Math.sqrt(Math.pow(object.width / 2, 2) + Math.pow(object.height / 2, 2));
+    }
+    
+}

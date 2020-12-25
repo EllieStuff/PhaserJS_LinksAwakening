@@ -41,6 +41,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('eventDoor',rutaImgInteractiveTiles           + 'EventDoor.png'              ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('oneWayDoor',rutaImgInteractiveTiles          + 'OneWayDoorAnim.png'         ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('oneWayDoorBackwards',rutaImgInteractiveTiles + 'OneWayDoorBackwardsAnim.png',{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('tpStairs',rutaImgInteractiveTiles            + 'TP_Stairs.png'              ,{frameWidth: 16, frameHeight: 16});
         //Others
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
         this.load.image('hitbox', rutaImgLink + 'HitboxLink.png');
@@ -71,12 +72,14 @@ class gameState extends Phaser.Scene{
         //Variables
         this.DrawDepths = { DEFAULT: 0, INTERACTIVE_TILES: 1, ITEMS: 2, ENEMIES: 3, PLAYER: 4 };
         this.Directions = { RIGHT: 0, LEFT: 1, UP: 2, DOWN: 3, NONE: 4 };
+        this.PhysicTypes = { TOP_DOWN_VIEW: 0, FRONT_VIEW: 1 };
         
         //Player
         this.CreatePlayer();
         
         //LoadGroups
         //this.movableBlock = new MovableBlock(this, config.width/2 - 24,config.height/2 + 48);
+        this.CreateInteractiveTiles();
         
         this.CreateEnemies();
         
@@ -115,6 +118,12 @@ class gameState extends Phaser.Scene{
         //this.player = this.physics.add;
         this.player = new PlayerPrefab(this,config.width/2,config.height/2);
         //this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0,5).setScale(1);
+        
+    }
+    
+    CreateInteractiveTiles(){
+        //TP Stairs
+        this.tpStairsPair = new TPStairsPair(this, config.width/2 - 24,config.height/2 + 48, config.width/2 - 24,config.height/2 + 70);
         
     }
     
