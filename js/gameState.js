@@ -50,7 +50,10 @@ class gameState extends Phaser.Scene{
         this.load.image('blocks', rutaImgTiles + 'DungeonBlockSheet.png');
         this.load.image('objects', rutaImgTiles + 'dungeonTiles1.png');
         this.load.image('fences', rutaImgTiles + 'vallas.png');
+        this.load.image('Blocks', rutaImgTiles + 'DungeonBlockSheet - copia.png');
+        this.load.image('torches', 'assets/img/objAnims/' + 'LitAnim.png');
         this.load.tilemapTiledJSON('dungeon', 'maps/insideMap.json');
+        this.load.tilemapTiledJSON('platformerDungeon', 'maps/2dVerticalMap.json');
         
         // Load Audios
         
@@ -58,7 +61,9 @@ class gameState extends Phaser.Scene{
 	}
 	create(){
         //Load Map
-        this.LoadMap();
+        //this.LoadMap();
+        this.LoadPlatformerMap();
+        //this.LoadMap();
         
         //SetOrigin
         
@@ -210,6 +215,31 @@ class gameState extends Phaser.Scene{
         //Init fences
         this.fences = this.map.createStaticLayer('fences', 'fences');
         this.map.setCollisionBetween(79,886,true,false,'fences');
+        
+    }
+    
+    LoadPlatformerMap(){
+        
+        this.platformerMap = this.add.tilemap('platformerDungeon');
+        this.platformerMap.addTilesetImage('Blocks');
+        this.platformerMap.addTilesetImage('torches');
+        
+        //Init blocks
+        this.platWalls = this.platformerMap.createStaticLayer('walls', 'Blocks');
+        this.platformerMap.setCollisionBetween(62,76,true,false,'walls');
+        
+        this.platFloor = this.platformerMap.createStaticLayer('floor', 'Blocks');
+        this.platformerMap.setCollisionBetween(38,75,true,false,'floor');
+        
+        this.platLadders = this.platformerMap.createStaticLayer('ladders', 'Blocks');
+        this.platformerMap.setCollision(61,true,false,'ladders');
+        
+        this.platformerMap.createDynamicLayer('torchlights', 'torches');
+        
+        this.platformerMap.createStaticLayer('decoration', 'Blocks');
+        
+        this.platformerMap.createStaticLayer('background', 'Blocks');
+        
         
     }
     
