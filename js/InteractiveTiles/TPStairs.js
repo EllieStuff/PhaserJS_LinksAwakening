@@ -87,7 +87,7 @@ class TPStairPrefab extends Phaser.GameObjects.Sprite{
         if(this.active){
             this.colManager.UpdateOnTrigger();
             
-            var minDist = Utils.GetDiagonal(this) + Utils.GetDiagonal(this.scene.player);
+            /*var minDist = Utils.GetDiagonal(this) + Utils.GetDiagonal(this.scene.player);
             console.log("Min dist " + minDist);
             console.log("Curr dist " + this.stairsPos.distance(this.scene.player.body));
             if(!this.available && this.colManager.GetCollisionState() == this.colManager.CollisionState.EXIT_COLLISION
@@ -97,12 +97,15 @@ class TPStairPrefab extends Phaser.GameObjects.Sprite{
             }
             else{
                 console.log(this.colManager.GetCollisionState());
-            }
+            }*/
             
             console.log(this.available);
             if(this.available && this.colManager.ObjectOverlappingInside(this, this.scene.player)){
                 this.scene.player.body.x = this.tpStairs.body.x;
-                this.scene.player.body.y = this.tpStairs.body.y;
+                if(this.physicsToUse == this.scene.PhysicTypes.FRONT_VIEW)
+                    this.scene.player.body.y = this.tpStairs.body.y - (this.tpStairs.body.height / 3);
+                else
+                    this.scene.player.body.y = this.tpStairs.body.y + this.tpStairs.body.height;
                 this.scene.player.currPhysics = this.tpStairs.physicsToUse;
                 //this.tpStairs.colManager.colState = this.colManager.CollisionState.COLLIDING;
                 this.tpStairs.available = false;
