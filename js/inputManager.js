@@ -7,7 +7,8 @@ class InputManager extends Phaser.GameObjects.Sprite {
         
         this.KeyCodes = { 
             K: 0, L: 1, 
-            W: 2, A: 3, S: 4, D: 5 
+            W: 2, A: 3, S: 4, D: 5,
+            Length: 6
         };
         
         this.Inputs = [
@@ -99,4 +100,19 @@ class InputManager extends Phaser.GameObjects.Sprite {
         return this.Inputs[_keyCode].isDown;
     }
     
+    GetAnyKey(){
+        for(var i = 0; i < this.KeyCodes.Length; i++){
+            if(this.Inputs[i].isDown){
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
 }
+
+
+
+
+

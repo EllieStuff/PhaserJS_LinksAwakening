@@ -1,4 +1,5 @@
 
+//TODO: Averiguar prq collons no detecta quan surt de la fckng colisio de les escales
 
 class PlayerPrefab extends Phaser.GameObjects.Sprite{
     
@@ -26,6 +27,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.assignA = "";
         this.assignB = "";
         this.isJumping = false;
+        this.overlapsWithLadder = this.onLadders = false;
         this.atkCharged = false;
         this.defPowerUpBuffer = 0;
         this.atkPowerUpBuffer = 0;
@@ -37,8 +39,11 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.keyAmmount = 0;
         this.shieldUp = false;
         this.currentAnim = 'walkdown';
+        this.gravity = 10;
         
         this.animator = new PlayerAnimator(scene, positionX, positionY);
+        
+        this.ladderColManager = new CollisionManager(scene);
         
         this.InitCollisions();
         
@@ -46,6 +51,8 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     
     InitCollisions(){
         this.scene.physics.add.collider(this, this.scene.walls);
+        this.scene.physics.add.collider(this, this.scene.platWalls);
+        this.scene.physics.add.collider(this, this.scene.platFloor);
         
     }
     
@@ -96,6 +103,54 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         var v = this.body.velocity;
         
         return v.x > 1 || v.x < -1 || v.y > 1 || v.y < -1;
+    }
+    
+    MoveOnLadders(){
+        if(!this.onLadders && this.scene.inputs.GetAnyKey() && !this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.K)){
+            this.onLadders = true;
+            this.onFloor = this.isJumping = false;
+            
+        }
+        
+        if(this.onLadders){
+            if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.A))
+            {
+                this.onLadders = true;
+                this.currentAnim = 'walkupS';
+                this.body.velocity.x = -64;
+            }
+            else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.D))
+            {
+                this.onLadders = true;
+                this.currentAnim = 'walkupS';
+                this.moveDir = this.Directions.RIGHT;
+                this.body.velocity.x = 64;
+            }
+            else
+            {
+                this.body.velocity.x = 0;
+            }
+
+            if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.S))
+            {
+                this.onLadders = true;
+                this.currentAnim = 'walkupS';
+                //this.moveDir = this.Directions.DOWN;
+                this.body.velocity.y = 64;
+            }
+            else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.W))
+            {
+                this.onLadders = true;
+                this.currentAnim = 'walkupS';
+                //this.moveDir = this.Directions.UP;
+                this.body.velocity.y = -64;
+            }
+            else
+            {
+                this.body.velocity.y = 0;
+            }
+        }
+        
     }
     
     SetIdleAnim(){
@@ -152,6 +207,29 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         
     }
     
+    PlatformerJump(){
+        this.isJumping = true;
+        this.onFloor = this.onLadders = false;
+        //this.body.velocity.y = 0;
+        this.body.velocity.y = -200;
+        switch(this.moveDir){
+            case this.Directions.LEFT:
+                this.currentAnim = 'playerPlatformerJumpLeft';
+                break;
+
+            case this.Directions.RIGHT:
+                this.currentAnim = 'playerPlatformerJumpRight';
+                break;
+
+            default:
+                break;
+
+        }
+
+        //this.scene.time.addEvent({delay: 370, callback: function(){this.isJumping = false; this.animator.extraMargin.y = 0; this.SetIdleAnim();}, callbackScope: this, repeat: 0});
+        
+    }
+    
     
     
     Update()
@@ -159,12 +237,10 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         switch(this.currPhysics)
         {
             case this.scene.PhysicTypes.TOP_DOWN_VIEW:
-                console.log("1");
                 this.TopDownUpdate();
                 break;
                 
             case this.scene.PhysicTypes.FRONT_VIEW:
-                console.log("2");
                 this.FrontViewUpdate();
                 break;
                 
@@ -292,10 +368,85 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         
     }
     
+    AddGravity(){
+        this.body.velocity.y += this.gravity;
+        
+    }
     
     FrontViewUpdate(){
-        this.TopDownUpdate();   //Esta aixi per fr proves
+        if(this.overlapsWithLadder)
+        {
+            this.MoveOnLadders();
+        }
+        if(this.body.onFloor()){
+            this.onFloor = true;
+        }
+        if(!this.onLadders && !this.body.onFloor())
+        {
+            this.AddGravity();
+        }
+        
+        //Jump
+        if(this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) && (this.onFloor || this.onLadders))
+        {
+            this.PlatformerJump();
+        }
+        
+        //MOVEMENT
+        if(this.onFloor && !this.onLadders){
+            if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.L))   //MOVE WITH SHIELD UP
+            {
+                this.shieldUp = true;
+
+                if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.A))
+                {
+                    this.currentAnim = 'shieldLeft';
+                    this.moveDir = this.Directions.LEFT;
+                    this.body.velocity.x = -64;
+                }
+                else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.D))
+                {
+                    this.currentAnim = 'shieldRight';
+                    this.moveDir = this.Directions.RIGHT;
+                    this.body.velocity.x = 64;
+                }
+                else
+                {
+                    this.body.velocity.x = 0;
+                }
+            }
+            else                            //MOVE WITH SHIELD DOWN
+            {
+                this.shieldUp = false;
+
+                if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.A))
+                {
+                    this.currentAnim = 'walkleftS';
+                    this.moveDir = this.Directions.LEFT;
+                    this.body.velocity.x = -64;
+                }
+                else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.D))
+                {
+                    this.currentAnim = 'walkrightS';
+                    this.moveDir = this.Directions.RIGHT;
+                    this.body.velocity.x = 64;
+                }
+                else
+                {
+                    this.body.velocity.x = 0;
+                }
+            }
+            
+            //Decide Idle anim if necessary
+            if(!this.IsMoving())
+                this.SetIdleAnim();
+        }
+        
+        //Update Animator
+        this.animator.Update(this);
     }
+    
+    
     
 }
 

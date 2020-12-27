@@ -11,7 +11,7 @@ class CollisionManager{
     constructor(scene)
     {
 		//super(scene, 0, 0, 'emptySprite');
-        //this.scene = scene;
+        this.scene = scene;
 		//this.scene.add.existing(this);
         //this.scene.physics.add.existing(this);
         //this.body.collideWorldBounds = true;

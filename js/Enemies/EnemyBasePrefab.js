@@ -18,6 +18,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         this.health = this.initHealth;
         this.isVulnerable = true;
         this.speed = 1;
+        this.canDieOnJump = false;
         
         this.playerColManager = new CollisionManager(scene);
         this.swordColManager = new CollisionManager(scene);
@@ -38,6 +39,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     
     InitCollisions(){
         this.scene.physics.add.overlap(this, this.scene.player, this.DamagePlayer, null, this);
+        this.scene.physics.add.collider(this, this.scene.walls);
         //this.scene.physics.add.collider(this, this.scene.player.shield, this.GetRepeled, null, this);   //Prq l'escut repeli una mica els enemics, l'impuls dependra d'una variable del enemy
         //this.scene.physics.add.collider(this, this.scene.player.sword, this.GetDamaged, null, this);    //Prq l'espasa danyi els enemics, el mal dependra del attack del player i de si ha carregat l'atac giratori
     }
@@ -66,8 +68,8 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     
     Reinit(){
         this.body.stop();
-        this.body.x = this.initPositionX;
-        this.body.y = this.initPositionY;
+        this.x = this.initPositionX;
+        this.y = this.initPositionY;
         this.health = this.initHealth;
         this.isVulnerable = true;
     }
@@ -102,7 +104,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     }
     
     Die(){
-        this.Reinit();
+        this.x = this.y = 0;
         this.active = this.visible = false;
         
     }
