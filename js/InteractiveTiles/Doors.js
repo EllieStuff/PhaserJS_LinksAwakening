@@ -9,6 +9,9 @@ class DoorsPrefab extends Phaser.GameObjects.Sprite{
         this.setDepth(scene.DrawDepths.INTERACTIVE_TILES);
         this.body.setImmovable(true);
         
+        this.body.immovable = true;
+        this.body.moves = false;
+        
         this.CreateAnims();
         this.InitCollisions();
         
@@ -27,7 +30,7 @@ class DoorsPrefab extends Phaser.GameObjects.Sprite{
     }
     
     Deactivate(){
-        this.active = this.visible = false;
+        this.scene.time.addEvent({delay: 300, callback: function(){this.active = this.visible = false; this.destroy();}, callbackScope: this, repeat: 0});
     }
     
 }
@@ -35,16 +38,27 @@ class DoorsPrefab extends Phaser.GameObjects.Sprite{
 
 class KeyDoor extends DoorsPrefab{
     
-    constructor(scene, positionX, positionY)
+    constructor(scene, positionX, positionY, dir)
     {
         super(scene, positionX, positionY, 'keyDoor');
         
+        this.doorDir = dir;
+        
+        if(this.doorDir == scene.Directions.LEFT){
+            this.setFrame(3);
+        }
     }
     
     CreateAnims(){
         this.scene.anims.create({
-            key: 'keyDoorOpening',
+            key: 'keyDoorOpeningDown',
             frames: this.scene.anims.generateFrameNumbers('keyDoor', { start: 0, end: 2 }),
+            frameRate: 10,
+            repeat: 0
+        });
+        this.scene.anims.create({
+            key: 'keyDoorOpeningLeft',
+            frames: this.scene.anims.generateFrameNumbers('keyDoor', { start: 3, end: 5 }),
             frameRate: 10,
             repeat: 0
         });
@@ -55,6 +69,20 @@ class KeyDoor extends DoorsPrefab{
         if(this.active){
             if(this.scene.player.keyAmmount > 0){
                 this.scene.player.keyAmmount--;
+                switch(this.doorDir){
+                    case this.scene.Directions.DOWN:
+                        this.anims.play('keyDoorOpeningDown');
+                        break;
+                        
+                    case this.scene.Directions.LEFT:
+                        this.anims.play('keyDoorOpeningLeft');
+                        break;
+                        
+                    default:
+                        console.log("this state is not defined");
+                        break;
+                }
+                
                 this.Deactivate();
                 
             }
@@ -86,6 +114,7 @@ class MasterKeyDoor extends DoorsPrefab{
         if(this.active){
             if(this.scene.player.hasMasterKey){
                 this.scene.player.hasMasterKey = false;
+                this.anims.play('masterKeyDoorOpening');
                 this.Deactivate();
                 
             }

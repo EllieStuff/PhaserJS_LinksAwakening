@@ -18,6 +18,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('playerSlash'     ,rutaImgLink + 'LinkSlash.png'   ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerJump'      ,rutaImgLink + 'jumpAnim.png'    ,{frameWidth: 16, frameHeight: 32});
         this.load.spritesheet('playerPlatformerJump' ,rutaImgLink + 'platformerJumpAnim.png' ,{frameWidth: 16, frameHeight: 16});
+        
         //Enemies
         this.load.spritesheet('HardHat'      ,rutaImgEnemies + 'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('enemySkeleton',rutaImgEnemies + 'EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
@@ -27,6 +28,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('BladeTrap', rutaImgEnemies    + 'BladeTrap.png'         ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('batEnemy', rutaImgEnemies     + 'KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('goomba', rutaImgEnemies       + 'Goomba.png'            ,{frameWidth: 16, frameHeight: 16});
+        
         //Items
         this.load.spritesheet('atkPowerUp',rutaImgItems + 'PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('defPowerUp',rutaImgItems + 'PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
@@ -36,19 +38,23 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('blueRupee' ,rutaImgItems + 'BlueRupee.png'  ,{frameWidth: 8,  frameHeight: 16});
         this.load.spritesheet('redRupee'  ,rutaImgItems + 'RedRupee.png'   ,{frameWidth: 8,  frameHeight: 16});
         this.load.spritesheet('smallHeart',rutaImgItems + 'RocFeather.png' ,{frameWidth: 16, frameHeight: 16});
+        
         //Interactive Tiles
         this.load.spritesheet('movableBlock',rutaImgInteractiveTiles        + 'Block.png'                  ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('keyDoor',rutaImgInteractiveTiles             + 'KeyDoorAnim.png'            ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('bossKeyDoor',rutaImgInteractiveTiles         + 'BossKeyDoor.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('masterKeyDoor',rutaImgInteractiveTiles       + 'BossKeyDoor.png'            ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('eventDoor',rutaImgInteractiveTiles           + 'EventDoor.png'              ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('oneWayDoor',rutaImgInteractiveTiles          + 'OneWayDoorAnim.png'         ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('oneWayDoorBackwards',rutaImgInteractiveTiles + 'OneWayDoorBackwardsAnim.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('tpStairs',rutaImgInteractiveTiles            + 'TP_Stairs.png'              ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('smallLadders',rutaImgInteractiveTiles        + 'SmallLadders.png'           ,{frameWidth: 16, frameHeight: 56});
         this.load.spritesheet('largeLadders',rutaImgInteractiveTiles        + 'LargeLadders.png'           ,{frameWidth: 16, frameHeight: 112});
+        this.load.spritesheet('keyBlock',rutaImgInteractiveTiles            + 'KeyBlock.png'               ,{frameWidth: 16, frameHeight: 16});
+        
         //Others
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
         this.load.image('hitbox', rutaImgLink + 'HitboxLink.png');
+        
         
         // Dungeon
         this.load.image('blocks', rutaImgTiles + 'DungeonBlockSheet.png');
@@ -136,14 +142,24 @@ class gameState extends Phaser.Scene{
         this.tpStairsPair2 = new TPStairsPair(this, 296, 144, 280, 0);
         this.tpStairsPair3 = new TPStairsPair(this, 1048, 304, 600, 0);
         
-        
+        //Platformer Ladders
         this.platLadders = this.physics.add.group();
-        //this.link = this.add.sprite(126,126,'link')
         this.platLadders.add(new Ladders(this, 40, 0,'largeLadders'));
         this.platLadders.add(new Ladders(this, 136, 56,'smallLadders'));
         this.platLadders.add(new Ladders(this, 184, 56,'smallLadders'));
         this.platLadders.add(new Ladders(this, 280, 0,'largeLadders'));
         this.platLadders.add(new Ladders(this, 600, 0,'largeLadders'));
+        
+        //Key Block
+        this.keyBlock = new KeyBlock(this, 680,336);
+        
+        // Doors
+        this.doors = this.physics.add.group();
+        //Key Doors
+        this.doors.add(new KeyDoor(this, 400, 256, this.Directions.DOWN));
+        this.doors.add(new KeyDoor(this, 792, 440, this.Directions.LEFT));
+        //Boss Doors
+        this.doors.add(new MasterKeyDoor(this, 1040, 256));
         
     }
     
