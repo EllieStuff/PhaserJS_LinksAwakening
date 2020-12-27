@@ -116,6 +116,12 @@ class gameState extends Phaser.Scene{
         //this.physics.add.overlap(this.player, this.tpStairs, this.tpStairs.ChangePlayerLocation, null, this);
         //this.physics.add.overlap(this.player, this.floorButton, this.floorButton.Trigger, null, this);
         
+        //Texts
+        this.owlString = "HOLA MUNDO";
+        this.owlText = this.add.text(config.width, config.height, this.owlString, { fontFamily: 'Arial', fontSize: '25px',   color:'#fff' }).setOrigin(1);
+        this.accumText = "";
+        this.counter = 0;
+        
 	}
     
     CreatePlayer()
@@ -223,15 +229,24 @@ class gameState extends Phaser.Scene{
         var posY = config.height - (16*3.5);
         this.centDigit = this.add.sprite(posX, posY, 'numbersUI').setOrigin(0).setScale(7);
         
+        
     }
     
-    
+    ShowText(_text)
+    {
+        this.accumText = this.accumText+ _text;
+        this.owlText.text = this.accumText;
+    }
     //
     
 	update()
     {
         //MOVEMENT
-        
+        var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
+        if(sampleText[this.counter] != null){
+           this.ShowText(sampleText[this.counter]);
+           this.counter++; 
+        }
         
         //ATTACK
         
