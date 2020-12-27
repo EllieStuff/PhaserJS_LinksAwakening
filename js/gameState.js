@@ -119,9 +119,7 @@ class gameState extends Phaser.Scene{
         //Texts
         this.owlString = "HOLA MUNDO";
         this.owlText = this.add.text(config.width, config.height, this.owlString, { fontFamily: 'Arial', fontSize: '25px',   color:'#fff' }).setOrigin(1);
-        this.accumText = "";
         this.counter = 0;
-        
 	}
     
     CreatePlayer()
@@ -232,22 +230,35 @@ class gameState extends Phaser.Scene{
         
     }
     
-    ShowText(_text)
+    ShowText(_text, lenght)
     {
-        this.accumText = this.accumText+ _text;
-        this.owlText.text = this.accumText;
+        if(this.counter < lenght){
+            if(_text[this.counter] != null){
+                this.owlText.text = this.owlText.text + _text[this.counter];
+                this.counter++; 
+            } 
+        }
+        else{
+            this.finishedText = true;
+        }
+    }
+    
+    ClearText(){
+        this.owlText.text = "";
+        this.counter = 0;
     }
     //
     
 	update()
     {
         //MOVEMENT
-        var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
-        if(sampleText[this.counter] != null){
-           this.ShowText(sampleText[this.counter]);
-           this.counter++; 
-        }
         
+            var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
+            this.ShowText(sampleText, sampleText.length);
+        
+        
+               
+           
         //ATTACK
         
 
