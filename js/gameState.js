@@ -213,6 +213,15 @@ class gameState extends Phaser.Scene{
         //Init HUD
         this.hudBG = this.add.image(config.width,config.height,'bgHUD').setOrigin(1).setScale(7);
         this.rupieHUD = this.add.image(config.width/2, config.height/1.17, 'rupieHUD').setOrigin(0).setScale(7);
+        var posX = config.width/2 + (16*7);
+        var posY = config.height - (16*3.5);
+        this.unitDigit = this.add.sprite(posX, posY, 'numbersUI').setOrigin(0).setScale(7);
+        var posX = config.width/2 + (16*3.5);
+        var posY = config.height - (16*3.5);
+        this.decimalDigit = this.add.sprite(posX, posY, 'numbersUI').setOrigin(0).setScale(7);
+        var posX = config.width/2;
+        var posY = config.height - (16*3.5);
+        this.centDigit = this.add.sprite(posX, posY, 'numbersUI').setOrigin(0).setScale(7);
         
     }
     
