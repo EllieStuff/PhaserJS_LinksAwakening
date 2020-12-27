@@ -26,6 +26,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('pokerEnemy'   ,rutaImgEnemies + 'PokerEnemy.png'        ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('BladeTrap', rutaImgEnemies    + 'BladeTrap.png'         ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('batEnemy', rutaImgEnemies     + 'KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('goomba', rutaImgEnemies       + 'Goomba.png'            ,{frameWidth: 16, frameHeight: 16});
         //Items
         this.load.spritesheet('atkPowerUp',rutaImgItems + 'PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('defPowerUp',rutaImgItems + 'PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
@@ -43,6 +44,8 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('oneWayDoor',rutaImgInteractiveTiles          + 'OneWayDoorAnim.png'         ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('oneWayDoorBackwards',rutaImgInteractiveTiles + 'OneWayDoorBackwardsAnim.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('tpStairs',rutaImgInteractiveTiles            + 'TP_Stairs.png'              ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('smallLadders',rutaImgInteractiveTiles        + 'SmallLadders.png'           ,{frameWidth: 16, frameHeight: 56});
+        this.load.spritesheet('largeLadders',rutaImgInteractiveTiles        + 'LargeLadders.png'           ,{frameWidth: 16, frameHeight: 112});
         //Others
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
         this.load.image('hitbox', rutaImgLink + 'HitboxLink.png');
@@ -129,12 +132,18 @@ class gameState extends Phaser.Scene{
     
     CreateInteractiveTiles(){
         //TP Stairs
-        this.tpStairsPair = new TPStairsPair(this, 80, 800, 40, 0);
-        this.tpStairsPair = new TPStairsPair(this, 296, 144, 280, 0);
-        this.tpStairsPair = new TPStairsPair(this, 1048, 304, 600, 0);
+        this.tpStairsPair1 = new TPStairsPair(this, 72, 592, 40, 0);
+        this.tpStairsPair2 = new TPStairsPair(this, 296, 144, 280, 0);
+        this.tpStairsPair3 = new TPStairsPair(this, 1048, 304, 600, 0);
         
-        //Stairs per a provar el platformer mes rapidament
-        this.tpStairsPair = new TPStairsPair(this, config.width / 2 - 30, config.height / 2 + 50, 280, 16);
+        
+        this.platLadders = this.physics.add.group();
+        //this.link = this.add.sprite(126,126,'link')
+        this.platLadders.add(new Ladders(this, 40, 0,'largeLadders'));
+        this.platLadders.add(new Ladders(this, 136, 56,'smallLadders'));
+        this.platLadders.add(new Ladders(this, 184, 56,'smallLadders'));
+        this.platLadders.add(new Ladders(this, 280, 0,'largeLadders'));
+        this.platLadders.add(new Ladders(this, 600, 0,'largeLadders'));
         
     }
     
@@ -146,6 +155,8 @@ class gameState extends Phaser.Scene{
         this.CreateEnemy(HardHatPrefab , config.width/2, config.height/4, true);
         this.CreateEnemy(BladePrefab, config.width/3, config.height/4, true);
         this.CreateEnemy(BatPrefab, config.width/2, config.height/2, true);
+        this.CreateEnemy(GoombaPrefab, 100, 90, true);
+        this.CreateEnemy(GoombaPrefab, 200, 90, true);
         
     }
     
@@ -231,7 +242,7 @@ class gameState extends Phaser.Scene{
         this.platformerMap.addTilesetImage('torches');
         
         //Init blocks
-        this.platformerMap.createStaticLayer('background', 'Blocks');
+        //this.platformerMap.createStaticLayer('background', 'Blocks');
         
         this.platWalls = this.platformerMap.createStaticLayer('walls', 'Blocks');
         this.platformerMap.setCollisionBetween(62,76,true,false,'walls');
@@ -239,12 +250,13 @@ class gameState extends Phaser.Scene{
         this.platFloor = this.platformerMap.createStaticLayer('floor', 'Blocks');
         this.platformerMap.setCollisionBetween(38,75,true,false,'floor');
         
-        this.platLadders = this.platformerMap.createStaticLayer('ladders', 'Blocks');
-        this.platformerMap.setCollision(61,true,false,'ladders');
         
-        this.platformerMap.createStaticLayer('torchlights', 'torches');
+        //this.platLadders = this.platformerMap.createStaticLayer('ladders', 'Blocks');
+        //this.platformerMap.setCollision(61,true,false,'ladders');
         
-        this.platformerMap.createStaticLayer('decoration', 'Blocks');
+        //this.platformerMap.createStaticLayer('torchlights', 'torches');
+        
+        //this.platformerMap.createStaticLayer('decoration', 'Blocks');
         
         
     }

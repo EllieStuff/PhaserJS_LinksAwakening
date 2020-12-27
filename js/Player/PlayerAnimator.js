@@ -123,13 +123,13 @@ class PlayerAnimator extends Phaser.GameObjects.Sprite{
         this.scene.anims.create({
             key: 'playerPlatformerJumpLeft',
             frames: this.scene.anims.generateFrameNumbers('playerPlatformerJump', { start: 0, end: 2 }),
-            frameRate: 1,
+            frameRate: 10,
             repeat: 0
         });
         this.scene.anims.create({
             key: 'playerPlatformerJumpRight',
             frames: this.scene.anims.generateFrameNumbers('playerPlatformerJump', { start: 3, end: 5 }),
-            frameRate: 1,
+            frameRate: 10,
             repeat: 0
         });
         

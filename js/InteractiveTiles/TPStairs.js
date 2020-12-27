@@ -28,6 +28,9 @@ class TPStairsSet{
 
 class TPStairsPair{
     constructor(scene, pos1x, pos1y, pos2x, pos2y){
+        scene.add.existing(this);
+        scene.physics.add.existing(this);
+        
         this.tpStair1 = new TPStairPrefab(scene, pos1x, pos1y, scene.PhysicTypes.TOP_DOWN_VIEW);
         this.tpStair2 = new TPStairPrefab(scene, pos2x, pos2y, scene.PhysicTypes.FRONT_VIEW);
         

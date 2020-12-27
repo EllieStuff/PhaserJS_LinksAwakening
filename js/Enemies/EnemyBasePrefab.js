@@ -18,6 +18,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         this.health = this.initHealth;
         this.isVulnerable = true;
         this.speed = 1;
+        this.canDieOnJump = false;
         
         this.playerColManager = new CollisionManager(scene);
         this.swordColManager = new CollisionManager(scene);
@@ -67,8 +68,8 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     
     Reinit(){
         this.body.stop();
-        this.body.x = this.initPositionX;
-        this.body.y = this.initPositionY;
+        this.x = this.initPositionX;
+        this.y = this.initPositionY;
         this.health = this.initHealth;
         this.isVulnerable = true;
     }
@@ -103,7 +104,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     }
     
     Die(){
-        this.Reinit();
+        this.x = this.y = 0;
         this.active = this.visible = false;
         
     }
