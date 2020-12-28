@@ -9,6 +9,7 @@ class gameState extends Phaser.Scene{
         var rutaImgItems            = 'assets/img/items/';
         var rutaImgTiles            = 'assets/img/tiles/';
         var rutaImgInteractiveTiles = 'assets/img/InteractiveTiles/';
+        var rutaImgHUD = 'assets/img/UI/';
         
         // Load Images
         //Player
@@ -50,6 +51,13 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('smallLadders',rutaImgInteractiveTiles        + 'SmallLadders.png'           ,{frameWidth: 16, frameHeight: 56});
         this.load.spritesheet('largeLadders',rutaImgInteractiveTiles        + 'LargeLadders.png'           ,{frameWidth: 16, frameHeight: 112});
         this.load.spritesheet('keyBlock',rutaImgInteractiveTiles            + 'KeyBlock.png'               ,{frameWidth: 16, frameHeight: 16});
+        
+        //HUD
+        this.load.image('bgHUD',rutaImgHUD + 'HUD_bg.png');
+        this.load.image('rupieHUD',rutaImgHUD + 'Rupie_UI.png');
+        this.load.spritesheet('heartsUI',rutaImgHUD + 'Hearts_UI.png',{frameWidth: 8, frameHeight: 8});
+        this.load.spritesheet('numbersUI',rutaImgHUD + 'Numbers_UI.png',{frameWidth: 8, frameHeight: 8});
+        this.load.spritesheet('ObjectHUD',rutaImgHUD + 'Objects_HUD.png',{frameWidth: 24, frameHeight: 16});
         
         //Others
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
@@ -126,6 +134,10 @@ class gameState extends Phaser.Scene{
         //this.physics.add.overlap(this.player, this.tpStairs, this.tpStairs.ChangePlayerLocation, null, this);
         //this.physics.add.overlap(this.player, this.floorButton, this.floorButton.Trigger, null, this);
         
+        //Texts
+        this.owlString = "HOLA MUNDO";
+        this.owlText = this.add.text(config.width, config.height, this.owlString, { fontFamily: 'Arial', fontSize: '25px',   color:'#fff' }).setOrigin(1);
+        this.counter = 0;
 	}
     
     CreatePlayer()
@@ -249,6 +261,20 @@ class gameState extends Phaser.Scene{
         this.fences = this.map.createStaticLayer('fences', 'fences');
         this.map.setCollisionBetween(79,886,true,false,'fences');
         
+        //Init HUD
+        this.hudBG = this.add.image(config.width,config.height,'bgHUD').setOrigin(1).setScale(7);
+        this.rupieHUD = this.add.image(config.width/2, config.height/1.17, 'rupieHUD').setOrigin(0).setScale(7);
+        var posX = config.width/2 + (16*7);
+        var posY = config.height - (16*3.5);
+        this.unitDigit = this.add.sprite(posX, posY, 'numbersUI').setOrigin(0).setScale(7);
+        var posX = config.width/2 + (16*3.5);
+        var posY = config.height - (16*3.5);
+        this.decimalDigit = this.add.sprite(posX, posY, 'numbersUI').setOrigin(0).setScale(7);
+        var posX = config.width/2;
+        var posY = config.height - (16*3.5);
+        this.centDigit = this.add.sprite(posX, posY, 'numbersUI').setOrigin(0).setScale(7);
+        
+        
     }
     
     LoadPlatformerMap(){
@@ -276,15 +302,35 @@ class gameState extends Phaser.Scene{
         
         
     }
+    ShowText(_text, lenght)
+    {
+        if(this.counter < lenght){
+            if(_text[this.counter] != null){
+                this.owlText.text = this.owlText.text + _text[this.counter];
+                this.counter++; 
+            } 
+        }
+        else{
+            this.finishedText = true;
+        }
+    }
     
-    
+    ClearText(){
+        this.owlText.text = "";
+        this.counter = 0;
+    }
     //
     
 	update()
     {
         //MOVEMENT
         
+            var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
+            this.ShowText(sampleText, sampleText.length);
         
+        
+               
+           
         //ATTACK
         
 

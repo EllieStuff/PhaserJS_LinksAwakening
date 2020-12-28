@@ -19,7 +19,8 @@ class InputManager extends Phaser.GameObjects.Sprite {
             _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W),
             _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A),
             _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S),
-            _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D)
+            _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D),
+            _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE)
         ];
         
         this.hasCopiedKeyDown = false;
@@ -28,6 +29,7 @@ class InputManager extends Phaser.GameObjects.Sprite {
             false,
             false,
             //Movement
+            false,
             false,
             false,
             false,
@@ -40,6 +42,7 @@ class InputManager extends Phaser.GameObjects.Sprite {
             false,
             false,
             //Movement
+            false,
             false,
             false,
             false,
@@ -69,7 +72,8 @@ class InputManager extends Phaser.GameObjects.Sprite {
                 Phaser.Input.Keyboard.JustDown(this.Inputs[this.KeyCodes.W]),
                 Phaser.Input.Keyboard.JustDown(this.Inputs[this.KeyCodes.A]),
                 Phaser.Input.Keyboard.JustDown(this.Inputs[this.KeyCodes.S]),
-                Phaser.Input.Keyboard.JustDown(this.Inputs[this.KeyCodes.D])
+                Phaser.Input.Keyboard.JustDown(this.Inputs[this.KeyCodes.D]),
+                Phaser.Input.Keyboard.JustDown(this.Inputs[this.KeyCodes.SPACE])
             ];
         }
         
@@ -88,7 +92,8 @@ class InputManager extends Phaser.GameObjects.Sprite {
                 Phaser.Input.Keyboard.JustUp(this.Inputs[this.KeyCodes.W]),
                 Phaser.Input.Keyboard.JustUp(this.Inputs[this.KeyCodes.A]),
                 Phaser.Input.Keyboard.JustUp(this.Inputs[this.KeyCodes.S]),
-                Phaser.Input.Keyboard.JustUp(this.Inputs[this.KeyCodes.D])
+                Phaser.Input.Keyboard.JustUp(this.Inputs[this.KeyCodes.D]),
+                Phaser.Input.Keyboard.JustUp(this.Inputs[this.KeyCodes.SPACE])
             ];
         }
         
