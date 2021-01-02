@@ -33,6 +33,8 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('moldormEnemy', rutaImgEnemies + 'MiniMoldorm.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('moldormEnemyBody1', rutaImgEnemies + 'MoldormBody1.png'       ,{frameWidth: 12, frameHeight: 12});
         this.load.spritesheet('moldormEnemyBody2', rutaImgEnemies + 'MoldormBody2.png'       ,{frameWidth: 10, frameHeight: 10});
+        this.load.spritesheet('moldormBossEnemy', rutaImgEnemies + 'MoldormHeads.png'       ,{frameWidth: 28, frameHeight: 28});
+        this.load.spritesheet('moldormBossEnemyBody', rutaImgEnemies + 'MoldormBodys.png'       ,{frameWidth: 16, frameHeight: 16});
         //Items
         this.load.spritesheet('atkPowerUp',rutaImgItems + 'PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('defPowerUp',rutaImgItems + 'PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
@@ -190,6 +192,7 @@ class gameState extends Phaser.Scene{
         this.CreateEnemy(GoombaPrefab, 200, 90, true);
         //this.CreateEnemy(BatPrefab, config.width/2, config.height/2, true);
         this.CreateEnemy(miniMoldormPrefab, config.width/2, config.height/2, true);
+        this.CreateEnemy(MoldormBossPrefab, config.width-60, config.height/4, true);
         
     }
     

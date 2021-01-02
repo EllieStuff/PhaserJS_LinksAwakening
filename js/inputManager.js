@@ -7,8 +7,8 @@ class InputManager extends Phaser.GameObjects.Sprite {
         
         this.KeyCodes = { 
             K: 0, L: 1, 
-            W: 2, A: 3, S: 4, D: 5,
-            Length: 6
+            W: 2, A: 3, S: 4, D: 5, SPACE: 6,
+            Length: 7
         };
         
         this.Inputs = [
