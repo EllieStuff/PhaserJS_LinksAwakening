@@ -19,14 +19,16 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('playerJump'      ,rutaImgLink + 'jumpAnim.png'    ,{frameWidth: 16, frameHeight: 32});
         this.load.spritesheet('playerPlatformerJump' ,rutaImgLink + 'platformerJumpAnim.png' ,{frameWidth: 16, frameHeight: 16});
         //Enemies
-        this.load.spritesheet('HardHat'      ,rutaImgEnemies + 'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('enemySkeleton',rutaImgEnemies + 'EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('auxSkeleton'  ,rutaImgEnemies + 'EsqueletoJumpAnim.png' ,{frameWidth: 16, frameHeight: 32});
-        this.load.spritesheet('spikedBeetle' ,rutaImgEnemies + 'SpikedBeetle.png'      ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('pokerEnemy'   ,rutaImgEnemies + 'PokerEnemy.png'        ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('BladeTrap', rutaImgEnemies    + 'BladeTrap.png'         ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('batEnemy', rutaImgEnemies     + 'KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('goomba', rutaImgEnemies       + 'Goomba.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('HardHat'      ,rutaImgEnemies   + 'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('enemySkeleton',rutaImgEnemies   + 'EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('auxSkeleton'  ,rutaImgEnemies   + 'EsqueletoJumpAnim.png' ,{frameWidth: 16, frameHeight: 32});
+        this.load.spritesheet('spikedBeetle' ,rutaImgEnemies   + 'SpikedBeetle.png'      ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('pokerEnemy'   ,rutaImgEnemies   + 'PokerEnemy.png'        ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('BladeTrap', rutaImgEnemies      + 'BladeTrap.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('batEnemy', rutaImgEnemies       + 'KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('goomba', rutaImgEnemies         + 'Goomba.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('redZol', rutaImgEnemies         + 'RedZol.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('greenZol', rutaImgEnemies       + 'GreenZol.png'            ,{frameWidth: 16, frameHeight: 16});
         //Items
         this.load.spritesheet('atkPowerUp',rutaImgItems + 'PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('defPowerUp',rutaImgItems + 'PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
@@ -126,7 +128,7 @@ class gameState extends Phaser.Scene{
         this.camPosY = 128 * 5;
         this.cameras.main
         this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
-        this.cameras.main.setLerp(0.1,0.1);
+        //this.cameras.main.setLerp(0.01);
         //this.cameras.main.setScroll(160*2 + 80,128*5 + 64);
         
 	}
