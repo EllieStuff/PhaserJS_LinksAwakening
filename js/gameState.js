@@ -120,12 +120,21 @@ class gameState extends Phaser.Scene{
         //this.physics.add.overlap(this.player, this.tpStairs, this.tpStairs.ChangePlayerLocation, null, this);
         //this.physics.add.overlap(this.player, this.floorButton, this.floorButton.Trigger, null, this);
         
+        this.cameras.main.setBounds(0, 0, this.width, this.height);
+        //this.cameras.main.startFollow(this.player);
+        this.camPosX = 160 * 3;
+        this.camPosY = 128 * 5;
+        this.cameras.main
+        this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+        this.cameras.main.setLerp(0.1,0.1);
+        //this.cameras.main.setScroll(160*2 + 80,128*5 + 64);
+        
 	}
     
     CreatePlayer()
     {
         //this.player = this.physics.add;
-        this.player = new PlayerPrefab(this,config.width/2,config.height/2);
+        this.player = new PlayerPrefab(this,555,725);
         //this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0,5).setScale(1);
         
     }
@@ -266,10 +275,26 @@ class gameState extends Phaser.Scene{
     
 	update()
     {
-        //MOVEMENT
-        
-        
-        //ATTACK
+        if(this.player.body.position.x < this.camPosX)
+        {
+            this.camPosX -= 160;
+            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+        }
+        else if(this.player.body.position.x > this.camPosX + 160)
+        {
+           this.camPosX += 160;
+           this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+        }
+        else if(this.player.body.position.y < this.camPosY)
+        {
+            this.camPosY -= 128;
+            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+        }
+        else if(this.player.body.position.y > this.camPosY + 128)
+        {
+            this.camPosY += 128;
+            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+        }  
         
 
 	}
