@@ -1,10 +1,13 @@
 
+// TODO: 
+//  1- Implementar lastBlocked al SparkPrefab com a una "Direction" que es va canviant en el "SparkPrefab.ChooseMoveDir()"
+//  2- Tenir en compte els blocked del pare a part de la seva dir al "SparkAux.isTriggered()" per a decidir a quin aux fer-li cas
 
 class SparkPrefab extends EnemyBase{
     
     constructor(scene, positionX, positionY)
     {
-		super(scene, positionX, positionY, 'sparkEnemy');
+		super(scene, positionX, positionY, 'hitbox');
         
         this.damage = 2;
         this.health = 1;
@@ -12,7 +15,19 @@ class SparkPrefab extends EnemyBase{
         this.speed = 30;
         this.moveDir = scene.Directions.NONE;
         
+        this.sparkAnimator = new SparkAnimator(scene, positionX, positionY)
+        
+        var margins = new Phaser.Math.Vector2(this.body.width / 2, this.body.height / 2)
+        this.sparkAuxsLength = 4
+        this.sparkAuxs = [
+            new SparkAux(scene, positionX, positionY, -margins.x, -margins.y, this.scene.Directions.UP_LEFT),
+            new SparkAux(scene, positionX, positionY, margins.x, -margins.y, this.scene.Directions.UP_RIGHT),
+            new SparkAux(scene, positionX, positionY, -margins.x, margins.y, this.scene.Directions.DOWN_LEFT),
+            new SparkAux(scene, positionX, positionY, margins.x, margins.y, this.scene.Directions.DOWN_RIGHT)
+        ];
+        
         this.wallsColManager = new CollisionManager(scene);
+        
         
     }
     
@@ -21,23 +36,10 @@ class SparkPrefab extends EnemyBase{
         this.scene.physics.add.collider(this, this.scene.walls, this.ChangeMoveDir, null, this);
     }
     
-    CreateAnims(){
-        this.scene.anims.create({
-            key: 'sparkMove',
-            frames: this.scene.anims.generateFrameNumbers('sparkEnemy', { start: 0, end: 1 }),
-            frameRate: 20,
-            repeat: -1
-        });
-        
-    }
-    
     ChangeMoveDir(){
         
         if(this.active){
             this.wallsColManager.UpdateOnTrigger();
-            
-            this.moveDir = this.ChooseMoveDir()
-            this.SetMoveDir();
             
         }
         
@@ -197,12 +199,224 @@ class SparkPrefab extends EnemyBase{
     Update()
     {
         if(this.active){
+            if(this.wallsColManager.GetCollisionState() == this.wallsColManager.CollisionState.EXIT_COLLISION){
+                var i = 0;
+                for(; i < this.sparkAuxsLength; i++)
+                {
+                    this.sparkAuxs[i].Update(this)
+                    
+                    if(this.sparkAuxs[i].triggered)
+                        break;
+                }
+                
+                this.moveDir = this.sparkAuxs[i].ChooseMoveDir(this.moveDir)
+                
+                //this.moveDir = this.sparkAnimator.ChooseMoveDir(this.moveDir)
+                
+                console.log(this.moveDir)
+            }
+            else{
+                this.moveDir = this.ChooseMoveDir()
+                console.log('in')
+            }
             
+            this.SetMoveDir()
             
+            this.sparkAnimator.Update(this)
             
         }
         
     }
+    
+    
+}
+
+class SparkAnimator extends Phaser.GameObjects.Sprite{
+    constructor(scene, positionX, positionY)
+    {
+		super(scene, positionX, positionY, 'sparkEnemy');
+        scene.add.existing(this);
+        scene.physics.add.existing(this);
+        
+        this.CreateAnims()
+        this.anims.play('sparkMove')
+        
+        
+        //this.wallsColManager = new CollisionManager(scene);
+        
+        //this.ChangeMoveDir()
+        
+    }
+    
+    CreateAnims(){
+        this.scene.anims.create({
+            key: 'sparkMove',
+            frames: this.scene.anims.generateFrameNumbers('sparkEnemy', { start: 0, end: 1 }),
+            frameRate: 15,
+            repeat: -1
+        });
+        
+    }
+    
+    Update(_father){
+        this.x = _father.x
+        this.y = _father.y + 3
+        
+    }
+    
+    
+    
+}
+
+class SparkAux extends Phaser.GameObjects.Sprite{
+    constructor(scene, positionX, positionY, marginX, marginY, dirFromFather)
+    {
+		super(scene, positionX + marginX, positionY + marginY, 'hitbox');
+        scene.add.existing(this);
+        scene.physics.add.existing(this);
+        
+        this.margins = new Phaser.Math.Vector2(marginX, marginY)
+        this.triggered = false;
+        this.dirFromFather = dirFromFather
+        this.distFromCenter = -1;
+        
+        this.scene.physics.add.overlap(this, this.scene.walls, this.UpdateColState, null, this);
+        this.colManager = new CollisionManager(scene);
+        
+    }
+    
+    UpdateColState(){
+        if(this.active){
+            this.colManager.UpdateOnTrigger()
+            
+        }
+        
+    }
+    
+    IsTriggered(_father){
+        // TODO: Implementar lastBlocked i tenir en compte els lastBlocked del pare a part de la seva dir per a decidir a quin aux fer-li cas
+        
+        if(this.colManager.GetCollisionState() == this.colManager.CollisionState.COLLIDING){
+            switch(this.dirFromFather){
+                case this.scene.Directions.UP_LEFT:
+                    return (_father.moveDir == this.scene.Directions.DOWN && _father.lastBlocked == this.scene.Directions.LEFT)
+                        || (_father.moveDir == this.scene.Directions.RIGHT && _father.lastBlocked == this.scene.Directions.UP)
+                    
+                    break;
+
+                case this.scene.Directions.UP_RIGHT:
+                    return _moveDir == this.scene.Directions.DOWN || _moveDir == this.scene.Directions.LEFT
+                    
+                    break;
+
+                case this.scene.Directions.DOWN_LEFT:
+                    return _moveDir == this.scene.Directions.UP || _moveDir == this.scene.Directions.RIGHT
+                    
+                    break;
+
+                case this.scene.Directions.DOWN_RIGHT:
+                    return _moveDir == this.scene.Directions.UP || _moveDir == this.scene.Directions.LEFT
+                    
+                    break;
+
+                default:
+                    console.log("smth is wrong")
+                    break;
+            }
+            
+        }
+        
+        return false
+    }
+    
+    ChooseMoveDir(_moveDir){
+        switch(this.dirFromFather){
+            case this.scene.Directions.UP_LEFT:
+                if(_moveDir == this.scene.Directions.DOWN){
+                    
+                    return this.scene.Directions.LEFT
+                }
+                else if(_moveDir == this.scene.Directions.RIGHT){
+                    
+                    return this.scene.Directions.UP
+                }
+                else{
+                    
+                    return _moveDir
+                }
+                
+                break;
+                
+            case this.scene.Directions.UP_RIGHT:
+                if(_moveDir == this.scene.Directions.DOWN){
+                    
+                    return this.scene.Directions.RIGHT
+                }
+                else if(_moveDir == this.scene.Directions.LEFT){
+                    
+                    return this.scene.Directions.UP
+                }
+                else{
+                    
+                    return _moveDir
+                }
+                
+                break;
+                
+            case this.scene.Directions.DOWN_LEFT:
+                if(_moveDir == this.scene.Directions.UP){
+                    
+                    return this.scene.Directions.DOWN
+                }
+                else if(_moveDir == this.scene.Directions.RIGHT){
+                    
+                    return this.scene.Directions.LEFT
+                }
+                else{
+                    
+                    return _moveDir
+                }
+                
+                break;
+                
+            case this.scene.Directions.DOWN_RIGHT:
+                if(_moveDir == this.scene.Directions.UP){
+                    
+                    return this.scene.Directions.DOWN
+                }
+                else if(_moveDir == this.scene.Directions.LEFT){
+                    
+                    return this.scene.Directions.RIGHT
+                }
+                else{
+                    
+                    return _moveDir
+                }
+                
+                break;
+                
+            default:
+                console.log("smth is wrong")
+                break;
+        }
+        
+    }
+    
+    
+    Update(_father){
+        this.x = _father.x + this.margins.x
+        this.y = _father.y + this.margins.y + 3
+        
+        this.triggered = this.IsTriggered(_father.moveDir)
+        
+        
+        /*if(this.triggered){
+            
+            //this.distFromCenter = this.colManager.GetRelativeDistanceOnOverlap()
+        }*/
+        
+    }
+    
     
     
 }
