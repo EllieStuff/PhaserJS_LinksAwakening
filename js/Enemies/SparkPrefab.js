@@ -1,7 +1,6 @@
 
 // TODO: 
-//  1- Implementar lastBlocked al SparkPrefab com a una "Direction" que es va canviant en el "SparkPrefab.ChooseMoveDir()"
-//  2- Tenir en compte els blocked del pare a part de la seva dir al "SparkAux.isTriggered()" per a decidir a quin aux fer-li cas
+//  Ara el problema es que detecta que surt de la colisió quan passa per una paret diferent
 
 class SparkPrefab extends EnemyBase{
     
@@ -14,6 +13,13 @@ class SparkPrefab extends EnemyBase{
         this.isVulnerable = false;
         this.speed = 30;
         this.moveDir = scene.Directions.NONE;
+        this.lastBlocked = scene.Directions.NONE;
+        //this.wallReached = false;
+        //this.framesSinceWallTouched = 0
+        //this.MAX_FRAMES_SINCE_WALL_TOUCHED = 20
+        this.MAX_WALL_DISTANCE = 22.5
+        
+        this.currentWallPos = new Phaser.Math.Vector2(positionX, positionY)
         
         this.sparkAnimator = new SparkAnimator(scene, positionX, positionY)
         
@@ -36,17 +42,34 @@ class SparkPrefab extends EnemyBase{
         this.scene.physics.add.collider(this, this.scene.walls, this.ChangeMoveDir, null, this);
     }
     
-    ChangeMoveDir(){
-        
+    ChangeMoveDir(_thisObject, _walls){
         if(this.active){
             this.wallsColManager.UpdateOnTrigger();
             
+            //var _currentWall = _walls.get(0, 0)
+            this.currentWallPos = new Phaser.Math.Vector2(_currentWall.x, _currentWall.y)
         }
         
         
     }
     
     ChooseMoveDir(){
+        if(this.body.blocked.up){
+            this.lastBlocked = this.scene.Directions.UP
+        }
+        else if(this.body.blocked.down){
+            this.lastBlocked = this.scene.Directions.DOWN
+        }
+        else if(this.body.blocked.right){
+            this.lastBlocked = this.scene.Directions.RIGHT
+        }
+        else if(this.body.blocked.left){
+            this.lastBlocked = this.scene.Directions.LEFT
+        }
+        else {
+            this.lastBlocked = this.scene.Directions.NONE
+        }
+        
         switch(this.moveDir){
             case this.scene.Directions.UP:
                 if(this.body.blocked.up){
@@ -199,25 +222,52 @@ class SparkPrefab extends EnemyBase{
     Update()
     {
         if(this.active){
-            if(this.wallsColManager.GetCollisionState() == this.wallsColManager.CollisionState.EXIT_COLLISION){
-                var i = 0;
-                for(; i < this.sparkAuxsLength; i++)
+            //console.log(this.wallsColManager.GetCollisionState())
+            //console.log(this.framesSinceWallTouched)
+            if(this.currentWallPos.distance(this) >= this.MAX_WALL_DISTANCE){
+                //this.framesSinceWallTouched = 0
+                
+                /*
+                var choosenAux = 0;
+                for(var i = 0; i < this.sparkAuxsLength; i++)
                 {
                     this.sparkAuxs[i].Update(this)
                     
                     if(this.sparkAuxs[i].triggered)
-                        break;
+                        choosenAux = i
                 }
                 
-                this.moveDir = this.sparkAuxs[i].ChooseMoveDir(this.moveDir)
+                this.moveDir = this.sparkAuxs[choosenAux].ChooseMoveDir(this.moveDir)
+                */
+                
+                
+                for(var i = 0; i < this.sparkAuxsLength; i++)
+                {
+                    this.sparkAuxs[i].Update(this)
+                    
+                    if(this.sparkAuxs[i].triggered){
+                        this.moveDir = this.sparkAuxs[i].ChooseMoveDir(this.moveDir)
+                        break
+                    }
+                }
+                
                 
                 //this.moveDir = this.sparkAnimator.ChooseMoveDir(this.moveDir)
                 
-                console.log(this.moveDir)
+                console.log(this.currentWallPos.distance(this))
             }
             else{
                 this.moveDir = this.ChooseMoveDir()
-                console.log('in')
+                
+                /*if(this.wallsColManager.GetCollisionState() == this.wallsColManager.CollisionState.COLLIDING){
+                    this.framesSinceWallTouched = 0
+                }
+                else if(this.wallsColManager.GetCollisionState() == this.wallsColManager.CollisionState.NOT_COLLIDING){
+                    this.framesSinceWallTouched++
+                }*/
+                
+                //this.wallReached = true;
+                //console.log('in')
             }
             
             this.SetMoveDir()
@@ -271,7 +321,7 @@ class SparkAnimator extends Phaser.GameObjects.Sprite{
 class SparkAux extends Phaser.GameObjects.Sprite{
     constructor(scene, positionX, positionY, marginX, marginY, dirFromFather)
     {
-		super(scene, positionX + marginX, positionY + marginY, 'hitbox');
+		super(scene, positionX + marginX, positionY + marginY, 'sparkEnemy');
         scene.add.existing(this);
         scene.physics.add.existing(this);
         
@@ -296,7 +346,7 @@ class SparkAux extends Phaser.GameObjects.Sprite{
     IsTriggered(_father){
         // TODO: Implementar lastBlocked i tenir en compte els lastBlocked del pare a part de la seva dir per a decidir a quin aux fer-li cas
         
-        if(this.colManager.GetCollisionState() == this.colManager.CollisionState.COLLIDING){
+        if(this.colManager.GetCollisionState() == this.colManager.CollisionState.COLLIDING || this.colManager.GetCollisionState() == this.colManager.CollisionState.ENTERED_COLLISION){
             switch(this.dirFromFather){
                 case this.scene.Directions.UP_LEFT:
                     return (_father.moveDir == this.scene.Directions.DOWN && _father.lastBlocked == this.scene.Directions.LEFT)
@@ -305,17 +355,20 @@ class SparkAux extends Phaser.GameObjects.Sprite{
                     break;
 
                 case this.scene.Directions.UP_RIGHT:
-                    return _moveDir == this.scene.Directions.DOWN || _moveDir == this.scene.Directions.LEFT
+                    return (_father.moveDir == this.scene.Directions.DOWN && _father.lastBlocked == this.scene.Directions.RIGHT)
+                        || (_father.moveDir == this.scene.Directions.LEFT && _father.lastBlocked == this.scene.Directions.UP)
                     
                     break;
 
                 case this.scene.Directions.DOWN_LEFT:
-                    return _moveDir == this.scene.Directions.UP || _moveDir == this.scene.Directions.RIGHT
+                    return (_father.moveDir == this.scene.Directions.UP && _father.lastBlocked == this.scene.Directions.RIGHT)
+                        || (_father.moveDir == this.scene.Directions.RIGHT && _father.lastBlocked == this.scene.Directions.DOWN)
                     
                     break;
 
                 case this.scene.Directions.DOWN_RIGHT:
-                    return _moveDir == this.scene.Directions.UP || _moveDir == this.scene.Directions.LEFT
+                    return (_father.moveDir == this.scene.Directions.UP && _father.lastBlocked == this.scene.Directions.RIGHT)
+                        || (_father.moveDir == this.scene.Directions.LEFT && _father.lastBlocked == this.scene.Directions.DOWN)
                     
                     break;
 
