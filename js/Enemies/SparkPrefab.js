@@ -14,10 +14,12 @@ class SparkPrefab extends EnemyBase{
         this.speed = 30;
         this.moveDir = scene.Directions.NONE;
         this.lastBlocked = scene.Directions.NONE;
+        this.currentlyBlocked = false
+        this.touchedFirstWall = false
         //this.wallReached = false;
         //this.framesSinceWallTouched = 0
         //this.MAX_FRAMES_SINCE_WALL_TOUCHED = 20
-        this.MAX_WALL_DISTANCE = 22.5
+        //this.MAX_WALL_DISTANCE = 22.5
         
         this.currentWallPos = new Phaser.Math.Vector2(positionX, positionY)
         
@@ -42,34 +44,46 @@ class SparkPrefab extends EnemyBase{
         this.scene.physics.add.collider(this, this.scene.walls, this.ChangeMoveDir, null, this);
     }
     
-    ChangeMoveDir(_thisObject, _walls){
+    ChangeMoveDir(){
         if(this.active){
             this.wallsColManager.UpdateOnTrigger();
             
-            //var _currentWall = _walls.get(0, 0)
-            this.currentWallPos = new Phaser.Math.Vector2(_currentWall.x, _currentWall.y)
         }
         
         
     }
     
-    ChooseMoveDir(){
+    GetLastBlockedDir(){
+        var _lastBlocked = this.lastBlocked
+        
         if(this.body.blocked.up){
-            this.lastBlocked = this.scene.Directions.UP
+            this.currentlyBlocked = true
+            _lastBlocked = this.scene.Directions.UP
         }
         else if(this.body.blocked.down){
-            this.lastBlocked = this.scene.Directions.DOWN
+            this.currentlyBlocked = true
+            _lastBlocked = this.scene.Directions.DOWN
         }
         else if(this.body.blocked.right){
-            this.lastBlocked = this.scene.Directions.RIGHT
+            this.currentlyBlocked = true
+            _lastBlocked = this.scene.Directions.RIGHT
         }
         else if(this.body.blocked.left){
-            this.lastBlocked = this.scene.Directions.LEFT
+            this.currentlyBlocked = true
+            _lastBlocked = this.scene.Directions.LEFT
         }
         else {
-            this.lastBlocked = this.scene.Directions.NONE
+            this.currentlyBlocked = false
+            //_lastBlocked = this.scene.Directions.NONE
+            _lastBlocked = this.lastBlocked
         }
         
+        console.log('curr blocked: ' + this.currentlyBlocked)
+        
+        return _lastBlocked
+    }
+    
+    ChooseMoveDir(){
         switch(this.moveDir){
             case this.scene.Directions.UP:
                 if(this.body.blocked.up){
@@ -224,7 +238,27 @@ class SparkPrefab extends EnemyBase{
         if(this.active){
             //console.log(this.wallsColManager.GetCollisionState())
             //console.log(this.framesSinceWallTouched)
-            if(this.currentWallPos.distance(this) >= this.MAX_WALL_DISTANCE){
+            
+            if(this.currentlyBlocked || !this.touchedFirstWall){
+                this.touchedFirstWall = true
+                
+                this.lastBlocked = this.GetLastBlockedDir()
+                this.moveDir = this.ChooseMoveDir()
+                
+                
+                /*if(this.wallsColManager.GetCollisionState() == this.wallsColManager.CollisionState.COLLIDING){
+                    this.framesSinceWallTouched = 0
+                }
+                else if(this.wallsColManager.GetCollisionState() == this.wallsColManager.CollisionState.NOT_COLLIDING){
+                    this.framesSinceWallTouched++
+                }*/
+                
+                //this.wallReached = true;
+                console.log('1')
+            }
+            else {
+                this.lastBlocked = this.GetLastBlockedDir()
+                
                 //this.framesSinceWallTouched = 0
                 
                 /*
@@ -254,20 +288,7 @@ class SparkPrefab extends EnemyBase{
                 
                 //this.moveDir = this.sparkAnimator.ChooseMoveDir(this.moveDir)
                 
-                console.log(this.currentWallPos.distance(this))
-            }
-            else{
-                this.moveDir = this.ChooseMoveDir()
-                
-                /*if(this.wallsColManager.GetCollisionState() == this.wallsColManager.CollisionState.COLLIDING){
-                    this.framesSinceWallTouched = 0
-                }
-                else if(this.wallsColManager.GetCollisionState() == this.wallsColManager.CollisionState.NOT_COLLIDING){
-                    this.framesSinceWallTouched++
-                }*/
-                
-                //this.wallReached = true;
-                //console.log('in')
+                console.log('2')
             }
             
             this.SetMoveDir()
