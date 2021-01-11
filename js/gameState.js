@@ -29,6 +29,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('BladeTrap', rutaImgEnemies    + 'BladeTrap.png'         ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('batEnemy', rutaImgEnemies     + 'KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('goomba', rutaImgEnemies       + 'Goomba.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('sparkEnemy', rutaImgEnemies   + 'SparkAnim.png'         ,{frameWidth: 16, frameHeight: 16});
         
         this.load.spritesheet('moldormEnemy', rutaImgEnemies + 'MiniMoldorm.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('moldormEnemyBody1', rutaImgEnemies + 'MoldormBody1.png'       ,{frameWidth: 12, frameHeight: 12});
@@ -99,7 +100,7 @@ class gameState extends Phaser.Scene{
        
         //Variables
         this.DrawDepths = { DEFAULT: 0, INTERACTIVE_TILES: 1, ITEMS: 2, ENEMIES: 3, PLAYER: 4 };
-        this.Directions = { RIGHT: 0, LEFT: 1, UP: 2, DOWN: 3, NONE: 4 };
+        this.Directions = { RIGHT: 'right', LEFT: 'left', UP: 'up', DOWN: 'down', UP_RIGHT: 'up-right', DOWN_RIGHT: 'down-right', UP_LEFT: 'up-left', DOWN_LEFT: 'down-left', NONE: 'none' };
         this.PhysicTypes = { TOP_DOWN_VIEW: 0, FRONT_VIEW: 1 };
         
         //Player
@@ -192,6 +193,7 @@ class gameState extends Phaser.Scene{
         this.CreateEnemy(GoombaPrefab, 200, 90, true);
         //this.CreateEnemy(BatPrefab, config.width/2, config.height/2, true);
         this.CreateEnemy(miniMoldormPrefab, config.width/2, config.height/2, true);
+        this.CreateEnemy(SparkPrefab, config.width/2 + 40, config.height/2, true);
         this.CreateEnemy(MoldormBossPrefab, config.width-60, config.height/4, true);
         
     }
