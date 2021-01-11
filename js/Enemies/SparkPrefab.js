@@ -17,10 +17,7 @@ class SparkPrefab extends EnemyBase{
         this.lastBlocked = scene.Directions.NONE;
         this.currentlyBlocked = false
         this.touchedFirstWall = false
-        //this.wallReached = false;
-        //this.framesSinceWallTouched = 0
-        //this.MAX_FRAMES_SINCE_WALL_TOUCHED = 20
-        //this.MAX_WALL_DISTANCE = 22.5
+        this.canEnterExitWallBehaviour = true
         
         this.currentWallPos = new Phaser.Math.Vector2(positionX, positionY)
         
@@ -50,7 +47,6 @@ class SparkPrefab extends EnemyBase{
             this.wallsColManager.UpdateOnTrigger();
             
         }
-        
         
     }
     
@@ -82,127 +78,12 @@ class SparkPrefab extends EnemyBase{
         if(!this.touchedFirstWall && this.currentlyBlocked){
             this.touchedFirstWall = true;
         }
-        
-        console.log('curr blocked: ' + this.currentlyBlocked)
+        if(this.currentlyBlocked){
+            this.canEnterExitWallBehaviour = true
+        }
         
         return _lastBlocked
     }
-    
-    /*ChooseMoveDir(){
-        switch(this.moveDir){
-            case this.scene.Directions.UP:
-                if(this.body.blocked.up){
-                    if(!this.body.blocked.right){
-                        return this.scene.Directions.RIGHT
-                    }
-                    else if(!this.body.blocked.left){
-                        return this.scene.Directions.LEFT
-                    }
-                    else if(!this.body.blocked.down){
-                        return this.scene.Directions.DOWN
-                    }
-                    else{
-                        return this.scene.Directions.NONE
-                    }
-                }
-                else{
-                    
-                    return this.scene.Directions.UP
-                }
-                
-                break;
-                
-            case this.scene.Directions.DOWN:
-                if(this.body.blocked.down){
-                    if(!this.body.blocked.left){
-                        return this.scene.Directions.LEFT
-                    }
-                    else if(!this.body.blocked.right){
-                        return this.scene.Directions.RIGHT
-                    }
-                    else if(!this.body.blocked.up){
-                        return this.scene.Directions.UP
-                    }
-                    else{
-                        return this.scene.Directions.NONE
-                    }
-                }
-                else{
-                    
-                    return this.scene.Directions.DOWN
-                }
-                
-                break;
-                
-            case this.scene.Directions.RIGHT:
-                if(this.body.blocked.right){
-                    if(!this.body.blocked.down){
-                        return this.scene.Directions.DOWN
-                    }
-                    else if(!this.body.blocked.up){
-                        return this.scene.Directions.UP
-                    }
-                    else if(!this.body.blocked.left){
-                        return this.scene.Directions.LEFT
-                    }
-                    else{
-                        return this.scene.Directions.NONE
-                    }
-                }
-                else{
-                    
-                    return this.scene.Directions.RIGHT
-                }
-                
-                break;
-                
-            case this.scene.Directions.LEFT:
-                if(this.body.blocked.left){
-                    if(!this.body.blocked.up){
-                        return this.scene.Directions.UP
-                    }
-                    else if(!this.body.blocked.down){
-                        return this.scene.Directions.DOWN
-                    }
-                    else if(!this.body.blocked.right){
-                        return this.scene.Directions.RIGHT
-                    }
-                    else{
-                        return this.scene.Directions.NONE
-                    }
-                }
-                else{
-                    
-                    return this.scene.Directions.LEFT
-                }
-                
-                break;
-                
-            case this.scene.Directions.NONE:
-                if(!this.body.blocked.up){
-                    return this.scene.Directions.UP
-                }
-                else if(!this.body.blocked.down){
-                    return this.scene.Directions.DOWN
-                }
-                else if(!this.body.blocked.right){
-                    return this.scene.Directions.RIGHT
-                }
-                else if(!this.body.blocked.left){
-                    return this.scene.Directions.LEFT
-                }
-                else{
-                    return this.scene.Directions.NONE
-                }
-                
-                break;
-                
-            default:
-                console.log("smth is wrong")
-                break;
-        }
-        
-    }*/
     
     ChooseMoveDir(){
         switch(this.diagonalMoveDir){
@@ -219,24 +100,6 @@ class SparkPrefab extends EnemyBase{
                     else{
                         console.log("smth went wrong")
                     }
-                        
-                    
-                    /*else if(this.body.blocked.right){
-                        return this.scene.Directions.DOWN_RIGHT
-                    }
-                    else if(!this.body.blocked.left){
-                        return this.scene.Directions.UP_LEFT
-                    }
-                    else if(!this.body.blocked.down){
-                        return this.scene.Directions.DOWN
-                    }
-                    else{
-                        return this.scene.Directions.NONE
-                    }*/
-                }
-                else{
-                    
-                    this.diagonalMoveDir = this.scene.Directions.UP_RIGHT
                 }
                 
                 break;
@@ -255,10 +118,6 @@ class SparkPrefab extends EnemyBase{
                         console.log("smth went wrong")
                     }
                 }
-                else{
-                    
-                    this.diagonalMoveDir = this.scene.Directions.UP_LEFT
-                }
                 
                 break;
                 
@@ -276,10 +135,6 @@ class SparkPrefab extends EnemyBase{
                         console.log("smth went wrong")
                     }
                 }
-                else{
-                    
-                    this.diagonalMoveDir = this.scene.Directions.DOWN_RIGHT
-                }
                 
                 break;
                 
@@ -296,10 +151,6 @@ class SparkPrefab extends EnemyBase{
                     else{
                         console.log("smth went wrong")
                     }
-                }
-                else{
-                    
-                    this.diagonalMoveDir = this.scene.Directions.DOWN_LEFT
                 }
                 
                 break;
@@ -372,46 +223,14 @@ class SparkPrefab extends EnemyBase{
     Update()
     {
         if(this.active){
-            //console.log(this.wallsColManager.GetCollisionState())
-            //console.log(this.framesSinceWallTouched)
-            
             this.lastBlocked = this.GetLastBlockedDir()
             
-            if(this.currentlyBlocked || !this.touchedFirstWall){
-                
-                //this.lastBlocked = this.GetLastBlockedDir()
-                
+            if(this.currentlyBlocked || !this.touchedFirstWall || this.pathFinded){
                 this.ChooseMoveDir()
                 
-                
-                /*if(this.wallsColManager.GetCollisionState() == this.wallsColManager.CollisionState.COLLIDING){
-                    this.framesSinceWallTouched = 0
-                }
-                else if(this.wallsColManager.GetCollisionState() == this.wallsColManager.CollisionState.NOT_COLLIDING){
-                    this.framesSinceWallTouched++
-                }*/
-                
-                //this.wallReached = true;
-                console.log('1')
             }
-            else {
-                //this.lastBlocked = this.GetLastBlockedDir()
-                
-                //this.framesSinceWallTouched = 0
-                
-                /*
-                var choosenAux = 0;
-                for(var i = 0; i < this.sparkAuxsLength; i++)
-                {
-                    this.sparkAuxs[i].Update(this)
-                    
-                    if(this.sparkAuxs[i].triggered)
-                        choosenAux = i
-                }
-                
-                this.moveDir = this.sparkAuxs[choosenAux].ChooseMoveDir(this.moveDir)
-                */
-                
+            else if(this.canEnterExitWallBehaviour){
+                this.canEnterExitWallBehaviour = false
                 
                 for(var i = 0; i < this.sparkAuxsLength; i++)
                 {
@@ -423,39 +242,6 @@ class SparkPrefab extends EnemyBase{
                         break;
                     }
                 }
-                
-                
-                //this.moveDir = this.sparkAnimator.ChooseMoveDir(this.moveDir)
-                
-                
-                
-                /*var triggeredPos = 0
-                var triggeredAuxNum = 0
-                for(var i = 0; i < this.sparkAuxsLength; i++)
-                {
-                    this.sparkAuxs[i].Update(this)
-                    
-                    if(this.sparkAuxs[i].triggered){
-                        triggeredAuxNum++
-                        
-                        if(triggeredAuxNum == 1){
-                            triggeredPos = i
-                        }
-                        else{
-                            break;
-                        }
-                    }
-                }
-                
-                if(triggeredAuxNum == 1){
-                    this.diagonalMoveDir = this.sparkAuxs[i].GetDiagonalMoveDir()
-                    this.moveDir = this.sparkAuxs[i].GetMoveDir(this.moveDir)
-                }
-                else{
-                    this.ChooseMoveDir()
-                }*/
-                
-                console.log('2')
             }
             
             this.SetMoveDir()
@@ -478,11 +264,6 @@ class SparkAnimator extends Phaser.GameObjects.Sprite{
         
         this.CreateAnims()
         this.anims.play('sparkMove')
-        
-        
-        //this.wallsColManager = new CollisionManager(scene);
-        
-        //this.ChangeMoveDir()
         
     }
     
@@ -509,7 +290,7 @@ class SparkAnimator extends Phaser.GameObjects.Sprite{
 class SparkAux extends Phaser.GameObjects.Sprite{
     constructor(scene, positionX, positionY, marginX, marginY, dirFromFather)
     {
-		super(scene, positionX + marginX, positionY + marginY, 'sparkEnemy');
+		super(scene, positionX + marginX, positionY + marginY, 'hitbox');
         scene.add.existing(this);
         scene.physics.add.existing(this);
         
@@ -518,11 +299,26 @@ class SparkAux extends Phaser.GameObjects.Sprite{
         this.dirFromFather = dirFromFather
         this.distFromCenter = -1;
         
-        //this.fatherMoveDir = scene.Directions.NONE
-        //this.fatherDiagonalMoveDir = scene.Directions.NONE
-        
         this.scene.physics.add.overlap(this, this.scene.walls, this.UpdateColState, null, this);
         this.colManager = new CollisionManager(scene);
+        
+        this.CreateAnims()
+        
+    }
+    
+    CreateAnims(){
+        this.scene.anims.create({
+            key: 'invisible',
+            frames: this.scene.anims.generateFrameNumbers('hitbox', { start: 0, end: 0 }),
+            frameRate: 1,
+            repeat: 0
+        });
+        this.scene.anims.create({
+            key: 'visible',
+            frames: this.scene.anims.generateFrameNumbers('sparkEnemy', { start: 0, end: 0 }),
+            frameRate: 1,
+            repeat: 0
+        });
         
     }
     
@@ -534,30 +330,30 @@ class SparkAux extends Phaser.GameObjects.Sprite{
         
     }
     
-    IsTriggered(_father){
+    IsTriggered(_fatherDiagonalMoveDir, _fatherMoveDir){
         if(this.colManager.GetCollisionState() == this.colManager.CollisionState.COLLIDING || this.colManager.GetCollisionState() == this.colManager.CollisionState.ENTERED_COLLISION){
             switch(this.dirFromFather){
                 case this.scene.Directions.UP_RIGHT:
-                    return (_father.diagonalMoveDir == this.scene.Directions.DOWN_RIGHT && _father.moveDir == this.scene.Directions.DOWN)
-                        || (_father.diagonalMoveDir == this.scene.Directions.UP_LEFT && _father.moveDir == this.scene.Directions.LEFT)
+                    return (_fatherDiagonalMoveDir == this.scene.Directions.DOWN_RIGHT && _fatherMoveDir == this.scene.Directions.DOWN)
+                        || (_fatherDiagonalMoveDir == this.scene.Directions.UP_LEFT && _fatherMoveDir == this.scene.Directions.LEFT)
                     
                     break;
                     
                 case this.scene.Directions.UP_LEFT:
-                    return (_father.diagonalMoveDir == this.scene.Directions.DOWN_LEFT && _father.moveDir == this.scene.Directions.DOWN)
-                        || (_father.diagonalMoveDir == this.scene.Directions.UP_RIGHT && _father.moveDir == this.scene.Directions.RIGHT)
+                    return (_fatherDiagonalMoveDir == this.scene.Directions.DOWN_LEFT && _fatherMoveDir == this.scene.Directions.DOWN)
+                        || (_fatherDiagonalMoveDir == this.scene.Directions.UP_RIGHT && _fatherMoveDir == this.scene.Directions.RIGHT)
                     
                     break;
 
                 case this.scene.Directions.DOWN_RIGHT:
-                    return (_father.diagonalMoveDir == this.scene.Directions.UP_RIGHT && _father.moveDir == this.scene.Directions.UP)
-                        || (_father.diagonalMoveDir == this.scene.Directions.DOWN_LEFT && _father.moveDir == this.scene.Directions.LEFT)
+                    return (_fatherDiagonalMoveDir == this.scene.Directions.UP_RIGHT && _fatherMoveDir == this.scene.Directions.UP)
+                        || (_fatherDiagonalMoveDir == this.scene.Directions.DOWN_LEFT && _fatherMoveDir == this.scene.Directions.LEFT)
                     
                     break;
 
                 case this.scene.Directions.DOWN_LEFT:
-                    return (_father.diagonalMoveDir == this.scene.Directions.UP_RIGHT && _father.moveDir == this.scene.Directions.UP)
-                        || (_father.diagonalMoveDir == this.scene.Directions.DOWN_RIGHT && _father.moveDir == this.scene.Directions.RIGHT)
+                    return (_fatherDiagonalMoveDir == this.scene.Directions.UP_LEFT && _fatherMoveDir == this.scene.Directions.UP)
+                        || (_fatherDiagonalMoveDir == this.scene.Directions.DOWN_RIGHT && _fatherMoveDir == this.scene.Directions.RIGHT)
                     
                     break;
 
@@ -569,43 +365,6 @@ class SparkAux extends Phaser.GameObjects.Sprite{
         }
         
         return false
-        
-        /*
-        // TODO: Implementar lastBlocked i tenir en compte els lastBlocked del pare a part de la seva dir per a decidir a quin aux fer-li cas
-        if(this.colManager.GetCollisionState() == this.colManager.CollisionState.COLLIDING || this.colManager.GetCollisionState() == this.colManager.CollisionState.ENTERED_COLLISION){
-            switch(this.dirFromFather){
-                case this.scene.Directions.UP_LEFT:
-                    return (_father.moveDir == this.scene.Directions.DOWN && _father.lastBlocked == this.scene.Directions.LEFT)
-                        || (_father.moveDir == this.scene.Directions.RIGHT && _father.lastBlocked == this.scene.Directions.UP)
-                    
-                    break;
-
-                case this.scene.Directions.UP_RIGHT:
-                    return (_father.moveDir == this.scene.Directions.DOWN && _father.lastBlocked == this.scene.Directions.RIGHT)
-                        || (_father.moveDir == this.scene.Directions.LEFT && _father.lastBlocked == this.scene.Directions.UP)
-                    
-                    break;
-
-                case this.scene.Directions.DOWN_LEFT:
-                    return (_father.moveDir == this.scene.Directions.UP && _father.lastBlocked == this.scene.Directions.RIGHT)
-                        || (_father.moveDir == this.scene.Directions.RIGHT && _father.lastBlocked == this.scene.Directions.DOWN)
-                    
-                    break;
-
-                case this.scene.Directions.DOWN_RIGHT:
-                    return (_father.moveDir == this.scene.Directions.UP && _father.lastBlocked == this.scene.Directions.RIGHT)
-                        || (_father.moveDir == this.scene.Directions.LEFT && _father.lastBlocked == this.scene.Directions.DOWN)
-                    
-                    break;
-
-                default:
-                    console.log("smth is wrong")
-                    break;
-            }
-        }
-        
-        return false
-        */
         
     }
     
@@ -686,108 +445,11 @@ class SparkAux extends Phaser.GameObjects.Sprite{
         }
     }
     
-    /*ChooseMoveDir(_moveDir){
-        //Nota: la dirFromFather es la posicio relativa del trigger des del pare, pel que quan s'activa el pare estara anant en una direccio contraria a aquest, si no ho entens fes-te un paint o algo
-        switch(this.dirFromFather){
-            case this.scene.Directions.UP_LEFT:
-                if(_moveDir == this.scene.Directions.DOWN){
-                    this.fatherDiagonalMoveDir = this.scene.Directions.UP_LEFT
-                }
-                else if(_moveDir == this.scene.Directions.RIGHT){
-                    this.fatherDiagonalMoveDir = this.scene.Directions.UP_RIGHT
-                }
-                
-                break;
-                
-        }
-                   
-        
-        switch(this.dirFromFather){
-            case this.scene.Directions.UP_LEFT:
-                if(_moveDir == this.scene.Directions.DOWN){
-                    
-                    return this.scene.Directions.LEFT
-                }
-                else if(_moveDir == this.scene.Directions.RIGHT){
-                    
-                    return this.scene.Directions.UP
-                }
-                else{
-                    
-                    return _moveDir
-                }
-                
-                break;
-                
-            case this.scene.Directions.UP_RIGHT:
-                if(_moveDir == this.scene.Directions.DOWN){
-                    
-                    return this.scene.Directions.RIGHT
-                }
-                else if(_moveDir == this.scene.Directions.LEFT){
-                    
-                    return this.scene.Directions.UP
-                }
-                else{
-                    
-                    return _moveDir
-                }
-                
-                break;
-                
-            case this.scene.Directions.DOWN_LEFT:
-                if(_moveDir == this.scene.Directions.UP){
-                    
-                    return this.scene.Directions.DOWN
-                }
-                else if(_moveDir == this.scene.Directions.RIGHT){
-                    
-                    return this.scene.Directions.LEFT
-                }
-                else{
-                    
-                    return _moveDir
-                }
-                
-                break;
-                
-            case this.scene.Directions.DOWN_RIGHT:
-                if(_moveDir == this.scene.Directions.UP){
-                    
-                    return this.scene.Directions.DOWN
-                }
-                else if(_moveDir == this.scene.Directions.LEFT){
-                    
-                    return this.scene.Directions.RIGHT
-                }
-                else{
-                    
-                    return _moveDir
-                }
-                
-                break;
-                
-            default:
-                console.log("smth is wrong")
-                break;
-        }
-        
-    }*/
-    
-    
     Update(_father){
         this.x = _father.x + this.margins.x
         this.y = _father.y + this.margins.y + 3
         
-        this.triggered = this.IsTriggered(_father.moveDir)
-        
-        //if(this.triggered) this.ChooseMoveDir(_father.moveDir)
-        
-        
-        /*if(this.triggered){
-            
-            //this.distFromCenter = this.colManager.GetRelativeDistanceOnOverlap()
-        }*/
+        this.triggered = this.IsTriggered(_father.diagonalMoveDir, _father.moveDir)
         
     }
     

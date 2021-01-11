@@ -192,7 +192,7 @@ class gameState extends Phaser.Scene{
         this.CreateEnemy(GoombaPrefab, 200, 90, true);
         //this.CreateEnemy(BatPrefab, config.width/2, config.height/2, true);
         this.CreateEnemy(miniMoldormPrefab, config.width/2, config.height/2, true);
-        this.CreateEnemy(SparkPrefab, config.width/2, config.height/2, true);
+        this.CreateEnemy(SparkPrefab, config.width/2 + 40, config.height/2, true);
     }
     
     CreateEnemy(_enemyType, _posX, _posY, _startActive){
