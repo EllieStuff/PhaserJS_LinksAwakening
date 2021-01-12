@@ -151,7 +151,7 @@ class gameState extends Phaser.Scene{
         this.camPosX = 160 * 3;
         this.camPosY = 128 * 5;
         this.cameras.main
-        this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+        this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 80);
         //this.cameras.main.setLerp(0.01);
         //this.cameras.main.setScroll(160*2 + 80,128*5 + 64);
         
@@ -347,22 +347,22 @@ class gameState extends Phaser.Scene{
         if(this.player.body.position.x < this.camPosX)
         {
             this.camPosX -= 160;
-            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 80);
         }
         else if(this.player.body.position.x > this.camPosX + 160)
         {
            this.camPosX += 160;
-           this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+           this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 80);
         }
         else if(this.player.body.position.y < this.camPosY)
         {
             this.camPosY -= 128;
-            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 80);
         }
         else if(this.player.body.position.y > this.camPosY + 128)
         {
             this.camPosY += 128;
-            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 80);
         }  
         
             var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
