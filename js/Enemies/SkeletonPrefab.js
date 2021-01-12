@@ -60,6 +60,7 @@ class SkeletonPrefab extends EnemyBase{
                     this.canJump = false;
                     this.auxSkeleton.active = true;
                     this.anims.play('skeletonJump');
+                    this.scene.soundManager.PlayFX('enemyJumping_FX')
                     
                     this.auxSkeleton.Init(this);
                 }

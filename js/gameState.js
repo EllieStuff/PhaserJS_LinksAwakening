@@ -96,32 +96,58 @@ class gameState extends Phaser.Scene{
         this.load.audio('miniBossRoller_FX', rutaFX         + 'LA_RollingBones_Roller.wav');
             //Enemies
         this.load.audio('bladeTrap_FX', rutaFX              + 'LA_BladeTrap.wav');
-        this.load.audio('enemyDying_FX', rutaFX             + 'LA_Enemy_Die.wav'); //---
+        this.load.audio('enemyDying_FX', rutaFX             + 'LA_Enemy_Die.wav'); // - Testing
         this.load.audio('enemyDyingPowerUp_FX', rutaFX      + 'LA_Enemy_Die_Power.wav'); //---
         this.load.audio('enemyFalling_FX', rutaFX           + 'LA_Enemy_Fall.wav'); //---
-        this.load.audio('enemyHit_FX', rutaFX               + 'LA_Enemy_Hit.wav'); //---
+        this.load.audio('enemyHit_FX', rutaFX               + 'LA_Enemy_Hit.wav'); // - Testing
         this.load.audio('enemyHitPowerUp_FX', rutaFX        + 'LA_Enemy_Hit_Power.wav'); //---
-        this.load.audio('enemyJumping_FX', rutaFX           + 'LA_Enemy_Jump.wav'); //---
+        this.load.audio('enemyJumping_FX', rutaFX           + 'LA_Enemy_Jump.wav'); // - ToDo: esta en esquelet, falta en miniboss
             //items
-        this.load.audio('compassSignal_FX', rutaFX          + 'LA_Dungeon_Signal.wav'); //---
+        this.load.audio('compassSignal_FX', rutaFX          + 'LA_Dungeon_Signal.wav'); // - ToDo: averiguar com va aixo
+        this.load.audio('getHeartContainer_FX', rutaFX      + 'LA_Fanfare_HeartContainer.wav'); //---
+        this.load.audio('getFanfareItem_FX', rutaFX         + 'LA_Fanfare_Item.wav'); //---
+        this.load.audio('getFanfareItemExtended_FX', rutaFX + 'LA_Fanfare_Item_Extended.wav'); //---
+        this.load.audio('getItem1_FX', rutaFX               + 'LA_Get_Item.wav'); //---
+        this.load.audio('getItem2_FX', rutaFX               + 'LA_Get_Item2.wav'); //---
+        this.load.audio('getPowerUp_FX', rutaFX             + 'LA_Get_PowerUp.wav');
+        this.load.audio('getRupee_FX', rutaFX               + 'LA_Get_Rupee.wav');
+        this.load.audio('getSirenInstrument_FX', rutaFX     + 'LA_Get_SirenInstrument.wav'); //---
+        this.load.audio('getSword_FX', rutaFX               + 'LA_Get_Sword.wav'); //---
+        this.load.audio('getFullMoonCello_FX', rutaFX       + 'LA_SirensInstrument_FullMoonCello.wav'); //---
             //Tilemap
         this.load.audio('openChest_FX', rutaFX              + 'LA_Chest_Open.wav'); // - ToDo
         this.load.audio('doorSlam_FX', rutaFX               + 'LA_Dungeon_DoorSlam.wav'); // - Testing
         this.load.audio('oneWayDoor_FX', rutaFX             + 'LA_Dungeon_OneWayDoor.wav'); // - Testing
-        this.load.audio('triggerSwitch_FX', rutaFX          + 'LA_Dungeon_Switch.wav'); //---
-        this.load.audio('teleport_FX', rutaFX               + 'LA_Dungeon_Teleport.wav'); //---
-        this.load.audio('teleportAppear_FX', rutaFX         + 'LA_Dungeon_Teleport_Appear.wav'); //---
+        this.load.audio('triggerSwitch_FX', rutaFX          + 'LA_Dungeon_Switch.wav'); // - ToDo
+        this.load.audio('teleport_FX', rutaFX               + 'LA_Dungeon_Teleport.wav'); // - ToDo: mirar si posarem el tp al final
+        this.load.audio('teleportAppear_FX', rutaFX         + 'LA_Dungeon_Teleport_Appear.wav'); // - ToDo: ""
             //Events
         this.load.audio('transportOut_FX', rutaFX           + 'LA_Dungeon_TransportOut.wav'); //--- //Quan agafes l'instrument i et fa fora de la dungeon
+        this.load.audio('error_FX', rutaFX                  + 'LA_Error.wav'); //---
         
         //OST
-        
+        this.load.audio('intro_OST', rutaOST                  + '01. Intro.mp3');
+        this.load.audio('title_OST', rutaOST                  + '02. Title.mp3');
+        this.load.audio('playerSelect_OST', rutaOST           + '03. Player Select.mp3');
+        this.load.audio('playerSelectZelda_OST', rutaOST      + '04. Player Select ZELDA.mp3');
+        this.load.audio('overworld_OST', rutaOST              + '10. Overworld.mp3');
+        this.load.audio('powerUp_OST', rutaOST                + '17. Piece Of Power _ Guardian Acorn.mp3');
+        this.load.audio('tailCave_OST', rutaOST               + '19. Level 1 - Tail Cave.mp3');
+        this.load.audio('sideScrolling_OST', rutaOST          + '20. Sidescrolling.mp3');
+        this.load.audio('miniBoss_OST', rutaOST               + '21. Mini Boss Battle.mp3');
+        this.load.audio('boss_OST', rutaOST                   + '22. Boss Battle.mp3');
+        this.load.audio('bossDefeated_OST', rutaOST           + '23. Boss Defeated.mp3');
+        this.load.audio('instrumentsOfTheSirens_OST', rutaOST + '24. Instrument Of The Sirens.mp3');
+        this.load.audio('fullMoonCello_OST', rutaOST          + '25. The Full Moon Cello.mp3');
         
 	}
 	create(){
         //Load Map
         this.LoadMap();
         this.LoadPlatformerMap();
+        
+        this.soundManager = new SoundManager(this)
+        
         //this.LoadMap();
         
         //SetOrigin
@@ -364,10 +390,13 @@ class gameState extends Phaser.Scene{
         this.owlText.text = "";
         this.counter = 0;
     }
-    //
+    
     
 	update()
     {
+        
+        //this.sound.play('tailCave_OST', true)
+        
         //MOVEMENT
         
             var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";

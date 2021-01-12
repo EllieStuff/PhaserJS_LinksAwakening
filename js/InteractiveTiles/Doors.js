@@ -216,7 +216,7 @@ class OneWayDoorBackwards extends Phaser.GameObjects.Sprite{
     Open(){
         this.anims.play('oneWayDoorBackwardsOpening');
         this.active = false;
-        this.scene.sound.play('oneWayDoor_FX')
+        this.scene.soundManager.PlayFX('oneWayDoor_FX')
     }
     Close(){
         this.active = true;
@@ -321,7 +321,7 @@ class TriggerDoor extends DoorsPrefab{
     }
     
     Deactivate(){
-        this.scene.time.addEvent({delay: 300, callback: function(){this.visible = false; this.x = 0: this.y = 0; }, callbackScope: this, repeat: 0});
+        this.scene.time.addEvent({delay: 300, callback: function(){this.visible = false; this.x = 0; this.y = 0; }, callbackScope: this, repeat: 0});
     }
     
     Update(){

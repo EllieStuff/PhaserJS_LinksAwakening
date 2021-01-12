@@ -68,7 +68,7 @@ class BladePrefab extends EnemyBase{
                     this.MoveTowards(this.targetPosUp, this.speed);
                 }
                 
-                this.scene.sound.play('bladeTrap_FX')
+                this.scene.soundManager.PlayFX('bladeTrap_FX')
             }
         }
         else if (this.returning)
