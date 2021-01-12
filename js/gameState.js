@@ -21,14 +21,16 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('playerPlatformerJump' ,rutaImgLink + 'platformerJumpAnim.png' ,{frameWidth: 16, frameHeight: 16});
         
         //Enemies
-        this.load.spritesheet('HardHat'      ,rutaImgEnemies + 'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('enemySkeleton',rutaImgEnemies + 'EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('auxSkeleton'  ,rutaImgEnemies + 'EsqueletoJumpAnim.png' ,{frameWidth: 16, frameHeight: 32});
-        this.load.spritesheet('spikedBeetle' ,rutaImgEnemies + 'SpikedBeetle.png'      ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('pokerEnemy'   ,rutaImgEnemies + 'PokerEnemy.png'        ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('BladeTrap', rutaImgEnemies    + 'BladeTrap.png'         ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('batEnemy', rutaImgEnemies     + 'KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('goomba', rutaImgEnemies       + 'Goomba.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('HardHat'      ,rutaImgEnemies   + 'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('enemySkeleton',rutaImgEnemies   + 'EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('auxSkeleton'  ,rutaImgEnemies   + 'EsqueletoJumpAnim.png' ,{frameWidth: 16, frameHeight: 32});
+        this.load.spritesheet('spikedBeetle' ,rutaImgEnemies   + 'SpikedBeetle.png'      ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('pokerEnemy'   ,rutaImgEnemies   + 'PokerEnemy.png'        ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('BladeTrap', rutaImgEnemies      + 'BladeTrap.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('batEnemy', rutaImgEnemies       + 'KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('goomba', rutaImgEnemies         + 'Goomba.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('redZol', rutaImgEnemies         + 'RedZol.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('greenZol', rutaImgEnemies       + 'GreenZol.png'            ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('sparkEnemy', rutaImgEnemies   + 'SparkAnim.png'         ,{frameWidth: 16, frameHeight: 16});
         
         this.load.spritesheet('moldormEnemy', rutaImgEnemies + 'MiniMoldorm.png'       ,{frameWidth: 16, frameHeight: 16});
@@ -144,12 +146,21 @@ class gameState extends Phaser.Scene{
         this.owlString = "HOLA MUNDO";
         this.owlText = this.add.text(config.width, config.height, this.owlString, { fontFamily: 'Arial', fontSize: '25px',   color:'#fff' }).setOrigin(1);
         this.counter = 0;
+        this.cameras.main.setBounds(0, 0, this.width, this.height);
+        //this.cameras.main.startFollow(this.player);
+        this.camPosX = 160 * 3;
+        this.camPosY = 128 * 5;
+        this.cameras.main
+        this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+        //this.cameras.main.setLerp(0.01);
+        //this.cameras.main.setScroll(160*2 + 80,128*5 + 64);
+        
 	}
     
     CreatePlayer()
     {
         //this.player = this.physics.add;
-        this.player = new PlayerPrefab(this,config.width/2,config.height/2);
+        this.player = new PlayerPrefab(this,555,725);
         //this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0,5).setScale(1);
         
     }
@@ -333,16 +344,29 @@ class gameState extends Phaser.Scene{
     
 	update()
     {
-        //MOVEMENT
+        if(this.player.body.position.x < this.camPosX)
+        {
+            this.camPosX -= 160;
+            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+        }
+        else if(this.player.body.position.x > this.camPosX + 160)
+        {
+           this.camPosX += 160;
+           this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+        }
+        else if(this.player.body.position.y < this.camPosY)
+        {
+            this.camPosY -= 128;
+            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+        }
+        else if(this.player.body.position.y > this.camPosY + 128)
+        {
+            this.camPosY += 128;
+            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+        }  
         
             var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
             this.ShowText(sampleText, sampleText.length);
-        
-        
-               
-           
-        //ATTACK
-        
 
 	}
     
