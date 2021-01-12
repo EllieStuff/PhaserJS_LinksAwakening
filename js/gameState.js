@@ -9,7 +9,9 @@ class gameState extends Phaser.Scene{
         var rutaImgItems            = 'assets/img/items/';
         var rutaImgTiles            = 'assets/img/tiles/';
         var rutaImgInteractiveTiles = 'assets/img/InteractiveTiles/';
-        var rutaImgHUD = 'assets/img/UI/';
+        var rutaImgHUD              = 'assets/img/UI/';
+        var rutaFX                  = 'assets/au/FX/';
+        var rutaOST                 = 'assets/au/OST/';
         
         // Load Images
         //Player
@@ -79,7 +81,40 @@ class gameState extends Phaser.Scene{
         this.load.tilemapTiledJSON('dungeon', 'maps/insideMap.json');
         this.load.tilemapTiledJSON('platformerDungeon', 'maps/2dVerticalMap.json');
         
+        
         // Load Audios
+        //FX
+            //Bosses - ToDo
+        this.load.audio('bossBursting_FX', rutaFX           + 'LA_Boss_Bursting.wav');
+        this.load.audio('bossBurstingFast1_FX', rutaFX      + 'LA_Boss_Bursting_Fast1.wav');
+        this.load.audio('bossBurstingFast2_FX', rutaFX      + 'LA_Boss_Bursting_Fast2.wav');
+        this.load.audio('bossDying_FX', rutaFX              + 'LA_Boss_Die.wav');
+        this.load.audio('bossExploding_FX', rutaFX          + 'LA_Boss_Explode.wav');
+        this.load.audio('bossHit_FX', rutaFX                + 'LA_Boss_Hit.wav');
+        this.load.audio('bossSegmentExplode_FX', rutaFX     + 'LA_Moldorm_SegmentExplode.wav');
+        this.load.audio('bossSpeedy_FX', rutaFX             + 'LA_Moldorm_Speedy.wav');
+        this.load.audio('miniBossRoller_FX', rutaFX         + 'LA_RollingBones_Roller.wav');
+            //Enemies
+        this.load.audio('bladeTrap_FX', rutaFX              + 'LA_BladeTrap.wav');
+        this.load.audio('enemyDying_FX', rutaFX             + 'LA_Enemy_Die.wav'); //---
+        this.load.audio('enemyDyingPowerUp_FX', rutaFX      + 'LA_Enemy_Die_Power.wav'); //---
+        this.load.audio('enemyFalling_FX', rutaFX           + 'LA_Enemy_Fall.wav'); //---
+        this.load.audio('enemyHit_FX', rutaFX               + 'LA_Enemy_Hit.wav'); //---
+        this.load.audio('enemyHitPowerUp_FX', rutaFX        + 'LA_Enemy_Hit_Power.wav'); //---
+        this.load.audio('enemyJumping_FX', rutaFX           + 'LA_Enemy_Jump.wav'); //---
+            //items
+        this.load.audio('compassSignal_FX', rutaFX          + 'LA_Dungeon_Signal.wav'); //---
+            //Tilemap
+        this.load.audio('openChest_FX', rutaFX              + 'LA_Chest_Open.wav'); // - ToDo
+        this.load.audio('doorSlam_FX', rutaFX               + 'LA_Dungeon_DoorSlam.wav'); // - Testing
+        this.load.audio('oneWayDoor_FX', rutaFX             + 'LA_Dungeon_OneWayDoor.wav'); // - Testing
+        this.load.audio('triggerSwitch_FX', rutaFX          + 'LA_Dungeon_Switch.wav'); //---
+        this.load.audio('teleport_FX', rutaFX               + 'LA_Dungeon_Teleport.wav'); //---
+        this.load.audio('teleportAppear_FX', rutaFX         + 'LA_Dungeon_Teleport_Appear.wav'); //---
+            //Events
+        this.load.audio('transportOut_FX', rutaFX           + 'LA_Dungeon_TransportOut.wav'); //--- //Quan agafes l'instrument i et fa fora de la dungeon
+        
+        //OST
         
         
 	}
