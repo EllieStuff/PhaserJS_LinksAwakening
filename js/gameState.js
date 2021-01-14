@@ -103,6 +103,18 @@ class gameState extends Phaser.Scene{
         this.load.audio('enemyHit_FX', rutaFX               + 'LA_Enemy_Hit.wav'); // - Testing
         this.load.audio('enemyHitPowerUp_FX', rutaFX        + 'LA_Enemy_Hit_Power.wav'); //---
         this.load.audio('enemyJumping_FX', rutaFX           + 'LA_Enemy_Jump.wav'); // - ToDo: esta en esquelet, falta en miniboss
+            //Player
+        this.load.audio('linkBounce_FX', rutaFX             + 'LA_Link_Bounce.wav'); //---
+        this.load.audio('linkDying_FX', rutaFX              + 'LA_Link_Dying.wav'); //---
+        this.load.audio('linkHurt_FX', rutaFX               + 'LA_Link_Hurt.wav'); //---
+        this.load.audio('linkJump_FX', rutaFX               + 'LA_Link_Jump.wav'); //---
+        this.load.audio('linkPickUp_FX', rutaFX             + 'LA_Link_PickUp.wav'); //---
+        this.load.audio('linkRebound_FX', rutaFX            + 'LA_Link_Rebound.wav'); //---
+        this.load.audio('linkRun_FX', rutaFX                + 'LA_Link_Run.wav'); //---
+        this.load.audio('linkHurt_FX', rutaFX               + 'LA_Link_Hurt.wav'); //---
+        this.load.audio('linkShock_FX', rutaFX              + 'LA_Link_Shock.wav'); //---
+        this.load.audio('linkThrow_FX', rutaFX              + 'LA_Link_Throw.wav'); //---
+        this.load.audio('linkLowHealth_FX', rutaFX          + 'LA_LowHealth.wav'); //---
             //items
         this.load.audio('compassSignal_FX', rutaFX          + 'LA_Dungeon_Signal.wav'); // - ToDo: averiguar com va aixo
         this.load.audio('getHeartContainer_FX', rutaFX      + 'LA_Fanfare_HeartContainer.wav'); //---
@@ -122,6 +134,7 @@ class gameState extends Phaser.Scene{
         this.load.audio('triggerSwitch_FX', rutaFX          + 'LA_Dungeon_Switch.wav'); // - ToDo
         this.load.audio('teleport_FX', rutaFX               + 'LA_Dungeon_Teleport.wav'); // - ToDo: mirar si posarem el tp al final
         this.load.audio('teleportAppear_FX', rutaFX         + 'LA_Dungeon_Teleport_Appear.wav'); // - ToDo: ""
+        this.load.audio('groundCrumbling_FX', rutaFX        + 'LA_Ground_Crumble.wav'); ///---
             //Events
         this.load.audio('transportOut_FX', rutaFX           + 'LA_Dungeon_TransportOut.wav'); //--- //Quan agafes l'instrument i et fa fora de la dungeon
         this.load.audio('error_FX', rutaFX                  + 'LA_Error.wav'); //---
