@@ -21,6 +21,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('playerSlash'     ,rutaImgLink + 'LinkSlash.png'   ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerJump'      ,rutaImgLink + 'jumpAnim.png'    ,{frameWidth: 16, frameHeight: 32});
         this.load.spritesheet('playerPlatformerJump' ,rutaImgLink + 'platformerJumpAnim.png' ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerFall'      ,rutaImgLink + 'fallAnim.png'    ,{frameWidth: 16, frameHeight: 16});
         
         //Enemies
         this.load.spritesheet('HardHat'      ,rutaImgEnemies + 'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
@@ -300,6 +301,7 @@ class gameState extends Phaser.Scene{
         this.voids.add(this.map.createStaticLayer('void2', 'blocks'));
         this.map.setCollision(40,false,false,'void2');
         this.map.createStaticLayer('cliff', 'blocks');
+        //ToDo: Afegir els brakableBlocks als void nomes quan es trenquin
         this.voids.add(this.map.createStaticLayer('breakblefloor', 'blocks'));
         this.map.setCollision(107,false,false,'breakblefloor');
         
