@@ -72,6 +72,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
         this.load.image('hitbox', rutaImgLink + 'HitboxLink.png');
         this.load.image('hitboxAttack', rutaImgLink + 'LinkAttackHit.png');
+        this.load.image('hitboxShield', rutaImgLink + 'ShieldHitbox.png');
         
         
         // Dungeon
