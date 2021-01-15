@@ -10,7 +10,8 @@ class gameState extends Phaser.Scene{
         var rutaImgTiles            = 'assets/img/tiles/';
         var rutaImgInteractiveTiles = 'assets/img/InteractiveTiles/';
         var rutaImgHUD              = 'assets/img/UI/';
-        var rutaImgMenus            = 'assets/img/MapUI/';
+        var rutaFX                  = 'assets/au/FX/';
+        var rutaOST                 = 'assets/au/OST/';
         
         // Load Images
         //Player
@@ -22,6 +23,8 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('playerAttack'        ,rutaImgLink + 'LinkAttack.png'         ,{frameWidth: 48, frameHeight: 48});
         this.load.spritesheet('playerSpin'          ,rutaImgLink + 'LinkSpinA.png'          ,{frameWidth: 48, frameHeight: 48});
         this.load.spritesheet('playerCharge'        ,rutaImgLink + 'LinkCharge.png'         ,{frameWidth: 48, frameHeight: 48});
+        this.load.spritesheet('playerSlash'     ,rutaImgLink + 'LinkSlash.png'   ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerFall'      ,rutaImgLink + 'fallAnim.png'    ,{frameWidth: 16, frameHeight: 16});
         //Enemies
         this.load.spritesheet('HardHat'      ,rutaImgEnemies   + 'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('enemySkeleton',rutaImgEnemies   + 'EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
@@ -86,8 +89,77 @@ class gameState extends Phaser.Scene{
         this.load.tilemapTiledJSON('dungeon', 'maps/insideMap.json');
         this.load.tilemapTiledJSON('platformerDungeon', 'maps/2dVerticalMap.json');
         
-        // Load Audios
         
+        // Load Audios
+        //FX
+            //Bosses - ToDo
+        this.load.audio('bossBursting_FX', rutaFX           + 'LA_Boss_Bursting.wav');
+        this.load.audio('bossBurstingFast1_FX', rutaFX      + 'LA_Boss_Bursting_Fast1.wav');
+        this.load.audio('bossBurstingFast2_FX', rutaFX      + 'LA_Boss_Bursting_Fast2.wav');
+        this.load.audio('bossDying_FX', rutaFX              + 'LA_Boss_Die.wav');
+        this.load.audio('bossExploding_FX', rutaFX          + 'LA_Boss_Explode.wav');
+        this.load.audio('bossHit_FX', rutaFX                + 'LA_Boss_Hit.wav');
+        this.load.audio('bossSegmentExplode_FX', rutaFX     + 'LA_Moldorm_SegmentExplode.wav');
+        this.load.audio('bossSpeedy_FX', rutaFX             + 'LA_Moldorm_Speedy.wav');
+        this.load.audio('miniBossRoller_FX', rutaFX         + 'LA_RollingBones_Roller.wav');
+            //Enemies
+        this.load.audio('bladeTrap_FX', rutaFX              + 'LA_BladeTrap.wav');
+        this.load.audio('enemyDying_FX', rutaFX             + 'LA_Enemy_Die.wav'); // - Testing
+        this.load.audio('enemyDyingPowerUp_FX', rutaFX      + 'LA_Enemy_Die_Power.wav'); //---
+        this.load.audio('enemyFalling_FX', rutaFX           + 'LA_Enemy_Fall.wav'); //---
+        this.load.audio('enemyHit_FX', rutaFX               + 'LA_Enemy_Hit.wav'); // - Testing
+        this.load.audio('enemyHitPowerUp_FX', rutaFX        + 'LA_Enemy_Hit_Power.wav'); //---
+        this.load.audio('enemyJumping_FX', rutaFX           + 'LA_Enemy_Jump.wav'); // - ToDo: esta en esquelet, falta en miniboss
+            //Player
+        this.load.audio('linkBounce_FX', rutaFX             + 'LA_Link_Bounce.wav'); //---
+        this.load.audio('linkDying_FX', rutaFX              + 'LA_Link_Dying.wav'); //---
+        this.load.audio('linkHurt_FX', rutaFX               + 'LA_Link_Hurt.wav'); //---
+        this.load.audio('linkJump_FX', rutaFX               + 'LA_Link_Jump.wav'); //---
+        this.load.audio('linkPickUp_FX', rutaFX             + 'LA_Link_PickUp.wav'); //---
+        this.load.audio('linkRebound_FX', rutaFX            + 'LA_Link_Rebound.wav'); //---
+        this.load.audio('linkRun_FX', rutaFX                + 'LA_Link_Run.wav'); //---
+        this.load.audio('linkHurt_FX', rutaFX               + 'LA_Link_Hurt.wav'); //---
+        this.load.audio('linkShock_FX', rutaFX              + 'LA_Link_Shock.wav'); //---
+        this.load.audio('linkThrow_FX', rutaFX              + 'LA_Link_Throw.wav'); //---
+        this.load.audio('linkLowHealth_FX', rutaFX          + 'LA_LowHealth.wav'); //---
+            //items
+        this.load.audio('compassSignal_FX', rutaFX          + 'LA_Dungeon_Signal.wav'); // - ToDo: averiguar com va aixo
+        this.load.audio('getHeartContainer_FX', rutaFX      + 'LA_Fanfare_HeartContainer.wav'); //---
+        this.load.audio('getFanfareItem_FX', rutaFX         + 'LA_Fanfare_Item.wav'); //---
+        this.load.audio('getFanfareItemExtended_FX', rutaFX + 'LA_Fanfare_Item_Extended.wav'); //---
+        this.load.audio('getItem1_FX', rutaFX               + 'LA_Get_Item.wav'); //---
+        this.load.audio('getItem2_FX', rutaFX               + 'LA_Get_Item2.wav'); //---
+        this.load.audio('getPowerUp_FX', rutaFX             + 'LA_Get_PowerUp.wav');
+        this.load.audio('getRupee_FX', rutaFX               + 'LA_Get_Rupee.wav');
+        this.load.audio('getSirenInstrument_FX', rutaFX     + 'LA_Get_SirenInstrument.wav'); //---
+        this.load.audio('getSword_FX', rutaFX               + 'LA_Get_Sword.wav'); //---
+        this.load.audio('getFullMoonCello_FX', rutaFX       + 'LA_SirensInstrument_FullMoonCello.wav'); //---
+            //Tilemap
+        this.load.audio('openChest_FX', rutaFX              + 'LA_Chest_Open.wav'); // - ToDo
+        this.load.audio('doorSlam_FX', rutaFX               + 'LA_Dungeon_DoorSlam.wav'); // - Testing
+        this.load.audio('oneWayDoor_FX', rutaFX             + 'LA_Dungeon_OneWayDoor.wav'); // - Testing
+        this.load.audio('triggerSwitch_FX', rutaFX          + 'LA_Dungeon_Switch.wav'); // - ToDo
+        this.load.audio('teleport_FX', rutaFX               + 'LA_Dungeon_Teleport.wav'); // - ToDo: mirar si posarem el tp al final
+        this.load.audio('teleportAppear_FX', rutaFX         + 'LA_Dungeon_Teleport_Appear.wav'); // - ToDo: ""
+        this.load.audio('groundCrumbling_FX', rutaFX        + 'LA_Ground_Crumble.wav'); ///---
+            //Events
+        this.load.audio('transportOut_FX', rutaFX           + 'LA_Dungeon_TransportOut.wav'); //--- //Quan agafes l'instrument i et fa fora de la dungeon
+        this.load.audio('error_FX', rutaFX                  + 'LA_Error.wav'); //---
+        
+        //OST
+        this.load.audio('intro_OST', rutaOST                  + '01. Intro.mp3');
+        this.load.audio('title_OST', rutaOST                  + '02. Title.mp3');
+        this.load.audio('playerSelect_OST', rutaOST           + '03. Player Select.mp3');
+        this.load.audio('playerSelectZelda_OST', rutaOST      + '04. Player Select ZELDA.mp3');
+        this.load.audio('overworld_OST', rutaOST              + '10. Overworld.mp3');
+        this.load.audio('powerUp_OST', rutaOST                + '17. Piece Of Power _ Guardian Acorn.mp3');
+        this.load.audio('tailCave_OST', rutaOST               + '19. Level 1 - Tail Cave.mp3');
+        this.load.audio('sideScrolling_OST', rutaOST          + '20. Sidescrolling.mp3');
+        this.load.audio('miniBoss_OST', rutaOST               + '21. Mini Boss Battle.mp3');
+        this.load.audio('boss_OST', rutaOST                   + '22. Boss Battle.mp3');
+        this.load.audio('bossDefeated_OST', rutaOST           + '23. Boss Defeated.mp3');
+        this.load.audio('instrumentsOfTheSirens_OST', rutaOST + '24. Instrument Of The Sirens.mp3');
+        this.load.audio('fullMoonCello_OST', rutaOST          + '25. The Full Moon Cello.mp3');
         
 	}
 	create(){
@@ -95,7 +167,7 @@ class gameState extends Phaser.Scene{
         this.LoadMap();
         this.LoadPlatformerMap();
         
-        
+        this.soundManager = new SoundManager(this)
         
         //this.LoadMap();
         
@@ -264,6 +336,7 @@ class gameState extends Phaser.Scene{
         this.voids.add(this.map.createStaticLayer('void2', 'blocks'));
         this.map.setCollision(40,false,false,'void2');
         this.map.createStaticLayer('cliff', 'blocks');
+        //ToDo: Afegir els brakableBlocks als void nomes quan es trenquin
         this.voids.add(this.map.createStaticLayer('breakblefloor', 'blocks'));
         this.map.setCollision(107,false,false,'breakblefloor');
         
@@ -357,7 +430,7 @@ class gameState extends Phaser.Scene{
         this.owlText.text = "";
         this.counter = 0;
     }
-    //
+    
     
 	update()
     {

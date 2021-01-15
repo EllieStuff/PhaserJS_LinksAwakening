@@ -18,6 +18,7 @@ class PowerUpAtk extends ItemsBase{
         this.scene.player.attack = this.scene.player.initAttack * 2;
         this.scene.player.speed = this.scene.player.initSpeed * 1.5;
         this.scene.player.atkPowerUpBuffer = 3;
+        this.scene.soundManager.PlayFX('getPowerUp_FX')
         
         this.destroy();
     }
@@ -33,6 +34,7 @@ class PowerUpDef extends ItemsBase{
     StartEffect(){
         this.scene.player.defense = this.scene.player.initDefense * 2;
         this.scene.player.defPowerUpBuffer = 3;
+        this.scene.soundManager.PlayFX('getPowerUp_FX')
         
         this.destroy();
     }

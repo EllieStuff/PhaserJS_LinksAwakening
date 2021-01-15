@@ -191,8 +191,6 @@ class PlayerAnimator extends Phaser.GameObjects.Sprite{
             repeat: 0
         });
         
-        
-        //TODO: Player idle anims
         this.scene.anims.create({
             key: 'playerIdleDown',
             frames: this.scene.anims.generateFrameNumbers('playerMove', { start: 0, end: 0 }),
@@ -280,6 +278,13 @@ class PlayerAnimator extends Phaser.GameObjects.Sprite{
             frameRate: 9,
             repeat: 0
         });
+        this.scene.anims.create({
+            key: 'playerFalling',
+            frames: this.scene.anims.generateFrameNumbers('playerFall', { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: 0
+        });
+        
     }
     
     

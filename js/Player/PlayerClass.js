@@ -41,10 +41,14 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.shieldDir = this.moveDir;
         this.currentAnim = 'walkdown';
         this.gravity = 10;
+        this.falling = false;
+        this.lastSavePosition = new Phaser.Math.Vector2(positionX, positionY)
+        this.mustRefreshSavePos = true;
         
         this.animator = new PlayerAnimator(scene, positionX, positionY);
         
         this.ladderColManager = new CollisionManager(scene);
+        //this.voidsColManager = new CollisionManager(scene);
         
         this.InitCollisions();
         
@@ -54,9 +58,50 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.scene.physics.add.collider(this, this.scene.walls);
         this.scene.physics.add.collider(this, this.scene.platWalls);
         this.scene.physics.add.collider(this, this.scene.platFloor);
+        this.scene.physics.add.overlap(this, this.scene.voids, this.Fall, null, this);
         
     }
     
+    
+    Fall(){
+        //this.voidsColManager.UpdateOnTrigger()
+        
+        /*if(!this.falling && !this.isJumping){
+            this.falling = true
+            this.active = false
+            this.body.stop()
+            this.GetDamaged(2)
+            this.currentAnim = "playerFalling"
+            
+            this.scene.time.addEvent({delay: 500, callback: this.RespawnAfterFalling, callbackScope: this, repeat: 0});
+            
+        }*/
+        
+    }
+    
+    RespawnAfterFalling(){
+        this.falling = false; 
+        this.active = true; 
+        
+        if(this.health > 0){
+            this.SetIdleAnim();
+            this.x = this.lastSavePosition.x
+            this.y = this.lastSavePosition.y
+        }
+        else{
+            //ToDo: Fer animació i respawn de mort
+            
+        }
+    }
+    
+    RefreshLastSavePos(){
+        if(this.mustRefreshSavePos && !this.falling){
+            this.mustRefreshSavePos = false
+            this.lastSavePosition = new Phaser.Math.Vector2(this.x, this.y)
+            
+            this.scene.time.addEvent({delay: 1000, callback: function(){ this.mustRefreshSavePos = true; }, callbackScope: this, repeat: 0});
+        }
+    }
     
     GetDamaged(_dmgTaken)
     {
@@ -351,26 +396,30 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     
     Update()
     {
-        switch(this.currPhysics)
-        {
-            case this.scene.PhysicTypes.TOP_DOWN_VIEW:
-                this.TopDownUpdate();
-                break;
-                
-            case this.scene.PhysicTypes.FRONT_VIEW:
-                this.FrontViewUpdate();
-                break;
-                
-                
-            default:
-                console.log("something went wrong");
-                break;
+        if(this.active){
+            switch(this.currPhysics)
+            {
+                case this.scene.PhysicTypes.TOP_DOWN_VIEW:
+                    this.TopDownUpdate();
+                    break;
+
+                case this.scene.PhysicTypes.FRONT_VIEW:
+                    this.FrontViewUpdate();
+                    break;
+
+
+                default:
+                    console.log("something went wrong");
+                    break;
+            }
         }
-        
         
     }
     
     TopDownUpdate(){
+        //Decides respawns position in case of falling
+        this.RefreshLastSavePos()
+        
         //Jump
         if(this.assignA == "Jump" && !this.isJumping)
             {
