@@ -10,6 +10,7 @@ class gameState extends Phaser.Scene{
         var rutaImgTiles            = 'assets/img/tiles/';
         var rutaImgInteractiveTiles = 'assets/img/InteractiveTiles/';
         var rutaImgHUD              = 'assets/img/UI/';
+        var rutaImgMenus            = 'assets/img/MapUI/';
         var rutaFX                  = 'assets/au/FX/';
         var rutaOST                 = 'assets/au/OST/';
         
@@ -145,6 +146,7 @@ class gameState extends Phaser.Scene{
             //Events
         this.load.audio('transportOut_FX', rutaFX           + 'LA_Dungeon_TransportOut.wav'); //--- //Quan agafes l'instrument i et fa fora de la dungeon
         this.load.audio('error_FX', rutaFX                  + 'LA_Error.wav'); //---
+        this.load.audio('titleAppear_FX', rutaFX            + 'LA_TitleAppear.wav');
         
         //OST
         this.load.audio('intro_OST', rutaOST                  + '01. Intro.mp3');
@@ -462,7 +464,10 @@ class gameState extends Phaser.Scene{
         if(this.startMenu.visible && this.inputs.GetAnyKey()){
             this.startMenu.visible = false
             this.player.active = true
+            
             this.cameras.main.flash(5000, 0xffffff)
+            this.soundManager.PlayFX('titleAppear_FX')
+            this.soundManager.PlayOST('tailCave_OST')
         }
 
 	}

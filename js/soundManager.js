@@ -58,7 +58,7 @@ class SoundManager {
         
         if(!this.audioInitied){
             this.audioInitied = true
-            this.PlayOST('tailCave_OST')
+            this.PlayOST('title_OST')
         }
         
     }
