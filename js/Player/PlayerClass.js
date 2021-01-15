@@ -38,6 +38,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.hasMasterKey = false;
         this.keyAmmount = 0;
         this.shieldUp = false;
+        this.shieldDir = this.moveDir;
         this.currentAnim = 'walkdown';
         this.gravity = 10;
         
@@ -152,6 +153,38 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         }
         
     }
+    
+    SetShieldHitbox()
+    {
+        
+        
+        switch(this.moveDir)
+        {
+            case this.Directions.LEFT:
+                this.hitboxB = this.scene.physics.add.sprite(this.body.x + 2,this.body.y,'hitboxShield').setOrigin(0.5).setScale(1);
+                break;
+
+            case this.Directions.RIGHT:
+                this.hitboxB = this.scene.physics.add.sprite(this.body.x + 6,this.body.y,'hitboxShield').setOrigin(0.5).setScale(1);
+                break;
+
+            case this.Directions.DOWN:
+                this.hitboxB = this.scene.physics.add.sprite(this.body.x + 4,this.body.y + 2,'hitboxShield').setOrigin(0.5).setScale(1);
+                break;
+
+            case this.Directions.UP:
+
+                this.hitboxB = this.scene.physics.add.sprite(this.body.x + 4,this.body.y - 2,'hitboxShield').setOrigin(0.5).setScale(1);
+                break;
+
+            default:
+                break;
+
+        } 
+        this.hitboxB.destroy();
+        
+    }
+    
     
     SetIdleAnim()
     {
@@ -410,6 +443,8 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
                         }
                         if(!this.IsMoving())
                             this.SetIdleAnimSUP();
+                        
+                        this.SetShieldHitbox();
                     }
                     else                            //MOVE WITH SHIELD DOWN
                     {
