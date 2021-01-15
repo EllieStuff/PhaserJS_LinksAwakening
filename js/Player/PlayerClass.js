@@ -65,7 +65,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     Fall(){
         //this.voidsColManager.UpdateOnTrigger()
         
-        if(!this.falling && !this.isJumping){
+        /*if(!this.falling && !this.isJumping){
             this.falling = true
             this.active = false
             this.body.stop()
@@ -74,7 +74,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
             
             this.scene.time.addEvent({delay: 500, callback: this.RespawnAfterFalling, callbackScope: this, repeat: 0});
             
-        }
+        }*/
         
     }
     
