@@ -13,13 +13,14 @@ class gameState extends Phaser.Scene{
         
         // Load Images
         //Player
-        this.load.spritesheet('playerMove'      ,rutaImgLink + 'WAnim.png'       ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('playerMoveShield',rutaImgLink + 'WShieldAnim.png' ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('playerShieldUp'  ,rutaImgLink + 'shieldAnim.png'  ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('playerSlash'     ,rutaImgLink + 'LinkSlash.png'   ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('playerJump'      ,rutaImgLink + 'jumpAnim.png'    ,{frameWidth: 16, frameHeight: 32});
-        this.load.spritesheet('playerPlatformerJump' ,rutaImgLink + 'platformerJumpAnim.png' ,{frameWidth: 16, frameHeight: 16});
-        
+        this.load.spritesheet('playerMove'          ,rutaImgLink + 'WAnim.png'              ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerMoveShield'    ,rutaImgLink + 'WShieldAnim.png'        ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerShieldUp'      ,rutaImgLink + 'shieldAnim.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerJump'          ,rutaImgLink + 'jumpAnim.png'           ,{frameWidth: 16, frameHeight: 32});
+        this.load.spritesheet('playerPlatformerJump',rutaImgLink + 'platformerJumpAnim.png' ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerAttack'        ,rutaImgLink + 'LinkAttack.png'         ,{frameWidth: 48, frameHeight: 48});
+        this.load.spritesheet('playerSpin'          ,rutaImgLink + 'LinkSpinA.png'          ,{frameWidth: 48, frameHeight: 48});
+        this.load.spritesheet('playerCharge'        ,rutaImgLink + 'LinkCharge.png'         ,{frameWidth: 48, frameHeight: 48});
         //Enemies
         this.load.spritesheet('HardHat'      ,rutaImgEnemies   + 'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('enemySkeleton',rutaImgEnemies   + 'EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
@@ -70,6 +71,7 @@ class gameState extends Phaser.Scene{
         //Others
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
         this.load.image('hitbox', rutaImgLink + 'HitboxLink.png');
+        this.load.image('hitboxAttack', rutaImgLink + 'LinkAttackHit.png');
         
         
         // Dungeon

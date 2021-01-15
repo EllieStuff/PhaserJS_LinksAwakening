@@ -24,8 +24,8 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.initAttack = this.attack = 1;
         this.initSpeed = this.speed = 1;
         this.rupies = 0;
-        this.assignA = "";
-        this.assignB = "";
+        this.assignA = "Sword";
+        this.assignB = "Shield";
         this.isJumping = false;
         this.overlapsWithLadder = this.onLadders = false;
         this.atkCharged = false;
@@ -153,7 +153,8 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         
     }
     
-    SetIdleAnim(){
+    SetIdleAnim()
+    {
         switch(this.moveDir){
             case this.Directions.LEFT:
                 this.currentAnim = 'playerIdleLeft';
@@ -169,6 +170,56 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
 
             case this.Directions.UP:
                 this.currentAnim = 'playerIdleUp';
+                break;
+
+            default:
+                break;
+
+        } 
+        
+    }
+    SetIdleAnimS()
+    {
+        switch(this.moveDir){
+            case this.Directions.LEFT:
+                this.currentAnim = 'walkleftSidle';
+                break;
+
+            case this.Directions.RIGHT:
+                this.currentAnim = 'walkrightSidle';
+                break;
+
+            case this.Directions.DOWN:
+                this.currentAnim = 'walkdownSidle';
+                break;
+
+            case this.Directions.UP:
+                this.currentAnim = 'walkupSidle';
+                break;
+
+            default:
+                break;
+
+        } 
+        
+    }
+    SetIdleAnimSUP()
+    {
+        switch(this.moveDir){
+            case this.Directions.LEFT:
+                this.currentAnim = 'shieldLeftI';
+                break;
+
+            case this.Directions.RIGHT:
+                this.currentAnim = 'shieldRightI';
+                break;
+
+            case this.Directions.DOWN:
+                this.currentAnim = 'shieldDownI';
+                break;
+
+            case this.Directions.UP:
+                this.currentAnim = 'shieldUpI';
                 break;
 
             default:
@@ -205,6 +256,39 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
 
         this.scene.time.addEvent({delay: 370, callback: function(){this.isJumping = false; this.animator.extraMargin.y = 0; this.SetIdleAnim();}, callbackScope: this, repeat: 0});
         
+    }
+    
+    Attack()
+    {
+        //this.animator.anims.setTimeScale(0.5);
+        switch(this.moveDir){
+            case this.Directions.LEFT:
+                this.currentAnim = 'playerAttackLeft';
+                this.hitboxA = this.scene.physics.add.sprite(this.body.x - 4,this.body.y - 8,'hitboxAttack').setOrigin(0.5).setScale(1);
+                break;
+
+            case this.Directions.RIGHT:
+                this.currentAnim = 'playerAttackRight';
+                this.hitboxA = this.scene.physics.add.sprite(this.body.x + 12,this.body.y - 8,'hitboxAttack').setOrigin(0.5).setScale(1);
+                break;
+
+            case this.Directions.DOWN:
+                this.currentAnim = 'playerAttackDown';
+                this.hitboxA = this.scene.physics.add.sprite(this.body.x - 4,this.body.y + 8,'hitboxAttack').setOrigin(0.5).setScale(1);
+                break;
+
+            case this.Directions.UP:
+                this.currentAnim = 'playerAttackUp';
+                this.hitboxA = this.scene.physics.add.sprite(this.body.x + 12,this.body.y - 8,'hitboxAttack').setOrigin(0.5).setScale(1);
+                break;
+
+            default:
+                break;
+        }
+        this.body.velocity.x = 0;
+        this.body.velocity.y = 0;
+        this.scene.time.addEvent({delay: 250, callback: function(){this.atkCharged = false;this.hitboxA.destroy();}, callbackScope: this, repeat: 0});
+            
     }
     
     PlatformerJump(){
@@ -255,109 +339,163 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     
     TopDownUpdate(){
         //Jump
-        if(!this.isJumping && this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K))
-        {
-            console.log("in");
-            this.isJumping = true;
-            this.Jump();
+        if(this.assignA == "Jump" && !this.isJumping)
+            {
+                if(this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K))
+                {
+                    console.log("in");
+                    this.isJumping = true;
+                    this.Jump();
             
-        }
+                }
+            }
         
         //MOVEMENT
-        if(!this.isJumping){
-            if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.L))   //MOVE WITH SHIELD UP
-            {
-                this.shieldUp = true;
-
-                if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.A))
-                {
-                    this.currentAnim = 'shieldLeft';
-                    this.moveDir = this.Directions.LEFT;
-                    this.body.velocity.x = -64;
-                }
-                else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.D))
-                {
-                    this.currentAnim = 'shieldRight';
-                    this.moveDir = this.Directions.RIGHT;
-                    this.body.velocity.x = 64;
-                }
-                else
-                {
-                    this.body.velocity.x = 0;
-                }
-
-                if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.S))
-                {
-                    this.currentAnim = 'shieldDown';
-                    this.moveDir = this.Directions.DOWN;
-                    this.body.velocity.y = 64;
-                }
-                else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.W))
-                {
-                    this.currentAnim = 'shieldUp';
-                    this.moveDir = this.Directions.UP;
-                    this.body.velocity.y = -64;
-                }
-                else
-                {
-                    this.body.velocity.y = 0;
-                }
-            }
-            else                            //MOVE WITH SHIELD DOWN
-            {
-
-                this.shieldUp = false;
-
-                if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.A))
-                {
-                    this.currentAnim = 'walkleftS';
-                    this.moveDir = this.Directions.LEFT;
-                    this.body.velocity.x = -64;
-                }
-                else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.D))
-                {
-                    this.currentAnim = 'walkrightS';
-                    this.moveDir = this.Directions.RIGHT;
-                    this.body.velocity.x = 64;
-                }
-                else
-                {
-                    this.body.velocity.x = 0;
-                }
-
-                if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.S))
-                {
-                    this.currentAnim = 'walkdownS';
-                    this.moveDir = this.Directions.DOWN;
-                    this.body.velocity.y = 64;
-
-                }
-                else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.W))
-                {
-                    this.currentAnim = 'walkupS';
-                    this.moveDir = this.Directions.UP;
-                    this.body.velocity.y = -64;
-                }
-                else
-                {
-                    //this.currentAnim = 'idleDown';
-                    //this.player.anims.play('idleDown');
-                    this.body.velocity.y = 0;
-                }
-                /*
-                //NOTA: Per acabar l'animacio i que es quedi mirant on vulguis crec que el millor seria algo aixi amb totes les direccions
-                if(this.scene.inputs.GetKeyUp(this.scene.inputs.KeyCodes.S)){
-                    this.scene.player.anims.play('idleDown');
-                }
-                */
-
-            }
+        if(!this.isJumping)
+        {
             
-            //Decide Idle anim if necessary
-            if(!this.IsMoving())
-                this.SetIdleAnim();
+            if(this.assignA == "Sword")
+            {
+                if(this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K))
+                {
+                    console.log("in");
+                    this.Attack();
+                    this.atkCharged = true;
+                }
+                else if(this.scene.inputs.GetKeyUp(this.scene.inputs.KeyCodes.K))
+                {
+                    
+                }
+            }
+            if(!this.atkCharged)
+            {
+                if(this.assignB == "Shield")
+                {
+                    if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.L))   //MOVE WITH SHIELD UP
+                    {
+                        this.shieldUp = true;
+
+                        if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.A))
+                        {
+                            this.currentAnim = 'shieldLeft';
+                            this.moveDir = this.Directions.LEFT;
+                            this.body.velocity.x = -64;
+                        }
+                        else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.D))
+                        {
+                            this.currentAnim = 'shieldRight';
+                            this.moveDir = this.Directions.RIGHT;
+                            this.body.velocity.x = 64;
+                        }
+                        else
+                        {
+                            this.body.velocity.x = 0;
+                        }
+
+                        if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.S))
+                        {
+                            this.currentAnim = 'shieldDown';
+                            this.moveDir = this.Directions.DOWN;
+                            this.body.velocity.y = 64;
+                        }
+                        else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.W))
+                        {
+                            this.currentAnim = 'shieldUp';
+                            this.moveDir = this.Directions.UP;
+                            this.body.velocity.y = -64;
+                        }
+                        else
+                        {
+                            this.body.velocity.y = 0;
+                        }
+                        if(!this.IsMoving())
+                            this.SetIdleAnimSUP();
+                    }
+                    else                            //MOVE WITH SHIELD DOWN
+                    {
+
+                        this.shieldUp = false;
+
+                        if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.A))
+                        {
+                            this.currentAnim = 'walkleftS';
+                            this.moveDir = this.Directions.LEFT;
+                            this.body.velocity.x = -64;
+                        }
+                        else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.D))
+                        {
+                            this.currentAnim = 'walkrightS';
+                            this.moveDir = this.Directions.RIGHT;
+                            this.body.velocity.x = 64;
+                        }
+                        else
+                        {
+                            this.body.velocity.x = 0;
+                        }
+
+                        if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.S))
+                        {
+                            this.currentAnim = 'walkdownS';
+                            this.moveDir = this.Directions.DOWN;
+                            this.body.velocity.y = 64;
+
+                        }
+                        else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.W))
+                        {
+                            this.currentAnim = 'walkupS';
+                            this.moveDir = this.Directions.UP;
+                            this.body.velocity.y = -64;
+                        }
+                        else
+                        {
+                            this.body.velocity.y = 0;
+                           
+                        }
+                        if(!this.IsMoving())
+                            this.SetIdleAnimS();
+                         
+                    }
+                    
+                }
+                if(this.assignA != "Shield" && this.assignB != "Shield")
+                {
+                    if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.A))
+                    {
+                        this.currentAnim = 'walkleft';
+                         this.moveDir = this.Directions.LEFT;
+                         this.body.velocity.x = -64;
+                    }
+                    else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.D))
+                    {
+                        this.currentAnim = 'walkright';
+                        this.moveDir = this.Directions.RIGHT;
+                        this.body.velocity.x = 64;
+                    }
+                    else
+                    {
+                        this.body.velocity.x = 0;
+                    }
+                    if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.S))
+                    {
+                        this.currentAnim = 'walkdown';
+                        this.moveDir = this.Directions.DOWN;
+                        this.body.velocity.y = 64;
+                    }
+                    else if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.W))
+                    {
+                        this.currentAnim = 'walkup';
+                        this.moveDir = this.Directions.UP;
+                        this.body.velocity.y = -64;
+                    }
+                    else
+                    {
+                        this.body.velocity.y = 0;
+                    }
+                    if (!this.IsMoving())
+                        this.SetIdleAnim();
+                }
+            }
         }
-        
         //Update Animator
         this.animator.Update(this);
         
