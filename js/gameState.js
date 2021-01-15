@@ -9,7 +9,8 @@ class gameState extends Phaser.Scene{
         var rutaImgItems            = 'assets/img/items/';
         var rutaImgTiles            = 'assets/img/tiles/';
         var rutaImgInteractiveTiles = 'assets/img/InteractiveTiles/';
-        var rutaImgHUD = 'assets/img/UI/';
+        var rutaImgHUD              = 'assets/img/UI/';
+        var rutaImgMenus            = 'assets/img/MapUI/';
         
         // Load Images
         //Player
@@ -73,6 +74,7 @@ class gameState extends Phaser.Scene{
         this.load.image('hitbox', rutaImgLink + 'HitboxLink.png');
         this.load.image('hitboxAttack', rutaImgLink + 'LinkAttackHit.png');
         this.load.image('hitboxShield', rutaImgLink + 'ShieldHitbox.png');
+        this.load.image('startMenu', rutaImgMenus + 'Intro Links Awakening.png');
         
         
         // Dungeon
@@ -92,6 +94,9 @@ class gameState extends Phaser.Scene{
         //Load Map
         this.LoadMap();
         this.LoadPlatformerMap();
+        
+        
+        
         //this.LoadMap();
         
         //SetOrigin
@@ -104,7 +109,7 @@ class gameState extends Phaser.Scene{
         this.inputs = new InputManager(this);
        
         //Variables
-        this.DrawDepths = { DEFAULT: 0, INTERACTIVE_TILES: 1, ITEMS: 2, ENEMIES: 3, PLAYER: 4 };
+        this.DrawDepths = { DEFAULT: 0, INTERACTIVE_TILES: 1, ITEMS: 2, ENEMIES: 3, PLAYER: 4, MENU: 7 };
         this.Directions = { RIGHT: 'right', LEFT: 'left', UP: 'up', DOWN: 'down', UP_RIGHT: 'up-right', DOWN_RIGHT: 'down-right', UP_LEFT: 'up-left', DOWN_LEFT: 'down-left', NONE: 'none' };
         this.PhysicTypes = { TOP_DOWN_VIEW: 0, FRONT_VIEW: 1 };
         
@@ -158,12 +163,18 @@ class gameState extends Phaser.Scene{
         //this.cameras.main.setLerp(0.01);
         //this.cameras.main.setScroll(160*2 + 80,128*5 + 64);
         
+        
+        //Init Start Menu
+        this.startMenu = this.add.image(this.camPosX , this.camPosY, 'startMenu').setOrigin(0).setScale(1, 1.06).setDepth(this.DrawDepths.MENU)
+        this.inStartMenu = true;
+        
 	}
     
     CreatePlayer()
     {
         //this.player = this.physics.add;
         this.player = new PlayerPrefab(this,555,725);
+        this.player.active = false;
         //this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0,5).setScale(1);
         
     }
@@ -285,6 +296,9 @@ class gameState extends Phaser.Scene{
         this.fences = this.map.createStaticLayer('fences', 'fences');
         this.map.setCollisionBetween(79,886,true,false,'fences');
         
+        //Init Start Menu
+        //this.startMenu = this.add.image(0, 0,'startMenu')//.setOrigin(1).setScale(7);
+        
         //Init HUD
         this.hudBG = this.add.image(config.width,config.height,'bgHUD').setOrigin(1).setScale(7);
         this.rupieHUD = this.add.image(config.width/2, config.height/1.17, 'rupieHUD').setOrigin(0).setScale(7);
@@ -368,8 +382,15 @@ class gameState extends Phaser.Scene{
             this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 80);
         }  
         
-            var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
-            this.ShowText(sampleText, sampleText.length);
+        var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
+        this.ShowText(sampleText, sampleText.length);
+        
+        
+        if(this.startMenu.visible && this.inputs.GetAnyKey()){
+            this.startMenu.visible = false
+            this.player.active = true
+            this.cameras.main.flash(5000, 0xffffff)
+        }
 
 	}
     
