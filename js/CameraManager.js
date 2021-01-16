@@ -1,4 +1,4 @@
-class CameraManager extends Phaser.GameObjects.Sprite
+class CameraManager
 {
     
     constructor(_scene)
@@ -7,11 +7,11 @@ class CameraManager extends Phaser.GameObjects.Sprite
         
         this.TileX = 3;
         this.TileY = 5;
-        
-        this._scene.cameras.main.setBounds(0, 0, this.scene.width, this.scene.height);
-        this.camPosX = 160 * TileX;
-        this.camPosY = 128 * TileY;
-        this._scene.cameras.main.centerOn(this.camPosX + this.scene.width/2,this.camPosY + this.scene.height/2);
+        this.scene = _scene
+        _scene.cameras.main.setBounds(0, 0, _scene.width, _scene.height);
+        this.camPosX = 160 * this.TileX;
+        this.camPosY = 128 * this.TileY;
+        _scene.cameras.main.centerOn(this.camPosX + _scene.width/2,this.camPosY + _scene.height/2);
         
     }
     
@@ -19,7 +19,7 @@ class CameraManager extends Phaser.GameObjects.Sprite
     
     GenerateEnemies()
     {
-        this.scene.enemies.clear();
+        //this.scene.enemies.clear();
         
         //Comprobar sala, generar nuevos enemigos
     }
