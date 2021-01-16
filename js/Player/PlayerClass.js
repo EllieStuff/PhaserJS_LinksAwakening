@@ -57,7 +57,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.scene.physics.add.collider(this, this.scene.walls);
         this.scene.physics.add.collider(this, this.scene.platWalls);
         this.scene.physics.add.collider(this, this.scene.platFloor);
-        this.scene.physics.add.overlap(this, this.scene.voids, this.Fall, null, this);
+        //this.scene.physics.add.overlap(this, this.scene.voids, this.Fall, null, this);
         
     }
     
@@ -71,6 +71,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
             this.body.stop()
             this.GetDamaged(2)
             this.currentAnim = "playerFalling"
+            this.animator.Update(this);
             
             this.scene.time.addEvent({delay: 500, callback: this.RespawnAfterFalling, callbackScope: this, repeat: 0});
             

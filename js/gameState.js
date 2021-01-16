@@ -62,7 +62,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('keyBlock',rutaImgInteractiveTiles            + 'KeyBlock.png'               ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('simpleVoid',rutaImgInteractiveTiles          + 'SimpleVoid.png'               ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('bossVoid',rutaImgInteractiveTiles            + 'BossVoid.png'               ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('breakableVoid',rutaImgInteractiveTiles       + 'BreakableVoid.png'               ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('breakableFloor',rutaImgInteractiveTiles       + 'BreakableFloor.png'               ,{frameWidth: 16, frameHeight: 16});
         
         //HUD
         this.load.image('bgHUD',rutaImgHUD + 'HUD_bg.png');
@@ -159,6 +159,11 @@ class gameState extends Phaser.Scene{
         
 	}
 	create(){
+        //Variables
+        this.DrawDepths = { DEFAULT: 0, INTERACTIVE_TILES: 1, ITEMS: 2, ENEMIES: 3, PLAYER: 4 };
+        this.Directions = { RIGHT: 'right', LEFT: 'left', UP: 'up', DOWN: 'down', UP_RIGHT: 'up-right', DOWN_RIGHT: 'down-right', UP_LEFT: 'up-left', DOWN_LEFT: 'down-left', NONE: 'none' };
+        this.PhysicTypes = { TOP_DOWN_VIEW: 0, FRONT_VIEW: 1 };
+        
         //Load Map
         this.LoadMap();
         this.LoadPlatformerMap();
@@ -175,11 +180,6 @@ class gameState extends Phaser.Scene{
         
         //Inputs
         this.inputs = new InputManager(this);
-       
-        //Variables
-        this.DrawDepths = { DEFAULT: 0, INTERACTIVE_TILES: 1, ITEMS: 2, ENEMIES: 3, PLAYER: 4 };
-        this.Directions = { RIGHT: 'right', LEFT: 'left', UP: 'up', DOWN: 'down', UP_RIGHT: 'up-right', DOWN_RIGHT: 'down-right', UP_LEFT: 'up-left', DOWN_LEFT: 'down-left', NONE: 'none' };
-        this.PhysicTypes = { TOP_DOWN_VIEW: 0, FRONT_VIEW: 1 };
         
         //Player
         this.CreatePlayer();
@@ -257,6 +257,11 @@ class gameState extends Phaser.Scene{
         //Boss Doors
         this.doors.add(new MasterKeyDoor(this, 1040, 256));
         
+        //Voids
+        this.voids = this.add.group()
+        this.voids.add(new SimpleVoid(this, config.width / 2 + 8, config.height / 2 + 48))
+        this.voids.add(new SimpleVoid(this, config.width / 2 - 8, config.height / 2 + 48))
+        
     }
     
     CreateEnemies(){
@@ -311,9 +316,6 @@ class gameState extends Phaser.Scene{
         this.stairs = this.map.createStaticLayer('stairs', 'blocks');
         this.map.setCollision(31,false,false,'stairs');
         
-        
-        this.voids = this.add.group()
-        this.voids.add(this, this.config.width / 2, this.config.height / 2, )
         //this.voids = this.add.group();
         //this.voids = this.map.createStaticLayer('void2', 'blocks')
         //this.voids.add(this.map.createStaticLayer('void', 'blocks'));

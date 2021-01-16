@@ -1,18 +1,15 @@
 
 
-class Ladders extends Phaser.GameObjects.Sprite{
+class SimpleVoid extends Phaser.GameObjects.Sprite{
     
-    constructor(scene, positionX, positionY, sprite)
+    constructor(scene, positionX, positionY)
     {
-		super(scene, positionX, positionY, sprite);
+		super(scene, positionX, positionY, 'simpleVoid');
         //this.functionToTrigger = functionToTrigger;
 		scene.add.existing(this);
         scene.physics.add.existing(this);
-        //scene.events.on('update', this.Update, this);
-        this.body.collideWorldBounds = true;
         this.setOrigin(0.5,0).setScale(1);
         this.setDepth(scene.DrawDepths.INTERACTIVE_TILES);
-        this.body.setImmovable(true);
         
         
         this.playerColManager = new CollisionManager(scene);
@@ -35,8 +32,11 @@ class Ladders extends Phaser.GameObjects.Sprite{
         if(this.active){
             this.playerColManager.UpdateOnTrigger();
             
-            if(this.playerColManager.ObjectOverlappingInside(this, this.scene.player))
+            if(this.playerColManager.ObjectOverlappingInside(this, this.scene.player, 0.5)){
+                this.scene.player.x = this.x
+                this.scene.player.y = this.y
                 this.scene.player.Fall()
+            }
         }
     }
     
@@ -44,8 +44,10 @@ class Ladders extends Phaser.GameObjects.Sprite{
         if(this.active){
             this.enemiesColManager.UpdateOnTrigger();
             
-            if(this.playerColManager.ObjectOverlappingInside(this, _enemy))
+            if(this.playerColManager.ObjectOverlappingInside(this, _enemy)){
+                console.log('enemy in')
                 _enemy.Fall()
+            }
         }
     }
     

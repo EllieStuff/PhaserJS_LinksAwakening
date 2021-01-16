@@ -44,11 +44,28 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         //this.scene.physics.add.collider(this, this.scene.player.sword, this.GetDamaged, null, this);    //Prq l'espasa danyi els enemics, el mal dependra del attack del player i de si ha carregat l'atac giratori
     }
     
+    CreateGlobalAnims(){
+        
+    }
+    
     //Make your anims on each enemy type
     CreateAnims(){}
     
     MoveTowards(_target, _speed){
         this.scene.physics.moveToObject(this, _target, _speed);
+    }
+    
+    Fall(){
+        if(!this.falling && !this.isJumping && this.canFall){
+            this.falling = true
+            this.active = false
+            this.body.stop()
+            this.GetDamaged(2)
+            
+            this.scene.time.addEvent({delay: 500, callback: this.RespawnAfterFalling, callbackScope: this, repeat: 0});
+            
+        }
+        
     }
     
     IsMoving(){
