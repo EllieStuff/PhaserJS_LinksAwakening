@@ -1,7 +1,7 @@
 var config = {
     type: Phaser.AUTO,
     width: 160, 
-    height: 128, 
+    height: 144, 
     scene: [gameState], //Array con los niveles   
 	antialias: false,
 	render:{pixelArt:true},
@@ -13,7 +13,7 @@ var config = {
         default: 'arcade',
         arcade: {
             gravity: {y: 0},
-			debug: true
+			debug: false
         }
     }
 

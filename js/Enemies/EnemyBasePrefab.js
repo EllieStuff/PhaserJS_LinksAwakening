@@ -60,6 +60,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     CheckDeath(){
         if(this.health <= 0){
             this.Reinit();
+            this.scene.soundManager.PlayFX('enemyDying_FX')
             
             this.visible = false;
             this.active = false;
@@ -96,6 +97,8 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         
         if(this.swordColManager.colState == this.swordColManager.CollisionState.ENTERED_COLLISION){
             this.health -= this.scene.player.attack;
+            this.scene.soundManager.PlayFX('enemyHit_FX')
+            
             if(this.health <= 0){
                 this.Die();
             }

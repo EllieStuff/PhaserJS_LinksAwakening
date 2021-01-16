@@ -9,6 +9,10 @@ class gameState extends Phaser.Scene{
         var rutaImgItems            = 'assets/img/items/';
         var rutaImgTiles            = 'assets/img/tiles/';
         var rutaImgInteractiveTiles = 'assets/img/InteractiveTiles/';
+        var rutaImgHUD              = 'assets/img/UI/';
+        var rutaImgMenus            = 'assets/img/MapUI/';
+        var rutaFX                  = 'assets/au/FX/';
+        var rutaOST                 = 'assets/au/OST/';
         
         // Load Images
         //Player
@@ -20,6 +24,8 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('playerAttack'        ,rutaImgLink + 'LinkAttack.png'         ,{frameWidth: 48, frameHeight: 48});
         this.load.spritesheet('playerSpin'          ,rutaImgLink + 'LinkSpinA.png'          ,{frameWidth: 48, frameHeight: 48});
         this.load.spritesheet('playerCharge'        ,rutaImgLink + 'LinkCharge.png'         ,{frameWidth: 48, frameHeight: 48});
+        this.load.spritesheet('playerSlash'     ,rutaImgLink + 'LinkSlash.png'   ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerFall'      ,rutaImgLink + 'fallAnim.png'    ,{frameWidth: 16, frameHeight: 16});
         //Enemies
         this.load.spritesheet('HardHat'      ,rutaImgEnemies   + 'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('enemySkeleton',rutaImgEnemies   + 'EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
@@ -30,7 +36,14 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('batEnemy', rutaImgEnemies       + 'KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('goomba', rutaImgEnemies         + 'Goomba.png'            ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('redZol', rutaImgEnemies         + 'RedZol.png'            ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('greenZol', rutaImgEnemies       + 'GreenZol.png'          ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('greenZol', rutaImgEnemies       + 'GreenZol.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('sparkEnemy', rutaImgEnemies   + 'SparkAnim.png'         ,{frameWidth: 16, frameHeight: 16});
+        
+        this.load.spritesheet('moldormEnemy', rutaImgEnemies + 'MiniMoldorm.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('moldormEnemyBody1', rutaImgEnemies + 'MoldormBody1.png'       ,{frameWidth: 12, frameHeight: 12});
+        this.load.spritesheet('moldormEnemyBody2', rutaImgEnemies + 'MoldormBody2.png'       ,{frameWidth: 10, frameHeight: 10});
+        this.load.spritesheet('moldormBossEnemy', rutaImgEnemies + 'MoldormHeads.png'       ,{frameWidth: 28, frameHeight: 28});
+        this.load.spritesheet('moldormBossEnemyBody', rutaImgEnemies + 'MoldormBodys.png'       ,{frameWidth: 16, frameHeight: 16});
         //Items
         this.load.spritesheet('atkPowerUp',rutaImgItems + 'PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('defPowerUp',rutaImgItems + 'PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
@@ -40,21 +53,33 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('blueRupee' ,rutaImgItems + 'BlueRupee.png'  ,{frameWidth: 8,  frameHeight: 16});
         this.load.spritesheet('redRupee'  ,rutaImgItems + 'RedRupee.png'   ,{frameWidth: 8,  frameHeight: 16});
         this.load.spritesheet('smallHeart',rutaImgItems + 'RocFeather.png' ,{frameWidth: 16, frameHeight: 16});
+        
         //Interactive Tiles
         this.load.spritesheet('movableBlock',rutaImgInteractiveTiles        + 'Block.png'                  ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('keyDoor',rutaImgInteractiveTiles             + 'KeyDoorAnim.png'            ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('bossKeyDoor',rutaImgInteractiveTiles         + 'BossKeyDoor.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('masterKeyDoor',rutaImgInteractiveTiles       + 'BossKeyDoor.png'            ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('eventDoor',rutaImgInteractiveTiles           + 'EventDoor.png'              ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('oneWayDoor',rutaImgInteractiveTiles          + 'OneWayDoorAnim.png'         ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('oneWayDoorBackwards',rutaImgInteractiveTiles + 'OneWayDoorBackwardsAnim.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('tpStairs',rutaImgInteractiveTiles            + 'TP_Stairs.png'              ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('smallLadders',rutaImgInteractiveTiles        + 'SmallLadders.png'           ,{frameWidth: 16, frameHeight: 56});
         this.load.spritesheet('largeLadders',rutaImgInteractiveTiles        + 'LargeLadders.png'           ,{frameWidth: 16, frameHeight: 112});
+        this.load.spritesheet('keyBlock',rutaImgInteractiveTiles            + 'KeyBlock.png'               ,{frameWidth: 16, frameHeight: 16});
+        
+        //HUD
+        this.load.image('bgHUD',rutaImgHUD + 'HUD_bg.png');
+        this.load.image('rupieHUD',rutaImgHUD + 'Rupie_UI.png');
+        this.load.spritesheet('heartsUI',rutaImgHUD + 'Hearts_UI.png',{frameWidth: 8, frameHeight: 8});
+        this.load.spritesheet('numbersUI',rutaImgHUD + 'Numbers_UI.png',{frameWidth: 8, frameHeight: 8});
+        this.load.spritesheet('ObjectHUD',rutaImgHUD + 'Objects_HUD.png',{frameWidth: 24, frameHeight: 16});
+        
         //Others
         this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
         this.load.image('hitbox', rutaImgLink + 'HitboxLink.png');
         this.load.image('hitboxAttack', rutaImgLink + 'LinkAttackHit.png');
         this.load.image('hitboxShield', rutaImgLink + 'ShieldHitbox.png');
+        this.load.image('startMenu', rutaImgMenus + 'Intro Links Awakening.png');
+        
         
         // Dungeon
         this.load.image('blocks', rutaImgTiles + 'DungeonBlockSheet.png');
@@ -65,14 +90,94 @@ class gameState extends Phaser.Scene{
         this.load.tilemapTiledJSON('dungeon', 'maps/insideMap.json');
         this.load.tilemapTiledJSON('platformerDungeon', 'maps/2dVerticalMap.json');
         
-        // Load Audios
         
+        // Load Audios
+        //FX
+            //Bosses - ToDo
+        this.load.audio('bossBursting_FX', rutaFX           + 'LA_Boss_Bursting.wav');
+        this.load.audio('bossBurstingFast1_FX', rutaFX      + 'LA_Boss_Bursting_Fast1.wav');
+        this.load.audio('bossBurstingFast2_FX', rutaFX      + 'LA_Boss_Bursting_Fast2.wav');
+        this.load.audio('bossDying_FX', rutaFX              + 'LA_Boss_Die.wav');
+        this.load.audio('bossExploding_FX', rutaFX          + 'LA_Boss_Explode.wav');
+        this.load.audio('bossHit_FX', rutaFX                + 'LA_Boss_Hit.wav');
+        this.load.audio('bossSegmentExplode_FX', rutaFX     + 'LA_Moldorm_SegmentExplode.wav');
+        this.load.audio('bossSpeedy_FX', rutaFX             + 'LA_Moldorm_Speedy.wav');
+        this.load.audio('miniBossRoller_FX', rutaFX         + 'LA_RollingBones_Roller.wav');
+            //Enemies
+        this.load.audio('bladeTrap_FX', rutaFX              + 'LA_BladeTrap.wav');
+        this.load.audio('enemyDying_FX', rutaFX             + 'LA_Enemy_Die.wav'); // - Testing
+        this.load.audio('enemyDyingPowerUp_FX', rutaFX      + 'LA_Enemy_Die_Power.wav'); //---
+        this.load.audio('enemyFalling_FX', rutaFX           + 'LA_Enemy_Fall.wav'); //---
+        this.load.audio('enemyHit_FX', rutaFX               + 'LA_Enemy_Hit.wav'); // - Testing
+        this.load.audio('enemyHitPowerUp_FX', rutaFX        + 'LA_Enemy_Hit_Power.wav'); //---
+        this.load.audio('enemyJumping_FX', rutaFX           + 'LA_Enemy_Jump.wav'); // - ToDo: esta en esquelet, falta en miniboss
+            //Player
+        this.load.audio('linkBounce_FX', rutaFX             + 'LA_Link_Bounce.wav'); //---
+        this.load.audio('linkDying_FX', rutaFX              + 'LA_Link_Dying.wav'); //---
+        this.load.audio('linkHurt_FX', rutaFX               + 'LA_Link_Hurt.wav'); //---
+        this.load.audio('linkJump_FX', rutaFX               + 'LA_Link_Jump.wav'); //---
+        this.load.audio('linkPickUp_FX', rutaFX             + 'LA_Link_PickUp.wav'); //---
+        this.load.audio('linkRebound_FX', rutaFX            + 'LA_Link_Rebound.wav'); //---
+        this.load.audio('linkRun_FX', rutaFX                + 'LA_Link_Run.wav'); //---
+        this.load.audio('linkHurt_FX', rutaFX               + 'LA_Link_Hurt.wav'); //---
+        this.load.audio('linkShock_FX', rutaFX              + 'LA_Link_Shock.wav'); //---
+        this.load.audio('linkThrow_FX', rutaFX              + 'LA_Link_Throw.wav'); //---
+        this.load.audio('linkLowHealth_FX', rutaFX          + 'LA_LowHealth.wav'); //---
+            //items
+        this.load.audio('compassSignal_FX', rutaFX          + 'LA_Dungeon_Signal.wav'); // - ToDo: averiguar com va aixo
+        this.load.audio('getHeartContainer_FX', rutaFX      + 'LA_Fanfare_HeartContainer.wav'); //---
+        this.load.audio('getFanfareItem_FX', rutaFX         + 'LA_Fanfare_Item.wav'); //---
+        this.load.audio('getFanfareItemExtended_FX', rutaFX + 'LA_Fanfare_Item_Extended.wav'); //---
+        this.load.audio('getItem1_FX', rutaFX               + 'LA_Get_Item.wav'); //---
+        this.load.audio('getItem2_FX', rutaFX               + 'LA_Get_Item2.wav'); //---
+        this.load.audio('getPowerUp_FX', rutaFX             + 'LA_Get_PowerUp.wav');
+        this.load.audio('getRupee_FX', rutaFX               + 'LA_Get_Rupee.wav');
+        this.load.audio('getSirenInstrument_FX', rutaFX     + 'LA_Get_SirenInstrument.wav'); //---
+        this.load.audio('getSword_FX', rutaFX               + 'LA_Get_Sword.wav'); //---
+        this.load.audio('getFullMoonCello_FX', rutaFX       + 'LA_SirensInstrument_FullMoonCello.wav'); //---
+            //Tilemap
+        this.load.audio('openChest_FX', rutaFX              + 'LA_Chest_Open.wav'); // - ToDo
+        this.load.audio('doorSlam_FX', rutaFX               + 'LA_Dungeon_DoorSlam.wav'); // - Testing
+        this.load.audio('oneWayDoor_FX', rutaFX             + 'LA_Dungeon_OneWayDoor.wav'); // - Testing
+        this.load.audio('triggerSwitch_FX', rutaFX          + 'LA_Dungeon_Switch.wav'); // - ToDo
+        this.load.audio('teleport_FX', rutaFX               + 'LA_Dungeon_Teleport.wav'); // - ToDo: mirar si posarem el tp al final
+        this.load.audio('teleportAppear_FX', rutaFX         + 'LA_Dungeon_Teleport_Appear.wav'); // - ToDo: ""
+        this.load.audio('groundCrumbling_FX', rutaFX        + 'LA_Ground_Crumble.wav'); ///---
+            //Events
+        this.load.audio('transportOut_FX', rutaFX           + 'LA_Dungeon_TransportOut.wav'); //--- //Quan agafes l'instrument i et fa fora de la dungeon
+        this.load.audio('error_FX', rutaFX                  + 'LA_Error.wav'); //---
+        this.load.audio('titleAppear_FX', rutaFX            + 'LA_TitleAppear.wav');
+        
+        //OST
+        this.load.audio('intro_OST', rutaOST                  + '01. Intro.mp3');
+        this.load.audio('title_OST', rutaOST                  + '02. Title.mp3');
+        this.load.audio('playerSelect_OST', rutaOST           + '03. Player Select.mp3');
+        this.load.audio('playerSelectZelda_OST', rutaOST      + '04. Player Select ZELDA.mp3');
+        this.load.audio('overworld_OST', rutaOST              + '10. Overworld.mp3');
+        this.load.audio('powerUp_OST', rutaOST                + '17. Piece Of Power _ Guardian Acorn.mp3');
+        this.load.audio('tailCave_OST', rutaOST               + '19. Level 1 - Tail Cave.mp3');
+        this.load.audio('sideScrolling_OST', rutaOST          + '20. Sidescrolling.mp3');
+        this.load.audio('miniBoss_OST', rutaOST               + '21. Mini Boss Battle.mp3');
+        this.load.audio('boss_OST', rutaOST                   + '22. Boss Battle.mp3');
+        this.load.audio('bossDefeated_OST', rutaOST           + '23. Boss Defeated.mp3');
+        this.load.audio('instrumentsOfTheSirens_OST', rutaOST + '24. Instrument Of The Sirens.mp3');
+        this.load.audio('fullMoonCello_OST', rutaOST          + '25. The Full Moon Cello.mp3');
         
 	}
 	create(){
+        //Set up camera
+        this.cameras.main.setBounds(0, 0, this.width, this.height);
+        //this.cameras.main.startFollow(this.player);
+        this.camPosX = 160 * 3;
+        this.camPosY = 128 * 5;
+        this.cameras.main
+        this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 72);
         //Load Map
         this.LoadMap();
         this.LoadPlatformerMap();
+        
+        this.soundManager = new SoundManager(this)
+        
         //this.LoadMap();
         
         //SetOrigin
@@ -85,8 +190,8 @@ class gameState extends Phaser.Scene{
         this.inputs = new InputManager(this);
        
         //Variables
-        this.DrawDepths = { DEFAULT: 0, INTERACTIVE_TILES: 1, ITEMS: 2, ENEMIES: 3, PLAYER: 4 };
-        this.Directions = { RIGHT: 0, LEFT: 1, UP: 2, DOWN: 3, NONE: 4 };
+        this.DrawDepths = { DEFAULT: 0, INTERACTIVE_TILES: 1, ITEMS: 2, ENEMIES: 3, PLAYER: 4, MENU: 7 };
+        this.Directions = { RIGHT: 'right', LEFT: 'left', UP: 'up', DOWN: 'down', UP_RIGHT: 'up-right', DOWN_RIGHT: 'down-right', UP_LEFT: 'up-left', DOWN_LEFT: 'down-left', NONE: 'none' };
         this.PhysicTypes = { TOP_DOWN_VIEW: 0, FRONT_VIEW: 1 };
         
         //Player
@@ -126,14 +231,18 @@ class gameState extends Phaser.Scene{
         //this.physics.add.overlap(this.player, this.tpStairs, this.tpStairs.ChangePlayerLocation, null, this);
         //this.physics.add.overlap(this.player, this.floorButton, this.floorButton.Trigger, null, this);
         
-        this.cameras.main.setBounds(0, 0, this.width, this.height);
-        //this.cameras.main.startFollow(this.player);
-        this.camPosX = 160 * 3;
-        this.camPosY = 128 * 5;
-        this.cameras.main
-        this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+        //Texts
+        this.owlString = "HOLA MUNDO";
+        this.owlText = this.add.text(config.width, config.height, this.owlString, { fontFamily: 'Arial', fontSize: '25px',   color:'#fff' }).setOrigin(1);
+        this.counter = 0;
+        
         //this.cameras.main.setLerp(0.01);
         //this.cameras.main.setScroll(160*2 + 80,128*5 + 64);
+        
+        
+        //Init Start Menu
+        this.startMenu = this.add.image(this.camPosX , this.camPosY, 'startMenu').setOrigin(0).setScale(1, 1.06).setDepth(this.DrawDepths.MENU)
+        this.inStartMenu = true;
         
 	}
     
@@ -141,6 +250,7 @@ class gameState extends Phaser.Scene{
     {
         //this.player = this.physics.add;
         this.player = new PlayerPrefab(this,555,725);
+        this.player.active = false;
         //this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0,5).setScale(1);
         
     }
@@ -151,14 +261,24 @@ class gameState extends Phaser.Scene{
         this.tpStairsPair2 = new TPStairsPair(this, 296, 144, 280, 0);
         this.tpStairsPair3 = new TPStairsPair(this, 1048, 304, 600, 0);
         
-        
+        //Platformer Ladders
         this.platLadders = this.physics.add.group();
-        //this.link = this.add.sprite(126,126,'link')
         this.platLadders.add(new Ladders(this, 40, 0,'largeLadders'));
         this.platLadders.add(new Ladders(this, 136, 56,'smallLadders'));
         this.platLadders.add(new Ladders(this, 184, 56,'smallLadders'));
         this.platLadders.add(new Ladders(this, 280, 0,'largeLadders'));
         this.platLadders.add(new Ladders(this, 600, 0,'largeLadders'));
+        
+        //Key Block
+        this.keyBlock = new KeyBlock(this, 680,336);
+        
+        // Doors
+        this.doors = this.physics.add.group();
+        //Key Doors
+        this.doors.add(new KeyDoor(this, 400, 256, this.Directions.DOWN));
+        this.doors.add(new KeyDoor(this, 792, 440, this.Directions.LEFT));
+        //Boss Doors
+        this.doors.add(new MasterKeyDoor(this, 1040, 256));
         
     }
     
@@ -172,6 +292,10 @@ class gameState extends Phaser.Scene{
         this.CreateEnemy(BatPrefab, config.width/2, config.height/2, true);
         this.CreateEnemy(GoombaPrefab, 100, 90, true);
         this.CreateEnemy(GoombaPrefab, 200, 90, true);
+        //this.CreateEnemy(BatPrefab, config.width/2, config.height/2, true);
+        this.CreateEnemy(miniMoldormPrefab, config.width/2, config.height/2, true);
+        this.CreateEnemy(SparkPrefab, config.width/2 + 40, config.height/2, true);
+        this.CreateEnemy(MoldormBossPrefab, config.width-60, config.height/4, true);
         
     }
     
@@ -216,6 +340,7 @@ class gameState extends Phaser.Scene{
         this.voids.add(this.map.createStaticLayer('void2', 'blocks'));
         this.map.setCollision(40,false,false,'void2');
         this.map.createStaticLayer('cliff', 'blocks');
+        //ToDo: Afegir els brakableBlocks als void nomes quan es trenquin
         this.voids.add(this.map.createStaticLayer('breakblefloor', 'blocks'));
         this.map.setCollision(107,false,false,'breakblefloor');
         
@@ -248,6 +373,25 @@ class gameState extends Phaser.Scene{
         this.fences = this.map.createStaticLayer('fences', 'fences');
         this.map.setCollisionBetween(79,886,true,false,'fences');
         
+        //Init Start Menu
+        //this.startMenu = this.add.image(0, 0,'startMenu')//.setOrigin(1).setScale(7);
+        
+        //Init HUD
+        this.hudBG = this.add.image(this.camPosX,this.camPosY + 128,'bgHUD').setOrigin(0).setDepth(5);
+        console.log(this.camPosX)
+        console.log(this.camPosY)
+        this.rupieHUD = this.add.image(config.width/2, config.height/1.17, 'rupieHUD').setOrigin(0).setScale(7);
+        var posX = config.width/2 + (16*7);
+        var posY = config.height - (16*3.5);
+        this.unitDigit = this.add.sprite(posX, posY, 'numbersUI').setOrigin(0).setScale(7);
+        var posX = config.width/2 + (16*3.5);
+        var posY = config.height - (16*3.5);
+        this.decimalDigit = this.add.sprite(posX, posY, 'numbersUI').setOrigin(0).setScale(7);
+        var posX = config.width/2;
+        var posY = config.height - (16*3.5);
+        this.centDigit = this.add.sprite(posX, posY, 'numbersUI').setOrigin(0).setScale(7);
+        
+        
     }
     
     LoadPlatformerMap(){
@@ -275,33 +419,60 @@ class gameState extends Phaser.Scene{
         
         
     }
+    ShowText(_text, lenght)
+    {
+        if(this.counter < lenght){
+            if(_text[this.counter] != null){
+                this.owlText.text = this.owlText.text + _text[this.counter];
+                this.counter++; 
+            } 
+        }
+        else{
+            this.finishedText = true;
+        }
+    }
     
+    ClearText(){
+        this.owlText.text = "";
+        this.counter = 0;
+    }
     
-    //
     
 	update()
     {
         if(this.player.body.position.x < this.camPosX)
         {
             this.camPosX -= 160;
-            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
         }
         else if(this.player.body.position.x > this.camPosX + 160)
         {
            this.camPosX += 160;
-           this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+           this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
         }
         else if(this.player.body.position.y < this.camPosY)
         {
             this.camPosY -= 128;
-            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
         }
         else if(this.player.body.position.y > this.camPosY + 128)
         {
             this.camPosY += 128;
-            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 64);
+            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
         }  
+        this.hudBG.setPosition(this.camPosX,this.camPosY + 128);
+        var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
+        this.ShowText(sampleText, sampleText.length);
         
+        
+        if(this.startMenu.visible && this.inputs.GetAnyKey()){
+            this.startMenu.visible = false
+            this.player.active = true
+            
+            this.cameras.main.flash(5000, 0xffffff)
+            this.soundManager.PlayFX('titleAppear_FX')
+            this.soundManager.PlayOST('tailCave_OST')
+        }
 
 	}
     
