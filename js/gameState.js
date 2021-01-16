@@ -165,6 +165,13 @@ class gameState extends Phaser.Scene{
         
 	}
 	create(){
+        //Set up camera
+        this.cameras.main.setBounds(0, 0, this.width, this.height);
+        //this.cameras.main.startFollow(this.player);
+        this.camPosX = 160 * 3;
+        this.camPosY = 128 * 5;
+        this.cameras.main
+        this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 72);
         //Load Map
         this.LoadMap();
         this.LoadPlatformerMap();
@@ -228,12 +235,7 @@ class gameState extends Phaser.Scene{
         this.owlString = "HOLA MUNDO";
         this.owlText = this.add.text(config.width, config.height, this.owlString, { fontFamily: 'Arial', fontSize: '25px',   color:'#fff' }).setOrigin(1);
         this.counter = 0;
-        this.cameras.main.setBounds(0, 0, this.width, this.height);
-        //this.cameras.main.startFollow(this.player);
-        this.camPosX = 160 * 3;
-        this.camPosY = 128 * 5;
-        this.cameras.main
-        this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 80);
+        
         //this.cameras.main.setLerp(0.01);
         //this.cameras.main.setScroll(160*2 + 80,128*5 + 64);
         
@@ -375,7 +377,9 @@ class gameState extends Phaser.Scene{
         //this.startMenu = this.add.image(0, 0,'startMenu')//.setOrigin(1).setScale(7);
         
         //Init HUD
-        this.hudBG = this.add.image(config.width,config.height,'bgHUD').setOrigin(1).setScale(7);
+        this.hudBG = this.add.image(this.camPosX,this.camPosY + 128,'bgHUD').setOrigin(0).setDepth(5);
+        console.log(this.camPosX)
+        console.log(this.camPosY)
         this.rupieHUD = this.add.image(config.width/2, config.height/1.17, 'rupieHUD').setOrigin(0).setScale(7);
         var posX = config.width/2 + (16*7);
         var posY = config.height - (16*3.5);
@@ -439,24 +443,24 @@ class gameState extends Phaser.Scene{
         if(this.player.body.position.x < this.camPosX)
         {
             this.camPosX -= 160;
-            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 80);
+            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
         }
         else if(this.player.body.position.x > this.camPosX + 160)
         {
            this.camPosX += 160;
-           this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 80);
+           this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
         }
         else if(this.player.body.position.y < this.camPosY)
         {
             this.camPosY -= 128;
-            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 80);
+            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
         }
         else if(this.player.body.position.y > this.camPosY + 128)
         {
             this.camPosY += 128;
-            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 80);
+            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
         }  
-        
+        this.hudBG.setPosition(this.camPosX,this.camPosY + 128);
         var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
         this.ShowText(sampleText, sampleText.length);
         
