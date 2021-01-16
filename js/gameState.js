@@ -60,6 +60,9 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('smallLadders',rutaImgInteractiveTiles        + 'SmallLadders.png'           ,{frameWidth: 16, frameHeight: 56});
         this.load.spritesheet('largeLadders',rutaImgInteractiveTiles        + 'LargeLadders.png'           ,{frameWidth: 16, frameHeight: 112});
         this.load.spritesheet('keyBlock',rutaImgInteractiveTiles            + 'KeyBlock.png'               ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('simpleVoid',rutaImgInteractiveTiles          + 'SimpleVoid.png'               ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('bossVoid',rutaImgInteractiveTiles            + 'BossVoid.png'               ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('breakableVoid',rutaImgInteractiveTiles       + 'BreakableVoid.png'               ,{frameWidth: 16, frameHeight: 16});
         
         //HUD
         this.load.image('bgHUD',rutaImgHUD + 'HUD_bg.png');
@@ -308,15 +311,19 @@ class gameState extends Phaser.Scene{
         this.stairs = this.map.createStaticLayer('stairs', 'blocks');
         this.map.setCollision(31,false,false,'stairs');
         
-        this.voids = this.add.group();
-        this.voids.add(this.map.createStaticLayer('void', 'blocks'));
-        this.map.setCollision(22,false,false,'void');
-        this.voids.add(this.map.createStaticLayer('void2', 'blocks'));
+        
+        this.voids = this.add.group()
+        this.voids.add(this, this.config.width / 2, this.config.height / 2, )
+        //this.voids = this.add.group();
+        //this.voids = this.map.createStaticLayer('void2', 'blocks')
+        //this.voids.add(this.map.createStaticLayer('void', 'blocks'));
+        //this.map.setCollision(40, false, false, 'void2');
+        /*this.voids.add(this.map.createStaticLayer('void2', 'blocks'));
         this.map.setCollision(40,false,false,'void2');
         this.map.createStaticLayer('cliff', 'blocks');
         //ToDo: Afegir els brakableBlocks als void nomes quan es trenquin
         this.voids.add(this.map.createStaticLayer('breakblefloor', 'blocks'));
-        this.map.setCollision(107,false,false,'breakblefloor');
+        this.map.setCollision(107,false,false,'breakblefloor');*/
         
         this.tpStairs = this.map.createStaticLayer('stairstp', 'blocks');
         this.map.setCollision(34,false,false,'stairstp');
