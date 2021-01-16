@@ -8,10 +8,10 @@ class CameraManager
         this.TileX = 3;
         this.TileY = 5;
         this.scene = _scene
-        _scene.cameras.main.setBounds(0, 0, _scene.width, _scene.height);
+        this.scene.cameras.main.setBounds(0, 0, this.scene.config.width, this.scene.config.height);
         this.camPosX = 160 * this.TileX;
         this.camPosY = 128 * this.TileY;
-        _scene.cameras.main.centerOn(this.camPosX + _scene.width/2,this.camPosY + _scene.height/2);
+        this.scene.cameras.main.centerOn(this.camPosX + this.scene.config.width/2,this.camPosY + this.scene.config.height/2);
         
     }
     
