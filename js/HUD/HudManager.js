@@ -26,7 +26,7 @@ class HudManager extends Phaser.GameObjects.Sprite{
                        scene.add.sprite(bgPosX + config.width/2 + (8*9), bgPosY + 8, 'heartsUI').setOrigin(0).setDepth(5)];
     }
     
-    setHearts(maxHearts){
+    setMaxHearts(maxHearts){
         var maxI = maxHearts;
         if(maxI > this.hearts.length)
             maxI = this.hearts.length;
@@ -35,5 +35,9 @@ class HudManager extends Phaser.GameObjects.Sprite{
             {
                 this.hearts[i].setFrame(3);
             }
+    }
+    
+    setHearts(health){
+        
     }
 }

@@ -380,7 +380,7 @@ class gameState extends Phaser.Scene{
     LoadHud(){
         //Init HUD
         this.hudBG = new HudManager(this,this.camPosX,this.camPosY + 128);
-        this.hudBG.setHearts(this.player.maxHearts);
+        this.hudBG.setMaxHearts(this.player.maxHearts);
     }
     
     LoadPlatformerMap(){
