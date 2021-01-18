@@ -149,6 +149,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
                 this.beeping = true
                 this.LowHealthBeep()
             }
+            this.scene.hudBG.setHearts(this.health);
             //this.scene.soundManager.PlayFX('linkHurt_FX')
             //console.log("Player Health: " + this.health);
             
@@ -177,6 +178,8 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     {
         this.maxHearts++;
         this.health = this.maxHearts * 2;
+        this.scene.hudBG.setMaxHearts(this.maxHearts);
+        this.scene.hudBG.setHearts(this.health);
     }
     
     Heal()
@@ -184,6 +187,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.health+=2;
         if(this.health > this.maxHearts*2)
             this.health = this.maxHearts * 2;
+        this.scene.hudBG.setHearts(this.health);
     }
     
     RefreshPowerUpBuffers(){
