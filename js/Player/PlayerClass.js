@@ -43,6 +43,8 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.falling = false;
         this.lastSavePosition = new Phaser.Math.Vector2(positionX, positionY)
         this.mustRefreshSavePos = true;
+        this.enemiesKilled = 0
+        this.beeping = false
         
         this.animator = new PlayerAnimator(scene, positionX, positionY);
         
@@ -72,11 +74,27 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
             this.GetDamaged(2)
             this.currentAnim = "playerFalling"
             this.animator.Update(this);
+            this.scene.soundManager.PlayFX('linkFall_FX')
             
-            this.scene.time.addEvent({delay: 500, callback: this.RespawnAfterFalling, callbackScope: this, repeat: 0});
+            this.scene.time.addEvent({delay: 1500, callback: this.RespawnAfterFalling, callbackScope: this, repeat: 0});
             
         }
         
+    }
+    
+    FallToPlatformerRoom(_roomIdX, _roomIdY){
+        if(!this.falling && !this.isJumping){
+            this.falling = true
+            this.active = false
+            this.body.stop()
+            this.GetDamaged(2)
+            this.currentAnim = "playerFalling"
+            this.animator.Update(this);
+            this.scene.soundManager.PlayFX('linkFall_FX')
+            
+            this.scene.time.addEvent({delay: 1500, callback: this.RespawnAfterFallingToPlatformerRoom, callbackScope: this, repeat: 0});
+            
+        }
     }
     
     RespawnAfterFalling(){
@@ -94,8 +112,26 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         }
     }
     
+    RespawnAfterFallingToPlatformerRoom(){
+        this.falling = false; 
+        this.active = true; 
+        
+        if(this.health > 0){
+            this.currPhysics = this.scene.PhysicTypes.FRONT_VIEW;
+            
+            //ToDo: Respawn a l'habitacio que toqui
+            /*this.SetIdleAnim();
+            this.x = this.lastSavePosition.x
+            this.y = this.lastSavePosition.y*/
+        }
+        else{
+            //ToDo: Fer animació i respawn de mort
+            
+        }
+    }
+    
     RefreshLastSavePos(){
-        if(this.mustRefreshSavePos && !this.falling){
+        if(this.mustRefreshSavePos && !this.falling && !this.isJumping){
             this.mustRefreshSavePos = false
             this.lastSavePosition = new Phaser.Math.Vector2(this.x, this.y)
             
@@ -108,11 +144,32 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         if(!this.isJumping){
             this.health -= _dmgTaken/this.defense;
             this.RefreshPowerUpBuffers();
-            console.log("Player Health: " + this.health);
+            if(!this.beeping){
+                this.beeping = true
+                this.LowHealthBeep()
+            }
+            //this.scene.soundManager.PlayFX('linkHurt_FX')
+            //console.log("Player Health: " + this.health);
             
-            //Add death      
+            // ToDo: Add death      
         }
         
+    }
+    
+    LowHealthBeep(){
+        if(this.health <= 4){
+            this.scene.soundManager.PlayFX('linkLowHealth_FX')
+            this.scene.time.addEvent({delay: 1000, callback: this.LowHealthBeep, callbackScope: this, repeat: 0});
+        }
+        else{
+            this.beeping = false
+        }
+    }
+    
+    Die(){
+        
+        
+        this.scene.soundManager.PlayFX('linkDying_FX')
     }
     
     AddMaxHeart()
@@ -226,6 +283,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     
     Jump(){
         //this.animator.anims.setTimeScale(0.5);
+        this.isJumping = true;
         this.animator.extraMargin.y = -12;
         switch(this.moveDir){
             case this.Directions.LEFT:
@@ -248,6 +306,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
                 break;
 
         }
+        this.scene.soundManager.PlayFX('linkJump_FX')
 
         this.scene.time.addEvent({delay: 370, callback: function(){this.isJumping = false; this.animator.extraMargin.y = 0; this.SetIdleAnim();}, callbackScope: this, repeat: 0});
         
@@ -271,6 +330,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
                 break;
 
         }
+        this.scene.soundManager.PlayFX('linkJump_FX')
 
         //this.scene.time.addEvent({delay: 370, callback: function(){this.isJumping = false; this.animator.extraMargin.y = 0; this.SetIdleAnim();}, callbackScope: this, repeat: 0});
         
@@ -308,7 +368,6 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         if(!this.isJumping && this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K))
         {
             console.log("in");
-            this.isJumping = true;
             this.Jump();
             
         }

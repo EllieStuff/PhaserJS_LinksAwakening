@@ -19,6 +19,7 @@ class miniMoldormPrefab extends EnemyBase{
         this.angleDelta = 0;
         this.isWaiting = false;
         this.waitingDelay = 750;
+        this.canFall = false
         this.tail1 = new miniMoldormBodyPrefab(scene, positionX + 20, positionY, 'moldormEnemyBody1');
         this.tail2 = new miniMoldormBodyPrefab(scene, positionX + 30, positionY, 'moldormEnemyBody2');
         
@@ -27,6 +28,7 @@ class miniMoldormPrefab extends EnemyBase{
     InitCollisions(){
         this.scene.physics.add.overlap(this, this.scene.player, this.DamagePlayer, null, this);
         this.scene.physics.add.collider(this, this.scene.walls, this.BounceWithWalls, null, this);
+        this.scene.physics.add.collider(this, this.scene.voids, this.BounceWithWalls, null, this);
     }
     
     BounceWithWalls(){
@@ -39,7 +41,6 @@ class miniMoldormPrefab extends EnemyBase{
         this.body.velocity = new Phaser.Math.Vector2(this.body.velocity.normalize().x * this.speed, this.body.velocity.normalize().y * this.speed);
         
     }
-    
     
     DamagePlayer(){
         this.playerColManager.UpdateOnTrigger();

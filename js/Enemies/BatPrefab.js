@@ -14,6 +14,7 @@ class BatPrefab extends EnemyBase{
         //this.fleeSpeed = -this.speed * 4;
         this.seeRange = 50;
         this.waitingDelay = 500;
+        this.canFall = false
         //this.onSlowStart = false;
         
         this.setFrame(1);

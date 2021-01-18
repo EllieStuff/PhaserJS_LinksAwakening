@@ -18,6 +18,8 @@ class SparkPrefab extends EnemyBase{
         this.currentlyBlocked = false
         this.touchedFirstWall = false
         this.canEnterExitWallBehaviour = true
+        this.canFall = false
+        this.dmgSoundEffect = 'linkShock_FX'
         
         this.currentWallPos = new Phaser.Math.Vector2(positionX, positionY)
         

@@ -5,8 +5,8 @@ class Heart extends ItemsBase{
     }
     
     StartEffect(){
-        if(this.scene.player.health < (this.scene.player.maxHearts * 4)
-            this.scene.player.health + = 1;
+        this.scene.player.Heal()
+        this.scene.soundManager.PlayFX('linkPickUp_FX')
         
         this.destroy();
         

@@ -19,6 +19,9 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         this.isVulnerable = true;
         this.speed = 1;
         this.canDieOnJump = false;
+        this.falling = false
+        this.canFall = true
+        this.dmgSoundEffect = 'linkHurt_FX'
         
         this.playerColManager = new CollisionManager(scene);
         this.swordColManager = new CollisionManager(scene);
@@ -26,6 +29,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         
         
         this.InitCollisions();
+        this.CreateGlobalAnims();
         this.CreateAnims();
     }  
     
@@ -40,12 +44,18 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     InitCollisions(){
         this.scene.physics.add.overlap(this, this.scene.player, this.DamagePlayer, null, this);
         this.scene.physics.add.collider(this, this.scene.walls);
+        this.scene.physics.add.overlap(this, this.scene.voids, this.OverlapVoids, null, this);
         //this.scene.physics.add.collider(this, this.scene.player.shield, this.GetRepeled, null, this);   //Prq l'escut repeli una mica els enemics, l'impuls dependra d'una variable del enemy
         //this.scene.physics.add.collider(this, this.scene.player.sword, this.GetDamaged, null, this);    //Prq l'espasa danyi els enemics, el mal dependra del attack del player i de si ha carregat l'atac giratori
     }
     
     CreateGlobalAnims(){
-        
+        this.scene.anims.create({
+            key: 'enemyFalling',
+            frames: this.scene.anims.generateFrameNumbers('enemyFallingAnim', { start: 0, end: 3 }),
+            frameRate: 4,
+            repeat: 0
+        });
     }
     
     //Make your anims on each enemy type
@@ -55,14 +65,21 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         this.scene.physics.moveToObject(this, _target, _speed);
     }
     
+    OverlapVoids(){
+        if(this.canFall)
+            this.Fall()
+    }
+    
     Fall(){
-        if(!this.falling && !this.isJumping && this.canFall){
+        if(!this.falling && this.isVulnerable){
             this.falling = true
-            this.active = false
-            this.body.stop()
-            this.GetDamaged(2)
+            //this.active = false
+            //this.body.stop()
+            this.anims.play('enemyFalling')
+            this.scene.soundManager.PlayFX('enemyFalling_FX')
             
-            this.scene.time.addEvent({delay: 500, callback: this.RespawnAfterFalling, callbackScope: this, repeat: 0});
+            this.scene.time.addEvent({delay: 1000, callback: function(){ this.body.stop() }, callbackScope: this, repeat: 0});
+            this.scene.time.addEvent({delay: 3000, callback: this.Die, callbackScope: this, repeat: 0});
             
         }
         
@@ -95,8 +112,10 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     DamagePlayer(){
         this.playerColManager.UpdateOnTrigger();
         
-        if(this.playerColManager.colState == this.playerColManager.CollisionState.ENTERED_COLLISION)
+        if(this.playerColManager.colState == this.playerColManager.CollisionState.ENTERED_COLLISION){
             this.scene.player.GetDamaged(this.attack);
+            this.scene.soundManager.PlayFX(this.dmgSoundEffect)
+        }
     }
     
     GetRepeled()
@@ -114,7 +133,12 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         
         if(this.swordColManager.colState == this.swordColManager.CollisionState.ENTERED_COLLISION){
             this.health -= this.scene.player.attack;
-            this.scene.soundManager.PlayFX('enemyHit_FX')
+            if(this.scene.player.enemiesKilled % 30 == 0 || this.scene.player.enemiesKilled % 12 == 0){
+                this.scene.soundManager.PlayFX('enemyHitPowerUp_FX')
+            }
+            else{
+                this.scene.soundManager.PlayFX('enemyHit_FX')
+            }
             
             if(this.health <= 0){
                 this.Die();
@@ -124,8 +148,37 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     }
     
     Die(){
+        this.scene.player.enemiesKilled++;
+        this.SpawnItem();
+        
         this.x = this.y = 0;
         this.active = this.visible = false;
+        
+    }
+    
+    //ToDo: Mirar si funciona aqui i, si no, passar-ho al gameState que alla segur que si
+    SpawnItem(){
+        if(this.scene.player.enemiesKilled % 30 == 0){
+            this.scene.items.add(new PowerUpAtk(this.scene, this.x, this.y))
+            this.scene.soundManager.PlayFX('enemyDyingPowerUp_FX')
+        }
+        else if(this.scene.player.enemiesKilled % 12 == 0){
+            this.scene.items.add(new PowerUpDef(this.scene, this.x, this.y))
+            this.scene.soundManager.PlayFX('enemyDyingPowerUp_FX')
+        }
+        else{
+            var rnd = Phaser.Math.Between(0, 11)
+            if(rnd < 1){
+                this.scene.items.add(new RedRupee(this.scene, this.x, this.y))
+            }
+            else if(rnd < 4){
+                this.scene.items.add(new BlueRupee(this.scene, this.x, this.y))
+            }
+            else if(rnd < 7){
+                this.scene.items.add(new Heart(this.scene, this.x, this.y))
+            }
+            this.scene.soundManager.PlayFX('enemyDying_FX')
+        }
         
     }
     
