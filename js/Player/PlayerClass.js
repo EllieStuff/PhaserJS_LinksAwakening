@@ -13,6 +13,9 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.setDepth(scene.DrawDepths.PLAYER);
         //this.hitbox = this.physics.add.sprite(config.width/2,config.height/2,'hitbox').setOrigin(0.5).setScale(1);
         
+        this.hitboxB = this.scene.physics.add.sprite(this.body.x,this.body.y,'hitboxShield').setOrigin(0.5).setScale(1);
+        
+        
         this.Directions = this.scene.Directions;
         this.currPhysics = this.scene.PhysicTypes.TOP_DOWN_VIEW;
         this.moveDir = this.Directions.DOWN;
@@ -47,9 +50,12 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.enemiesKilled = 0
         this.beeping = false
         
+        
+        
         this.animator = new PlayerAnimator(scene, positionX, positionY);
         
         this.ladderColManager = new CollisionManager(scene);
+        this.ShieldColManager = new CollisionManager(scene);
         //this.voidsColManager = new CollisionManager(scene);
         
         this.InitCollisions();
@@ -260,31 +266,43 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     SetShieldHitbox()
     {
         
-        
+        this.ShieldColManager.UpdateOnTrigger();
+         
         switch(this.moveDir)
+            {
+                case this.Directions.LEFT:
+                    this.hitboxB.body.x = this.animator.x - 3;
+                    this.hitboxB.body.y = this.animator.y + 2;
+                    break;
+
+                case this.Directions.RIGHT:
+                    this.hitboxB.body.x = this.animator.x + 7;
+                    this.hitboxB.body.y = this.animator.y + 2;
+                    break;
+
+                case this.Directions.DOWN:
+                    this.hitboxB.body.x = this.animator.x + 2;
+                    this.hitboxB.body.y = this.animator.y + 7;
+                    break;
+
+                case this.Directions.UP:
+                    this.hitboxB.body.x = this.animator.x + 2;
+                    this.hitboxB.body.y = this.animator.y - 3;
+                    break;
+
+                default:
+                    break;
+
+            } 
+        
+        if(this.ShieldColManager.GetCollisionState() == this.ShieldColManager.CollisionState.ENTERED_COLLISION)
         {
-            case this.Directions.LEFT:
-                this.hitboxB = this.scene.physics.add.sprite(this.body.x + 2,this.body.y,'hitboxShield').setOrigin(0.5).setScale(1);
-                break;
-
-            case this.Directions.RIGHT:
-                this.hitboxB = this.scene.physics.add.sprite(this.body.x + 6,this.body.y,'hitboxShield').setOrigin(0.5).setScale(1);
-                break;
-
-            case this.Directions.DOWN:
-                this.hitboxB = this.scene.physics.add.sprite(this.body.x + 4,this.body.y + 2,'hitboxShield').setOrigin(0.5).setScale(1);
-                break;
-
-            case this.Directions.UP:
-
-                this.hitboxB = this.scene.physics.add.sprite(this.body.x + 4,this.body.y - 2,'hitboxShield').setOrigin(0.5).setScale(1);
-                break;
-
-            default:
-                break;
-
-        } 
-        this.hitboxB.destroy();
+           
+        }
+            
+        
+        
+        //this.hitboxB.destroy();
         
     }
     
@@ -425,7 +443,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         }
         this.body.velocity.x = 0;
         this.body.velocity.y = 0;
-        this.scene.time.addEvent({delay: 250, callback: function(){this.atkCharged = false;this.hitboxA.destroy();}, callbackScope: this, repeat: 0});
+        this.scene.time.addEvent({delay: 240, callback: function(){this.atkCharged = false;this.hitboxA.destroy();}, callbackScope: this, repeat: 0});
             
     }
     
@@ -480,7 +498,8 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     TopDownUpdate(){
         //Decides respawns position in case of falling
         this.RefreshLastSavePos()
-        
+        this.hitboxB.body.x = this.body.x - 2;
+        this.hitboxB.body.y = this.body.y - 6;
         //Jump
         if(this.assignA == "Jump" && !this.isJumping)
             {

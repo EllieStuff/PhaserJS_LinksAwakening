@@ -178,10 +178,8 @@ class gameState extends Phaser.Scene{
         //Set up camera
         this.cameras.main.setBounds(0, 0, this.width, this.height);
         //this.cameras.main.startFollow(this.player);
-        this.camPosX = 160 * 3;
-        this.camPosY = 128 * 5;
-        this.cameras.main
-        this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 72);
+        this.cameraManager = new CameraManager(this);
+        this.cameras.main.centerOn(this.cameraManager.camPosX + config.width/2,this.cameraManager.camPosY + config.height/2);
         //Load Map
         this.LoadMap();
         this.LoadPlatformerMap();
@@ -246,7 +244,7 @@ class gameState extends Phaser.Scene{
         //Init HUD
         this.LoadHud();
         //Init Start Menu
-        this.startMenu = this.add.image(this.camPosX , this.camPosY, 'startMenu').setOrigin(0).setScale(1, 1.06).setDepth(this.DrawDepths.MENU)
+        this.startMenu = this.add.image(this.cameraManager.camPosX , this.cameraManager.camPosY, 'startMenu').setOrigin(0).setScale(1, 1.06).setDepth(this.DrawDepths.MENU)
         this.inStartMenu = true;
         
 	}
@@ -293,11 +291,12 @@ class gameState extends Phaser.Scene{
         
     }
     
-    CreateEnemies(){
+    CreateEnemies()
+    {
         this.enemies = this.physics.add.group();
-        
         //Afegir els enemics un per un aqui si no no es que ho hem de fer diferent per tema del tilemap
-        this.CreateEnemy(SkeletonPrefab, config.width/2, config.height/2, true);
+        /*
+        this.CreateEnemy(SkeletonPrefab, config.width/4, config.height/4, true);
         this.CreateEnemy(HardHatPrefab , config.width/2, config.height/4, true);
         this.CreateEnemy(BladePrefab, config.width/3, config.height/4, true);
         this.CreateEnemy(BatPrefab, config.width/2, config.height/2, true);
@@ -307,10 +306,12 @@ class gameState extends Phaser.Scene{
         this.CreateEnemy(miniMoldormPrefab, config.width/2, config.height/2, true);
         this.CreateEnemy(SparkPrefab, config.width/2 + 40, config.height/2, true);
         this.CreateEnemy(MoldormBossPrefab, config.width-60, config.height/4, true);
+        */
         
     }
     
-    CreateEnemy(_enemyType, _posX, _posY, _startActive){
+    CreateEnemy(_enemyType, _posX, _posY, _startActive)
+    {
         var enemy = new _enemyType(this, _posX, _posY);
         this.enemies.add(enemy);
         enemy.visible = enemy.active = _startActive;    
@@ -441,35 +442,31 @@ class gameState extends Phaser.Scene{
     
 	update()
     {
-        if(this.player.body.position.x < this.camPosX)
+        if(this.player.body.position.x < this.cameraManager.camPosX)
         {
-            this.camPosX -= 160;
-            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
+            this.cameraManager.directionChange =  this.Directions.LEFT;
+            this.cameraManager.changeTile = true;
             this.hudBG.movePosition(this.camPosX,this.camPosY + 128);
-            //this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
         }
-        else if(this.player.body.position.x > this.camPosX + 160)
+        else if(this.player.body.position.x > this.cameraManager.camPosX + 160)
         {
-           this.camPosX += 160;
-           this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
+           this.cameraManager.directionChange =  this.Directions.RIGHT;
+           this.cameraManager.changeTile = true;
            this.hudBG.movePosition(this.camPosX,this.camPosY + 128);
-           //this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
         }
-        else if(this.player.body.position.y < this.camPosY)
+        else if(this.player.body.position.y < this.cameraManager.camPosY)
         {
-            this.camPosY -= 128;
-            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
+            this.cameraManager.directionChange =  this.Directions.UP;
+            this.cameraManager.changeTile = true;
             this.hudBG.movePosition(this.camPosX,this.camPosY + 128);
-            //this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
         }
-        else if(this.player.body.position.y > this.camPosY + 128)
+        else if(this.player.body.position.y > this.cameraManager.camPosY + 128)
         {
-            this.camPosY += 128;
-            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
+            this.cameraManager.directionChange =  this.Directions.DOWN;
+            this.cameraManager.changeTile = true;
             this.hudBG.movePosition(this.camPosX,this.camPosY + 128);
-            //this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
         }  
-        
+        this.hudBG.setPosition(this.camPosX,this.camPosY + 128);
         var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
         this.ShowText(sampleText, sampleText.length);
         
