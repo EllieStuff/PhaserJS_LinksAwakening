@@ -16,37 +16,38 @@ class SpikedPrefab extends EnemyBase{
     
     Update()
     {
-        var currentPos = new Phaser.Math.Vector2(this.body);
-        
-        
-        if(this.isVulnerable)
-        {
-            this.anims.play('SpikedDown', true);
-           
-            if((this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) || this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.L)) && !this.collided)
+        if(this.active && !this.falling){
+            var currentPos = new Phaser.Math.Vector2(this.body);
+
+            if(this.isVulnerable)
             {
-                    //KILL
+                this.anims.play('SpikedDown', true);
+
+                if((this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) || this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.L)) && !this.collided)
+                {
+                        //KILL
+                }
             }
-        }
-        else
-        {
-            if(currentPos.distance(this.scene.player.body) < this.seeRange && !this.collided)
+            else
             {
-                if(!this.charging)
-                    this.MoveTowards(this.scene.player, this.speed * 0.5);                    
-                    this.scene.time.addEvent({delay: 3000, callback: this.GetRepeled(), callbackScope: this, repeat: 0});
-                this.anims.play('SpikedWalk', true);
-            }
-            else if (!this.collided)
-            {
-                this.body.stop();
-            }
-        
-        
-            if((this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) || this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.L)) && !this.collided && this.charging)
-            {
-                this.isVulnerable = true;
-                this.GetRepeled();
+                if(currentPos.distance(this.scene.player.body) < this.seeRange && !this.collided)
+                {
+                    if(!this.charging)
+                        this.MoveTowards(this.scene.player, this.speed * 0.5);                    
+                        this.scene.time.addEvent({delay: 3000, callback: this.GetRepeled(), callbackScope: this, repeat: 0});
+                    this.anims.play('SpikedWalk', true);
+                }
+                else if (!this.collided)
+                {
+                    this.body.stop();
+                }
+
+
+                if((this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) || this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.L)) && !this.collided && this.charging)
+                {
+                    this.isVulnerable = true;
+                    this.GetRepeled();
+                }
             }
         }
     }

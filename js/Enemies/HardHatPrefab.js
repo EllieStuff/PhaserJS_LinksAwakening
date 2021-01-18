@@ -16,22 +16,24 @@ class HardHatPrefab extends EnemyBase{
     
     Update()
     {
-        var currentPos = new Phaser.Math.Vector2(this.body);
-        
-        if(currentPos.distance(this.scene.player.body) < this.seeRange && !this.collided)
-        {
-            this.MoveTowards(this.scene.player, this.speed);
-            this.anims.play('hardhatWalk', true);
-            
-        }
-        else if (!this.collided)
-        {
-            this.body.stop();
-        }
-        
-        if((this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) || this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.L)) && !this.collided)
-        {
-            this.GetRepeled();
+        if(this.active && !this.falling){
+            var currentPos = new Phaser.Math.Vector2(this.body);
+
+            if(currentPos.distance(this.scene.player.body) < this.seeRange && !this.collided)
+            {
+                this.MoveTowards(this.scene.player, this.speed);
+                this.anims.play('hardhatWalk', true);
+
+            }
+            else if (!this.collided)
+            {
+                this.body.stop();
+            }
+
+            if((this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) || this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.L)) && !this.collided)
+            {
+                this.GetRepeled();
+            }
         }
     }
     

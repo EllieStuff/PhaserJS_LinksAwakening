@@ -44,7 +44,7 @@ class SkeletonPrefab extends EnemyBase{
     
     Update()
     {
-        if(this.active){
+        if(this.active && !this.falling){
             var currentPos = new Phaser.Math.Vector2(this.body);
 
             if(currentPos.distance(this.scene.player.body) < this.seeRange
@@ -100,6 +100,7 @@ class AuxSkeleton extends Phaser.GameObjects.Sprite{
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.collideWorldBounds = true;
+        this.setDepth(scene.DrawDepths.ENEMIES);
         
         this.scene.physics.add.collider(this, this.scene.walls);
         

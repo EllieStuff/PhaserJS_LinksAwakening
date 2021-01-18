@@ -19,6 +19,7 @@ class MoldormBossPrefab extends EnemyBase{
         this.angleDelta = 0;
         this.isWaiting = false;
         this.waitingDelay = 750;
+        this.canFall = false
         this.tail1 = new MoldormBossBodyPrefab(scene, positionX + 20, positionY, 'moldormBossEnemyBody', 3);
         this.tail2 = new MoldormBossBodyPrefab(scene, positionX + 30, positionY, 'moldormBossEnemyBody', 3);
         this.tail3 = new MoldormBossBodyPrefab(scene, positionX + 40, positionY, 'moldormBossEnemyBody', 3);
@@ -29,6 +30,7 @@ class MoldormBossPrefab extends EnemyBase{
     InitCollisions(){
         this.scene.physics.add.overlap(this, this.scene.player, this.DamagePlayer, null, this);
         this.scene.physics.add.collider(this, this.scene.walls, this.BounceWithWalls, null, this);
+        this.scene.physics.add.collider(this, this.scene.voids, this.BounceWithWalls, null, this);
     }
     
     BounceWithWalls(){

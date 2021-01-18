@@ -38,12 +38,13 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('redZol', rutaImgEnemies         + 'RedZol.png'            ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('greenZol', rutaImgEnemies       + 'GreenZol.png'            ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('sparkEnemy', rutaImgEnemies   + 'SparkAnim.png'         ,{frameWidth: 16, frameHeight: 16});
-        
+        this.load.spritesheet('enemyFallingAnim', rutaImgEnemies + 'EnemyFallingAnim.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('moldormEnemy', rutaImgEnemies + 'MiniMoldorm.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('moldormEnemyBody1', rutaImgEnemies + 'MoldormBody1.png'       ,{frameWidth: 12, frameHeight: 12});
         this.load.spritesheet('moldormEnemyBody2', rutaImgEnemies + 'MoldormBody2.png'       ,{frameWidth: 10, frameHeight: 10});
         this.load.spritesheet('moldormBossEnemy', rutaImgEnemies + 'MoldormHeads.png'       ,{frameWidth: 28, frameHeight: 28});
         this.load.spritesheet('moldormBossEnemyBody', rutaImgEnemies + 'MoldormBodys.png'       ,{frameWidth: 16, frameHeight: 16});
+        
         //Items
         this.load.spritesheet('atkPowerUp',rutaImgItems + 'PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('defPowerUp',rutaImgItems + 'PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
@@ -52,7 +53,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('rocFeather',rutaImgItems + 'RocFeather.png' ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('blueRupee' ,rutaImgItems + 'BlueRupee.png'  ,{frameWidth: 8,  frameHeight: 16});
         this.load.spritesheet('redRupee'  ,rutaImgItems + 'RedRupee.png'   ,{frameWidth: 8,  frameHeight: 16});
-        this.load.spritesheet('smallHeart',rutaImgItems + 'RocFeather.png' ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('smallHeart',rutaImgItems + 'SmallHeart.png' ,{frameWidth: 16, frameHeight: 16});
         
         //Interactive Tiles
         this.load.spritesheet('movableBlock',rutaImgInteractiveTiles        + 'Block.png'                  ,{frameWidth: 16, frameHeight: 16});
@@ -65,6 +66,9 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('smallLadders',rutaImgInteractiveTiles        + 'SmallLadders.png'           ,{frameWidth: 16, frameHeight: 56});
         this.load.spritesheet('largeLadders',rutaImgInteractiveTiles        + 'LargeLadders.png'           ,{frameWidth: 16, frameHeight: 112});
         this.load.spritesheet('keyBlock',rutaImgInteractiveTiles            + 'KeyBlock.png'               ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('simpleVoid',rutaImgInteractiveTiles          + 'SimpleVoid.png'               ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('bossVoid',rutaImgInteractiveTiles            + 'BossVoid.png'               ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('breakableFloor',rutaImgInteractiveTiles       + 'BreakableFloor.png'               ,{frameWidth: 16, frameHeight: 16});
         
         //HUD
         this.load.image('bgHUD',rutaImgHUD + 'HUD_bg.png');
@@ -106,29 +110,30 @@ class gameState extends Phaser.Scene{
             //Enemies
         this.load.audio('bladeTrap_FX', rutaFX              + 'LA_BladeTrap.wav');
         this.load.audio('enemyDying_FX', rutaFX             + 'LA_Enemy_Die.wav'); // - Testing
-        this.load.audio('enemyDyingPowerUp_FX', rutaFX      + 'LA_Enemy_Die_Power.wav'); //---
-        this.load.audio('enemyFalling_FX', rutaFX           + 'LA_Enemy_Fall.wav'); //---
+        this.load.audio('enemyDyingPowerUp_FX', rutaFX      + 'LA_Enemy_Die_Power.wav'); // - Testing
+        this.load.audio('enemyFalling_FX', rutaFX           + 'LA_Enemy_Fall.wav');
         this.load.audio('enemyHit_FX', rutaFX               + 'LA_Enemy_Hit.wav'); // - Testing
-        this.load.audio('enemyHitPowerUp_FX', rutaFX        + 'LA_Enemy_Hit_Power.wav'); //---
+        this.load.audio('enemyHitPowerUp_FX', rutaFX        + 'LA_Enemy_Hit_Power.wav'); // - Testing
         this.load.audio('enemyJumping_FX', rutaFX           + 'LA_Enemy_Jump.wav'); // - ToDo: esta en esquelet, falta en miniboss
             //Player
         this.load.audio('linkBounce_FX', rutaFX             + 'LA_Link_Bounce.wav'); //---
-        this.load.audio('linkDying_FX', rutaFX              + 'LA_Link_Dying.wav'); //---
-        this.load.audio('linkHurt_FX', rutaFX               + 'LA_Link_Hurt.wav'); //---
-        this.load.audio('linkJump_FX', rutaFX               + 'LA_Link_Jump.wav'); //---
-        this.load.audio('linkPickUp_FX', rutaFX             + 'LA_Link_PickUp.wav'); //---
-        this.load.audio('linkRebound_FX', rutaFX            + 'LA_Link_Rebound.wav'); //---
-        this.load.audio('linkRun_FX', rutaFX                + 'LA_Link_Run.wav'); //---
-        this.load.audio('linkHurt_FX', rutaFX               + 'LA_Link_Hurt.wav'); //---
-        this.load.audio('linkShock_FX', rutaFX              + 'LA_Link_Shock.wav'); //---
-        this.load.audio('linkThrow_FX', rutaFX              + 'LA_Link_Throw.wav'); //---
-        this.load.audio('linkLowHealth_FX', rutaFX          + 'LA_LowHealth.wav'); //---
+        this.load.audio('linkDying_FX', rutaFX              + 'LA_Link_Dying.wav');
+        this.load.audio('linkHurt_FX', rutaFX               + 'LA_Link_Hurt.wav');
+        this.load.audio('linkJump_FX', rutaFX               + 'LA_Link_Jump.wav');
+        this.load.audio('linkPickUp_FX', rutaFX             + 'LA_Link_PickUp.wav');
+        //this.load.audio('linkRebound_FX', rutaFX            + 'LA_Link_Rebound.wav'); // No se on ha d'anar
+        //this.load.audio('linkRun_FX', rutaFX                + 'LA_Link_Run.wav'); // Crec que no s'ha de posar, que es per les botes pegas
+        this.load.audio('linkHurt_FX', rutaFX               + 'LA_Link_Hurt.wav');
+        this.load.audio('linkShock_FX', rutaFX              + 'LA_Link_Shock.wav');
+        //this.load.audio('linkThrow_FX', rutaFX              + 'LA_Link_Throw.wav'); // Crec que no s'ha de posar
+        this.load.audio('linkFall_FX', rutaFX               + 'LA_Link_Fall.wav');
+        this.load.audio('linkLowHealth_FX', rutaFX          + 'LA_LowHealth.wav');
             //items
         this.load.audio('compassSignal_FX', rutaFX          + 'LA_Dungeon_Signal.wav'); // - ToDo: averiguar com va aixo
         this.load.audio('getHeartContainer_FX', rutaFX      + 'LA_Fanfare_HeartContainer.wav'); //---
         this.load.audio('getFanfareItem_FX', rutaFX         + 'LA_Fanfare_Item.wav'); //---
         this.load.audio('getFanfareItemExtended_FX', rutaFX + 'LA_Fanfare_Item_Extended.wav'); //---
-        this.load.audio('getItem1_FX', rutaFX               + 'LA_Get_Item.wav'); //---
+        this.load.audio('getItem1_FX', rutaFX               + 'LA_Get_Item.wav'); //--- Crec que aquest i el d'abaix son per agafar items secundaris de cofres
         this.load.audio('getItem2_FX', rutaFX               + 'LA_Get_Item2.wav'); //---
         this.load.audio('getPowerUp_FX', rutaFX             + 'LA_Get_PowerUp.wav');
         this.load.audio('getRupee_FX', rutaFX               + 'LA_Get_Rupee.wav');
@@ -142,7 +147,7 @@ class gameState extends Phaser.Scene{
         this.load.audio('triggerSwitch_FX', rutaFX          + 'LA_Dungeon_Switch.wav'); // - ToDo
         this.load.audio('teleport_FX', rutaFX               + 'LA_Dungeon_Teleport.wav'); // - ToDo: mirar si posarem el tp al final
         this.load.audio('teleportAppear_FX', rutaFX         + 'LA_Dungeon_Teleport_Appear.wav'); // - ToDo: ""
-        this.load.audio('groundCrumbling_FX', rutaFX        + 'LA_Ground_Crumble.wav'); ///---
+        this.load.audio('groundCrumbling_FX', rutaFX        + 'LA_Ground_Crumble.wav');
             //Events
         this.load.audio('transportOut_FX', rutaFX           + 'LA_Dungeon_TransportOut.wav'); //--- //Quan agafes l'instrument i et fa fora de la dungeon
         this.load.audio('error_FX', rutaFX                  + 'LA_Error.wav'); //---
@@ -165,6 +170,11 @@ class gameState extends Phaser.Scene{
         
 	}
 	create(){
+        //Variables
+        this.DrawDepths = { DEFAULT: 0, INTERACTIVE_TILES: 1, ITEMS: 2, ENEMIES: 3, PLAYER: 4 };
+        this.Directions = { RIGHT: 'right', LEFT: 'left', UP: 'up', DOWN: 'down', UP_RIGHT: 'up-right', DOWN_RIGHT: 'down-right', UP_LEFT: 'up-left', DOWN_LEFT: 'down-left', NONE: 'none' };
+        this.PhysicTypes = { TOP_DOWN_VIEW: 0, FRONT_VIEW: 1 };
+        
         //Set up camera
         this.cameras.main.setBounds(0, 0, this.width, this.height);
         //this.cameras.main.startFollow(this.player);
@@ -188,11 +198,6 @@ class gameState extends Phaser.Scene{
         
         //Inputs
         this.inputs = new InputManager(this);
-       
-        //Variables
-        this.DrawDepths = { DEFAULT: 0, INTERACTIVE_TILES: 1, ITEMS: 2, ENEMIES: 3, PLAYER: 4, MENU: 7 };
-        this.Directions = { RIGHT: 'right', LEFT: 'left', UP: 'up', DOWN: 'down', UP_RIGHT: 'up-right', DOWN_RIGHT: 'down-right', UP_LEFT: 'up-left', DOWN_LEFT: 'down-left', NONE: 'none' };
-        this.PhysicTypes = { TOP_DOWN_VIEW: 0, FRONT_VIEW: 1 };
         
         //Player
         this.CreatePlayer();
@@ -280,13 +285,19 @@ class gameState extends Phaser.Scene{
         //Boss Doors
         this.doors.add(new MasterKeyDoor(this, 1040, 256));
         
+        //Voids
+        this.voids = this.add.group()
+        this.voids.add(new BossVoid(this, config.width / 2 + 8, config.height / 2 + 48))
+        this.voids.add(new SimpleVoid(this, config.width / 2 - 8, config.height / 2 + 48))
+        this.voids.add(new BreakableFloor(this, config.width / 2 - 24, config.height / 2 + 48))
+        
     }
     
     CreateEnemies(){
         this.enemies = this.physics.add.group();
         
         //Afegir els enemics un per un aqui si no no es que ho hem de fer diferent per tema del tilemap
-        this.CreateEnemy(SkeletonPrefab, config.width/4, config.height/4, true);
+        this.CreateEnemy(SkeletonPrefab, config.width/2, config.height/2, true);
         this.CreateEnemy(HardHatPrefab , config.width/2, config.height/4, true);
         this.CreateEnemy(BladePrefab, config.width/3, config.height/4, true);
         this.CreateEnemy(BatPrefab, config.width/2, config.height/2, true);
@@ -334,15 +345,16 @@ class gameState extends Phaser.Scene{
         this.stairs = this.map.createStaticLayer('stairs', 'blocks');
         this.map.setCollision(31,false,false,'stairs');
         
-        this.voids = this.add.group();
-        this.voids.add(this.map.createStaticLayer('void', 'blocks'));
-        this.map.setCollision(22,false,false,'void');
-        this.voids.add(this.map.createStaticLayer('void2', 'blocks'));
+        //this.voids = this.add.group();
+        //this.voids = this.map.createStaticLayer('void2', 'blocks')
+        //this.voids.add(this.map.createStaticLayer('void', 'blocks'));
+        //this.map.setCollision(40, false, false, 'void2');
+        /*this.voids.add(this.map.createStaticLayer('void2', 'blocks'));
         this.map.setCollision(40,false,false,'void2');
         this.map.createStaticLayer('cliff', 'blocks');
         //ToDo: Afegir els brakableBlocks als void nomes quan es trenquin
         this.voids.add(this.map.createStaticLayer('breakblefloor', 'blocks'));
-        this.map.setCollision(107,false,false,'breakblefloor');
+        this.map.setCollision(107,false,false,'breakblefloor');*/
         
         this.tpStairs = this.map.createStaticLayer('stairstp', 'blocks');
         this.map.setCollision(34,false,false,'stairstp');
@@ -426,7 +438,6 @@ class gameState extends Phaser.Scene{
         this.owlText.text = "";
         this.counter = 0;
     }
-    
     
 	update()
     {
