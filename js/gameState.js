@@ -381,6 +381,7 @@ class gameState extends Phaser.Scene{
         //Init HUD
         this.hudBG = new HudManager(this,this.camPosX,this.camPosY + 128);
         this.hudBG.setMaxHearts(this.player.maxHearts);
+        this.hudBG.setObjects("Espada", "Escudo");
     }
     
     LoadPlatformerMap(){
@@ -433,29 +434,29 @@ class gameState extends Phaser.Scene{
         {
             this.camPosX -= 160;
             this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
-            //this.hudBG.setPosition(this.camPosX,this.camPosY + 128);
-            this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
+            this.hudBG.movePosition(this.camPosX,this.camPosY + 128);
+            //this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
         }
         else if(this.player.body.position.x > this.camPosX + 160)
         {
            this.camPosX += 160;
            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
-           //this.hudBG.setPosition(this.camPosX,this.camPosY + 128);
-           this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
+           this.hudBG.movePosition(this.camPosX,this.camPosY + 128);
+           //this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
         }
         else if(this.player.body.position.y < this.camPosY)
         {
             this.camPosY -= 128;
             this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
-            //this.hudBG.setPosition(this.camPosX,this.camPosY + 128);
-            this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
+            this.hudBG.movePosition(this.camPosX,this.camPosY + 128);
+            //this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
         }
         else if(this.player.body.position.y > this.camPosY + 128)
         {
             this.camPosY += 128;
             this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
-            //this.hudBG.setPosition(this.camPosX,this.camPosY + 128);
-            this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
+            this.hudBG.movePosition(this.camPosX,this.camPosY + 128);
+            //this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
         }  
         
         var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";

@@ -18,7 +18,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.moveDir = this.Directions.DOWN;
         
         this.maxHearts = 3;
-        this.health = this.maxHearts*4;
+        this.health = this.maxHearts*2;
         this.setOrigin(0.5,0).setScale(1);
         this.initDefense = this.defense = 1;
         this.initAttack = this.attack = 1;
@@ -118,14 +118,14 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     AddMaxHeart()
     {
         this.maxHearts++;
-        this.health = this.maxHearts * 4;
+        this.health = this.maxHearts * 2;
     }
     
     Heal()
     {
-        this.health+=4;
-        if(this.health > this.maxHearts*4)
-            this.health = this.maxHearts * 4;
+        this.health+=2;
+        if(this.health > this.maxHearts*2)
+            this.health = this.maxHearts * 2;
     }
     
     RefreshPowerUpBuffers(){
