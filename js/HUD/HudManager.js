@@ -31,6 +31,7 @@ class HudManager extends Phaser.GameObjects.Sprite{
     movePosition(bgPosX, bgPosY){
         this.setPosition(bgPosX,bgPosY);
         this.objectB.setPosition(bgPosX + 8,bgPosY);
+        this.objectA.setPosition(bgPosX + 48,bgPosY);
         this.rupieImg.setPosition(bgPosX + config.width/2, bgPosY);
         this.centDigit.setPosition(bgPosX + config.width/2, bgPosY + 8);
         this.decimalDigit.setPosition(bgPosX + config.width/2 + 8, bgPosY + 8);
@@ -97,7 +98,8 @@ class HudManager extends Phaser.GameObjects.Sprite{
             {
                 for(var i = (health/2); i < this.maxHearts; i++)
                 {
-                    if(i%2 != 0)
+                    console.log(i%2);
+                    if(i%2 != 0 && i%2 != 1)
                         this.hearts[i-0.5].setFrame(1);
                     else
                         this.hearts[i].setFrame(1);
