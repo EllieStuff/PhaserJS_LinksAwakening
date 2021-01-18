@@ -57,6 +57,12 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
             frameRate: 4,
             repeat: 0
         });
+        this.scene.anims.create({
+            key: 'enemyDeath',
+            frames: this.scene.anims.generateFrameNumbers('EnemyDeath', { start: 0, end: 1 }),
+            frameRate: 8,
+            repeat: 0
+        });
     }
     
     //Make your anims on each enemy type
@@ -78,9 +84,10 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
             //this.body.stop()
             this.anims.play('enemyFalling')
             this.scene.soundManager.PlayFX('enemyFalling_FX')
-            
+            this.scene.player.enemiesKilled++;
             this.scene.time.addEvent({delay: 1000, callback: function(){ this.body.stop() }, callbackScope: this, repeat: 0});
-            this.scene.time.addEvent({delay: 3000, callback: this.Die, callbackScope: this, repeat: 0});
+            this.scene.time.addEvent({delay: 3000, callback: function(){this.x = this.y = 0; this.active = this. visible = false; }, callbackScope: this, repeat: 0});
+
             
         }
         
@@ -167,19 +174,25 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
                 this.scene.soundManager.PlayFX('enemyHit_FX')
             }
             
-            if(this.health <= 0){
+            if(this.health <= 0)
+            {
+                this.anims.stop();
+                this.anims.play('enemyDeath');
                 this.Die();
+                
+                
             }
         }
     
     }
     
     Die(){
-        this.scene.player.enemiesKilled++;
-        this.SpawnItem();
         
-        this.x = this.y = 0;
-        this.active = this.visible = false;
+        this.scene.player.enemiesKilled++;
+        this.scene.time.addEvent({delay: 300, callback: function(){this.x = this.y = 0; this.active = this. visible = false; }, callbackScope: this, repeat: 0});
+        this.SpawnItem();
+        //this.x = this.y = 0;
+       // this.active = this.visible = false;
         
     }
     

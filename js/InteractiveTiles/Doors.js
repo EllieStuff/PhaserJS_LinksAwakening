@@ -124,21 +124,21 @@ class MasterKeyDoor extends DoorsPrefab{
     
 }
 
-class OneWayDoor extends DoorsPrefab{
+class OneWayDoor extends DoorsPrefab
+{
     
     constructor(scene, positionX, positionY)
     {
         super(scene, positionX, positionY, 'oneWayDoor');
-        
         this.colManager = new CollisionManager(scene);
         this.doorBackwards = new OneWayDoorBackwards(scene, this.body.x, this.body.y + this.body.height);
-        this.tpPos = new Phaser.Math.Vector2(this.body.x, this.body.y + this.body.height * 2);
+        this.tpPos = new Phaser.Math.Vector2(this.body.x, this.body.y - this.body.height * 2);
     }
     
     CreateAnims(){
         this.scene.anims.create({
             key: 'oneWayDoorOpening',
-            frames: this.scene.anims.generateFrameNumbers('oneWayDoor', { start: 0, end: 2 }),
+            frames: this.scene.anims.generateFrameNumbers('oneWayDoor', { start: 0, end: 7 }),
             frameRate: 10,
             repeat: 0
         });
@@ -146,34 +146,20 @@ class OneWayDoor extends DoorsPrefab{
     
     
     Trigger(){
-        if(this.active){
+        if(this.active)
+        {
             this.colManager.UpdateOnTrigger();
-            
             if(this.colManager.GetCollisionState() == this.colManager.CollisionState.ENTERED_COLLISION
-              && this.colManager.GetCollisionDirection() == this.colManager.CollisionDirection.DOWN)
+              && this.colManager.GetCollisionDirection(this,this.scene.player) == this.colManager.CollisionDirection.DOWN)
             {
                 this.anims.play('oneWayDoorOpening');
-                this.scene.player.body.x = tpPos.x;
-                this.scene.player.body.y = tpPos.y;
-                
-                //TODO: Do stuff to change the room
-                
-                this.scene.time.addEvent({delay: 1000, callback: this.ChangingRoomDelay, callbackScope: this, repeat: 0});  //Delay per deixar temps a que es vegi l'animacio de la porta
+                this.scene.player.body.y -= 32;
+                this.scene.time.addEvent({delay: 1000, callback: function(){this.scene.player.body.y = this.tpPos}, callbackScope: this, repeat: 0});  //Delay per deixar temps a que es vegi l'animacio de la porta
             }
         }
         
     }
-    
-    ChangeRoom(){
-        //TODO: Do stuff to change the room
         
-    }
-    
-    ChangingRoomDelay(){
-        //Delay per deixar temps a que es vegi l'animacio de la porta
-        this.scene.time.addEvent({delay: 1000, callback: this.ChangeRoom, callbackScope: this, repeat: 0});
-    }
-    
     Activate(){
         this.active = this.visible = true;
         this.colManager.active = true;
@@ -186,6 +172,7 @@ class OneWayDoor extends DoorsPrefab{
     }
     
 }
+
 class OneWayDoorBackwards extends Phaser.GameObjects.Sprite{
     constructor(scene, positionX, positionY)
     {
