@@ -238,8 +238,8 @@ class gameState extends Phaser.Scene{
         
         //this.cameras.main.setLerp(0.01);
         //this.cameras.main.setScroll(160*2 + 80,128*5 + 64);
-        
-        
+        //Init HUD
+        this.LoadHud();
         //Init Start Menu
         this.startMenu = this.add.image(this.camPosX , this.camPosY, 'startMenu').setOrigin(0).setScale(1, 1.06).setDepth(this.DrawDepths.MENU)
         this.inStartMenu = true;
@@ -374,24 +374,14 @@ class gameState extends Phaser.Scene{
         this.map.setCollisionBetween(79,886,true,false,'fences');
         
         //Init Start Menu
-        //this.startMenu = this.add.image(0, 0,'startMenu')//.setOrigin(1).setScale(7);
-        
+        //this.startMenu = this.add.image(0, 0,'startMenu')//.setOrigin(1).setScale(7);    
+    }
+    
+    LoadHud(){
         //Init HUD
-        this.hudBG = this.add.image(this.camPosX,this.camPosY + 128,'bgHUD').setOrigin(0).setDepth(5);
-        console.log(this.camPosX)
-        console.log(this.camPosY)
-        this.rupieHUD = this.add.image(config.width/2, config.height/1.17, 'rupieHUD').setOrigin(0).setScale(7);
-        var posX = config.width/2 + (16*7);
-        var posY = config.height - (16*3.5);
-        this.unitDigit = this.add.sprite(posX, posY, 'numbersUI').setOrigin(0).setScale(7);
-        var posX = config.width/2 + (16*3.5);
-        var posY = config.height - (16*3.5);
-        this.decimalDigit = this.add.sprite(posX, posY, 'numbersUI').setOrigin(0).setScale(7);
-        var posX = config.width/2;
-        var posY = config.height - (16*3.5);
-        this.centDigit = this.add.sprite(posX, posY, 'numbersUI').setOrigin(0).setScale(7);
-        
-        
+        this.hudBG = new HudManager(this,this.camPosX,this.camPosY + 128);
+        this.hudBG.setMaxHearts(this.player.maxHearts);
+        this.hudBG.setObjects("Espada", "Escudo");
     }
     
     LoadPlatformerMap(){
@@ -444,23 +434,31 @@ class gameState extends Phaser.Scene{
         {
             this.camPosX -= 160;
             this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
+            this.hudBG.movePosition(this.camPosX,this.camPosY + 128);
+            //this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
         }
         else if(this.player.body.position.x > this.camPosX + 160)
         {
            this.camPosX += 160;
            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
+           this.hudBG.movePosition(this.camPosX,this.camPosY + 128);
+           //this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
         }
         else if(this.player.body.position.y < this.camPosY)
         {
             this.camPosY -= 128;
             this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
+            this.hudBG.movePosition(this.camPosX,this.camPosY + 128);
+            //this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
         }
         else if(this.player.body.position.y > this.camPosY + 128)
         {
             this.camPosY += 128;
             this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
+            this.hudBG.movePosition(this.camPosX,this.camPosY + 128);
+            //this.rupieHUD.setPosition(this.camPosX + config.width/2, this.camPosY + config.height - 16);
         }  
-        this.hudBG.setPosition(this.camPosX,this.camPosY + 128);
+        
         var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
         this.ShowText(sampleText, sampleText.length);
         
