@@ -5,25 +5,34 @@ class CameraManager
     {
         this.scene = _scene
         _scene.events.on('update', this.Update, this);
-        _scene.cameras.main.setBounds(0, 0, config.width, config.height);
-        
         
         this.TileX = 3;
         this.TileY = 5;
         
-        
         this.camPosX = 160 * this.TileX;
         this.camPosY = 128 * this.TileY;
-        this.scene.cameras.main
-        this.scene.cameras.main.centerOn(this.camPosX + config.width/2, this.camPosY + config.height/2);
+        this.changeTile = false;
+        this.directionChange = this.scene.Directions;
+        
+        this.levelEnemies = 
+            [
+            [0,0,1,1,1,0],
+            [0,1,0,0,0,1],
+            [0,1,1,1,1,1],
+            [0,1,1,1,1,1],
+            [0,0,1,1,1,0],
+            [0,0,1,1,0,0],
+            [1,1,1,1,0,0],
+            ]
+        
         
     }
     
     
     
-    GenerateEnemies()
+    GenerateEnemies(enemyArray)
     {
-        //this.scene.enemies.clear();
+        enemyArray.clear();
         
         //Comprobar sala, generar nuevos enemigos
     }
@@ -31,36 +40,39 @@ class CameraManager
     
     Update()
     {
-        /*
-        if(this.scene.player.body.position.x < this.camPosX)
+        
+        if(this.changeTile)
         {
-            this.camPosX -= 160;
-            this.scene.cameras.main.centerOn(this.camPosX + config.width/2,this.camPosY + config.height/2);
-            this.TileX--;
-            this.GenerateEnemies();
+            switch(this.directionChange)
+            {
+               case this.scene.Directions.LEFT:
+                    this.camPosX -= 160;
+                    this.tileX--;
+                break;
+
+            case this.scene.Directions.RIGHT:
+                    this.camPosX += 160;
+                    this.tileX++;
+                break;
+
+            case this.scene.Directions.DOWN:
+                    
+                    this.camPosY += 128;
+                    this.tileY++;
+                break;
+
+            case this.scene.Directions.UP:
+                    this.camPosY -= 128;
+                    this.tileY--;
+                break;
+
+            default:
+                break;
+               
+            }
+            this.scene.cameras.main.centerOn(this.camPosX + config.width/2, this.camPosY + config.height/2);
+            this.changeTile = false;
         }
-        else if(this.scene.player.body.position.x > this.camPosX + 160)
-        {
-           this.camPosX += 160;
-           this.scene.cameras.main.centerOn(this.camPosX + config.width/2,this.camPosY + config.height/2);
-            this.TileX++;
-            this.GenerateEnemies();
-        }
-        else if(this.scene.player.body.position.y < this.camPosY)
-        {
-            this.camPosY -= 128;
-            this.scene.cameras.main.centerOn(this.camPosX + config.width/2,this.camPosY + config.height/2);
-            this.TileY--;
-            this.GenerateEnemies();
-        }
-        else if(this.scene.player.body.position.y > this.camPosY + 128)
-        {
-            this.camPosY += 128;
-            this.scene.cameras.main.centerOn(this.camPosX + config.width/2,this.camPosY + config.height/2);
-            this.TileY++;
-            this.GenerateEnemies();
-        }   
-        */
     }
     
 }

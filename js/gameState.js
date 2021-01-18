@@ -168,10 +168,8 @@ class gameState extends Phaser.Scene{
         //Set up camera
         this.cameras.main.setBounds(0, 0, this.width, this.height);
         //this.cameras.main.startFollow(this.player);
-        this.camPosX = 160 * 3;
-        this.camPosY = 128 * 5;
-        this.cameras.main
-        this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + 72);
+        this.cameraManager = new CameraManager(this);
+        this.cameras.main.centerOn(this.cameraManager.camPosX + config.width/2,this.cameraManager.camPosY + config.height/2);
         //Load Map
         this.LoadMap();
         this.LoadPlatformerMap();
@@ -241,7 +239,7 @@ class gameState extends Phaser.Scene{
         
         
         //Init Start Menu
-        this.startMenu = this.add.image(this.camPosX , this.camPosY, 'startMenu').setOrigin(0).setScale(1, 1.06).setDepth(this.DrawDepths.MENU)
+        this.startMenu = this.add.image(this.cameraManager.camPosX , this.cameraManager.camPosY, 'startMenu').setOrigin(0).setScale(1, 1.06).setDepth(this.DrawDepths.MENU)
         this.inStartMenu = true;
         
 	}
@@ -440,27 +438,35 @@ class gameState extends Phaser.Scene{
     
 	update()
     {
-        if(this.player.body.position.x < this.camPosX)
+        if(this.player.body.position.x < this.cameraManager.camPosX)
         {
-            this.camPosX -= 160;
-            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
+            this.cameraManager.directionChange =  this.Directions.LEFT;
+            this.cameraManager.changeTile = true;
         }
-        else if(this.player.body.position.x > this.camPosX + 160)
+        else if(this.player.body.position.x > this.cameraManager.camPosX + 160)
         {
-           this.camPosX += 160;
-           this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
+           this.cameraManager.directionChange =  this.Directions.RIGHT;
+           this.cameraManager.changeTile = true;
         }
-        else if(this.player.body.position.y < this.camPosY)
+        else if(this.player.body.position.y < this.cameraManager.camPosY)
         {
-            this.camPosY -= 128;
-            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
+            this.cameraManager.directionChange =  this.Directions.UP;
+            this.cameraManager.changeTile = true;
         }
-        else if(this.player.body.position.y > this.camPosY + 128)
+        else if(this.player.body.position.y > this.cameraManager.camPosY + 128)
         {
-            this.camPosY += 128;
-            this.cameras.main.centerOn(this.camPosX + 80,this.camPosY + config.height/2);
+            this.cameraManager.directionChange =  this.Directions.DOWN;
+            this.cameraManager.changeTile = true;
         }  
-        this.hudBG.setPosition(this.camPosX,this.camPosY + 128);
+        if(this.cameraManager.changeTile)
+        {
+            this.enemies.remove();
+            this.cameraManager.GenerateEnemies(this.enemies);
+            
+        }
+            
+        
+        this.hudBG.setPosition(this.cameraManager.camPosX,this.cameraManager.camPosY + 128);
         var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
         this.ShowText(sampleText, sampleText.length);
         
