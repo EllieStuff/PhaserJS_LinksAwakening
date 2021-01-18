@@ -98,7 +98,6 @@ class HudManager extends Phaser.GameObjects.Sprite{
             {
                 for(var i = (health/2); i < this.maxHearts; i++)
                 {
-                    console.log(i%2);
                     if(i%2 != 0 && i%2 != 1)
                         this.hearts[i-0.5].setFrame(1);
                     else
