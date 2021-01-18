@@ -89,6 +89,7 @@ class gameState extends Phaser.Scene{
         this.load.image('hitboxAttack', rutaImgLink + 'LinkAttackHit.png');
         this.load.image('hitboxShield', rutaImgLink + 'ShieldHitbox.png');
         this.load.image('startMenu', rutaImgMenus + 'Intro Links Awakening.png');
+        this.load.image('startMenu', rutaImgMenus + 'GameOver.png');
         
         
         // Dungeon
@@ -470,6 +471,7 @@ class gameState extends Phaser.Scene{
     
 	update()
     {
+        
         if(this.player.body.position.x < this.cameraManager.camPosX)
         {
             this.cameraManager.directionChange =  this.Directions.LEFT;
@@ -503,7 +505,11 @@ class gameState extends Phaser.Scene{
             this.soundManager.PlayFX('titleAppear_FX')
             this.soundManager.PlayOST('tailCave_OST')
         }
-
+        if(this.player.health < 5)
+        {
+            this.scene.destroy();
+            
+        }
 	}
     
 }

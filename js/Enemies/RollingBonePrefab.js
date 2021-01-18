@@ -17,7 +17,7 @@ class RollingBonePrefab extends EnemyBase
         this.initHealth = 10;
         this.health = this.initHealth;
         this.speed = 1;
-
+        
     }  
     
     //

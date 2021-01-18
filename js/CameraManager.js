@@ -78,8 +78,8 @@ class CameraManager
         this.scene.enemies.add(new RedZolPrefab(this.scene, 160 * 3 + 80 + 8 , 128 * 1 + 16));
         this.scene.enemies.add(new RedZolPrefab(this.scene, 160 * 3 + 48 + 8 , 128 * 1 + 48));
         
-        this.scene.enemies.add(new SpikedPrefab(this.scene, 160 * 1 + 32 + 8 , 128 * 1 + 48 + 8));
-        this.scene.enemies.add(new SpikedPrefab(this.scene, 160 * 1 + 80 + 8 , 128 * 1 + 80 + 8));
+        //this.scene.enemies.add(new SpikedPrefab(this.scene, 160 * 1 + 32 + 8 , 128 * 1 + 48 + 8));
+        //this.scene.enemies.add(new SpikedPrefab(this.scene, 160 * 1 + 80 + 8 , 128 * 1 + 80 + 8));
         
         this.scene.enemies.add(new GoombaPrefab(this.scene, 160 * 1 + 32 + 8 , 128 * 0 + 48 + 8));
         this.scene.enemies.add(new GoombaPrefab(this.scene, 160 * 1 + 80 + 8 , 128 * 0 + 48 + 8));
