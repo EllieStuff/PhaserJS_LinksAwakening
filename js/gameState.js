@@ -198,15 +198,18 @@ class gameState extends Phaser.Scene{
         this.DrawDepths = { DEFAULT: 0, INTERACTIVE_TILES: 1, ITEMS: 2, ENEMIES: 3, PLAYER: 4, MENU: 7 };
         this.Directions = { RIGHT: 'right', LEFT: 'left', UP: 'up', DOWN: 'down', UP_RIGHT: 'up-right', DOWN_RIGHT: 'down-right', UP_LEFT: 'up-left', DOWN_LEFT: 'down-left', NONE: 'none' };
         this.PhysicTypes = { TOP_DOWN_VIEW: 0, FRONT_VIEW: 1 };
+        //Load Map
+        this.LoadMap();
+        this.LoadPlatformerMap();
+        //Player
+        this.CreatePlayer();
+        //Enemies
         this.CreateEnemies();
         //Set up camera
         this.cameras.main.setBounds(0, 0, this.width, this.height);
         //this.cameras.main.startFollow(this.player);
         this.cameraManager = new CameraManager(this);
         this.cameras.main.centerOn(this.cameraManager.camPosX + config.width/2,this.cameraManager.camPosY + config.height/2);
-        //Load Map
-        this.LoadMap();
-        this.LoadPlatformerMap();
         
         this.soundManager = new SoundManager(this)
         
@@ -220,9 +223,6 @@ class gameState extends Phaser.Scene{
         
         //Inputs
         this.inputs = new InputManager(this);
-        
-        //Player
-        this.CreatePlayer();
         
         //LoadGroups
         //this.movableBlock = new MovableBlock(this, config.width/2 - 24,config.height/2 + 48);

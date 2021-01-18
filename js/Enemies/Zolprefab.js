@@ -17,20 +17,18 @@ class GreenZolPrefab extends EnemyBase{
     Update()
     {
         var currentPos = new Phaser.Math.Vector2(this.body);
-            if(this.hiding)
-                this.anims.play('GreenZolHid');
-            if(currentPos.distance(this.scene.player.body) < this.seeRange && this.hiding)
-            {
-                this.hiding = false;
-                this.anims.play('GreenZolAppear');
-                
-            }
+        if(this.hiding)
+            this.anims.play('GreenZolHid');
+        if(currentPos.distance(this.scene.player.body) < this.seeRange && this.hiding)
+        {
+            this.hiding = false;
+            this.anims.play('GreenZolAppear');
+
+        }
         if(!this.hiding && !this.charging)
         {
             this.charging = true;
             this.scene.time.addEvent({delay: 2000, callback: this.DashToPlayer(), callbackScope: this, repeat: 0});
-        }
-
         }
 
     }
