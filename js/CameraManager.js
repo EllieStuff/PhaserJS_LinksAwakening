@@ -29,7 +29,7 @@ class CameraManager
                 [new EnemyCreation(50,50,HardHatPrefab)]
             ];
             
-        
+        this.GenerateEnemies();
         
     }
     
@@ -38,9 +38,16 @@ class CameraManager
     GenerateEnemies()
     {
         
-        this.newEnemy = new this.levelEnemies[0][0].type(this.scene, this.camPosX +this.levelEnemies[0][0].initX, this.camPosY + this.levelEnemies[0][0].initY)
-        this.scene.enemies.add(this.newEnemy);     //no quiere hacer clear uwu
-        this.scene.enemies.children.each(function(){this.destroy();}, this);
+        this.newEnemy = new HardHatPrefab(this.scene, 160 * 2 + 48 + 8 , 128 * 5 + 32);
+        this.newEnemy = new HardHatPrefab(this.scene, 160 * 2 + 96 + 8 , 128 * 5 + 32);
+        this.scene.enemies.add(new HardHatPrefab(this.scene, 160 * 2 + 48 + 8 , 128 * 5 + 32));
+        this.scene.enemies.add(new HardHatPrefab(this.scene, 160 * 2 + 96 + 8 , 128 * 5 + 32));
+        
+        this.scene.enemies.add(new GreenZolPrefab(this.scene, 160 * 1 + 32 + 8 , 128 * 5 + 48));
+        this.scene.enemies.add(new GreenZolPrefab(this.scene, 160 * 1 + 32 + 8 , 128 * 5 + 64));
+        this.scene.enemies.add(new GreenZolPrefab(this.scene, 160 * 1 + 64 + 8 , 128 * 5 + 48));
+        this.scene.enemies.add(new GreenZolPrefab(this.scene, 160 * 1 + 64 + 8 , 128 * 5 + 64));
+        //this.scene.enemies.children.each(function(){this.destroy();}, this);
         //Comprobar sala, generar nuevos enemigos
     }
     
@@ -80,7 +87,6 @@ class CameraManager
                 break;
                
             }
-            this.GenerateEnemies();
             this.scene.cameras.main.centerOn(this.camPosX + config.width/2, this.camPosY + config.height/2);
             
             this.changeTile = false;
