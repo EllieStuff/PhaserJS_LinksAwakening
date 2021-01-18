@@ -143,15 +143,15 @@ class gameState extends Phaser.Scene{
         this.load.audio('linkHurt_FX','LA_Link_Hurt.wav');
         this.load.audio('linkShock_FX','LA_Link_Shock.wav');
         //this.load.audio('linkThrow_FX', rutaFX              + 'LA_Link_Throw.wav'); // Crec que no s'ha de posar
-        this.load.audio('shield_FX',                  + 'LA_Shield.wav');
-        this.load.audio('shieldDeflect_FX',           + 'LA_Shield_Deflect.wav'); //---
-        this.load.audio('swordCharge_FX',             + 'LA_Sword_Charge.wav'); //---
-        this.load.audio('swordSlash1_FX',             + 'LA_Sword_Slash1.wav');
-        this.load.audio('swordSlash2_FX',             + 'LA_Sword_Slash2.wav');
-        this.load.audio('swordSlash3_FX',             + 'LA_Sword_Slash3.wav');
-        this.load.audio('swordSlash4_FX',             + 'LA_Sword_Slash4.wav');
-        this.load.audio('swordSpin_FX',               + 'LA_Sword_Spin.wav'); //---
-        this.load.audio('swordTap_FX',                + 'LA_Sword_Tap.wav'); //---
+        this.load.audio('shield_FX',                  'LA_Shield.wav');
+        this.load.audio('shieldDeflect_FX',           'LA_Shield_Deflect.wav'); //---
+        this.load.audio('swordCharge_FX',             'LA_Sword_Charge.wav'); //---
+        this.load.audio('swordSlash1_FX',             'LA_Sword_Slash1.wav');
+        this.load.audio('swordSlash2_FX',             'LA_Sword_Slash2.wav');
+        this.load.audio('swordSlash3_FX',             'LA_Sword_Slash3.wav');
+        this.load.audio('swordSlash4_FX',             'LA_Sword_Slash4.wav');
+        this.load.audio('swordSpin_FX',               'LA_Sword_Spin.wav'); //---
+        this.load.audio('swordTap_FX',                'LA_Sword_Tap.wav'); //---
         this.load.audio('linkFall_FX','LA_Link_Fall.wav');
         this.load.audio('linkLowHealth_FX','LA_LowHealth.wav');
             //items
@@ -174,19 +174,19 @@ class gameState extends Phaser.Scene{
         this.load.audio('teleport_FX','LA_Dungeon_Teleport.wav'); // - ToDo: mirar si posarem el tp al final
         this.load.audio('teleportAppear_FX','LA_Dungeon_Teleport_Appear.wav'); // - ToDo: ""
         this.load.audio('groundCrumbling_FX','LA_Ground_Crumble.wav');
-        this.load.audio('rockPush_FX',                + 'LA_Rock_Push.wav'); // - Testing
-        this.load.audio('stairs_FX',                  + 'LA_Stairs.wav'); //---
+        this.load.audio('rockPush_FX',                'LA_Rock_Push.wav'); // - Testing
+        this.load.audio('stairs_FX',                  'LA_Stairs.wav'); //---
             //Events
-        this.load.audio('secret1_FX',                 + 'LA_Secret1.wav'); //---
-        this.load.audio('secret2_FX',                 + 'LA_Secret2.wav'); //---
-        this.load.audio('textDone_FX',                + 'LA_Text_Done.wav'); //---
-        this.load.audio('textLetter_FX',              + 'LA_Text_Letter.wav'); //---
+        this.load.audio('secret1_FX',                 'LA_Secret1.wav'); //---
+        this.load.audio('secret2_FX',                 'LA_Secret2.wav'); //---
+        this.load.audio('textDone_FX',                'LA_Text_Done.wav'); //---
+        this.load.audio('textLetter_FX',              'LA_Text_Letter.wav'); //---
             //Menus
-        this.load.audio('menuCursor_FX',              + 'LA_Menu_Cursor.wav'); //---
-        this.load.audio('menuSelect_FX',              + 'LA_Menu_Select.wav'); //---
-        this.load.audio('pauseMenuOpen_FX',           + 'LA_PauseMenu_Open.wav'); //---
-        this.load.audio('pauseMenuClose_FX',          + 'LA_PauseMenu_Close.wav'); //---
-        this.load.audio('menuCursor_FX',              + 'LA_Menu_Cursor.wav'); //---
+        this.load.audio('menuCursor_FX',              'LA_Menu_Cursor.wav'); //---
+        this.load.audio('menuSelect_FX',              'LA_Menu_Select.wav'); //---
+        this.load.audio('pauseMenuOpen_FX',           'LA_PauseMenu_Open.wav'); //---
+        this.load.audio('pauseMenuClose_FX',          'LA_PauseMenu_Close.wav'); //---
+        this.load.audio('menuCursor_FX',              'LA_Menu_Cursor.wav'); //---
         this.load.audio('transportOut_FX','LA_Dungeon_TransportOut.wav'); //--- //Quan agafes l'instrument i et fa fora de la dungeon
         this.load.audio('error_FX','LA_Error.wav'); //---
         this.load.audio('titleAppear_FX','LA_TitleAppear.wav');
