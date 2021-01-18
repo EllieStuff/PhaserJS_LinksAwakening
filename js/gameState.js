@@ -468,27 +468,23 @@ class gameState extends Phaser.Scene{
         {
             this.cameraManager.directionChange =  this.Directions.LEFT;
             this.cameraManager.changeTile = true;
-            this.hudBG.movePosition(this.cameraManager.camPosX,this.cameraManager.camPosY + 128);
         }
         else if(this.player.body.position.x > this.cameraManager.camPosX + 160)
         {
            this.cameraManager.directionChange =  this.Directions.RIGHT;
            this.cameraManager.changeTile = true;
-           this.hudBG.movePosition(this.cameraManager.camPosX,this.cameraManager.camPosY + 128);
         }
         else if(this.player.body.position.y < this.cameraManager.camPosY)
         {
             this.cameraManager.directionChange =  this.Directions.UP;
             this.cameraManager.changeTile = true;
-            this.hudBG.movePosition(this.cameraManager.camPosX,this.cameraManager.camPosY + 128);
         }
         else if(this.player.body.position.y > this.cameraManager.camPosY + 128)
         {
             this.cameraManager.directionChange =  this.Directions.DOWN;
             this.cameraManager.changeTile = true;
-            this.hudBG.movePosition(this.cameraManager.camPosX,this.cameraManager.camPosY + 128);
         }  
-        this.hudBG.setPosition(this.camPosX,this.camPosY + 128);
+        //this.hudBG.setPosition(this.camPosX,this.camPosY + 128);
         var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
         this.ShowText(sampleText, sampleText.length);
         

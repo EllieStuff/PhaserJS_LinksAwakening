@@ -124,6 +124,7 @@ class CameraManager
                case this.scene.Directions.LEFT:
                     this.camPosX -= 160;
                     this.tileX--;
+                    
                 break;
 
             case this.scene.Directions.RIGHT:
@@ -146,7 +147,7 @@ class CameraManager
                
             }
             this.scene.cameras.main.centerOn(this.camPosX + config.width/2, this.camPosY + config.height/2);
-            
+            this.scene.hudBG.movePosition(this.camPosX,this.camPosY + 128);
             this.changeTile = false;
         }
         
