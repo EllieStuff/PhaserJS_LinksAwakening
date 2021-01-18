@@ -280,10 +280,11 @@ class gameState extends Phaser.Scene{
         
     }
     
-    CreateEnemies(){
+    CreateEnemies()
+    {
         this.enemies = this.physics.add.group();
-        
         //Afegir els enemics un per un aqui si no no es que ho hem de fer diferent per tema del tilemap
+        /*
         this.CreateEnemy(SkeletonPrefab, config.width/4, config.height/4, true);
         this.CreateEnemy(HardHatPrefab , config.width/2, config.height/4, true);
         this.CreateEnemy(BladePrefab, config.width/3, config.height/4, true);
@@ -294,10 +295,12 @@ class gameState extends Phaser.Scene{
         this.CreateEnemy(miniMoldormPrefab, config.width/2, config.height/2, true);
         this.CreateEnemy(SparkPrefab, config.width/2 + 40, config.height/2, true);
         this.CreateEnemy(MoldormBossPrefab, config.width-60, config.height/4, true);
+        */
         
     }
     
-    CreateEnemy(_enemyType, _posX, _posY, _startActive){
+    CreateEnemy(_enemyType, _posX, _posY, _startActive)
+    {
         var enemy = new _enemyType(this, _posX, _posY);
         this.enemies.add(enemy);
         enemy.visible = enemy.active = _startActive;    
@@ -458,12 +461,6 @@ class gameState extends Phaser.Scene{
             this.cameraManager.directionChange =  this.Directions.DOWN;
             this.cameraManager.changeTile = true;
         }  
-        if(this.cameraManager.changeTile)
-        {
-            this.enemies.remove();
-            this.cameraManager.GenerateEnemies(this.enemies);
-            
-        }
             
         
         this.hudBG.setPosition(this.cameraManager.camPosX,this.cameraManager.camPosY + 128);

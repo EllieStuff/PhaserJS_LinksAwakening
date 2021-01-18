@@ -1,3 +1,14 @@
+class EnemyCreation
+{
+    constructor(posX,posY,_type)
+    {
+        this.initX = posX;
+        this.initY = posY;
+        this.type = _type;
+    }
+}
+
+
 class CameraManager
 {
     
@@ -5,7 +16,6 @@ class CameraManager
     {
         this.scene = _scene
         _scene.events.on('update', this.Update, this);
-        
         this.TileX = 3;
         this.TileY = 5;
         
@@ -16,24 +26,21 @@ class CameraManager
         
         this.levelEnemies = 
             [
-            [0,0,1,1,1,0],
-            [0,1,0,0,0,1],
-            [0,1,1,1,1,1],
-            [0,1,1,1,1,1],
-            [0,0,1,1,1,0],
-            [0,0,1,1,0,0],
-            [1,1,1,1,0,0],
-            ]
+                [new EnemyCreation(50,50,HardHatPrefab)]
+            ];
+            
         
         
     }
     
     
     
-    GenerateEnemies(enemyArray)
+    GenerateEnemies()
     {
-        enemyArray.clear();
         
+        this.newEnemy = new this.levelEnemies[0][0].type(this.scene, this.camPosX +this.levelEnemies[0][0].initX, this.camPosY + this.levelEnemies[0][0].initY)
+        this.scene.enemies.add(this.newEnemy);     //no quiere hacer clear uwu
+        this.scene.enemies.cle;
         //Comprobar sala, generar nuevos enemigos
     }
     
@@ -56,7 +63,6 @@ class CameraManager
                 break;
 
             case this.scene.Directions.DOWN:
-                    
                     this.camPosY += 128;
                     this.tileY++;
                 break;
@@ -70,7 +76,9 @@ class CameraManager
                 break;
                
             }
+            this.GenerateEnemies();
             this.scene.cameras.main.centerOn(this.camPosX + config.width/2, this.camPosY + config.height/2);
+            
             this.changeTile = false;
         }
     }
