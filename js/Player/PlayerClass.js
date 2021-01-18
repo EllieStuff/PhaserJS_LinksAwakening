@@ -377,7 +377,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         }
         this.body.velocity.x = 0;
         this.body.velocity.y = 0;
-        this.scene.time.addEvent({delay: 250, callback: function(){this.atkCharged = false;this.hitboxA.destroy();}, callbackScope: this, repeat: 0});
+        this.scene.time.addEvent({delay: 240, callback: function(){this.atkCharged = false;this.hitboxA.destroy();}, callbackScope: this, repeat: 0});
             
     }
     
