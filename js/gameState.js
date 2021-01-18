@@ -46,6 +46,9 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('moldormEnemyBody2', rutaImgEnemies + 'MoldormBody2.png'       ,{frameWidth: 10, frameHeight: 10});
         this.load.spritesheet('moldormBossEnemy', rutaImgEnemies + 'MoldormHeads.png'       ,{frameWidth: 28, frameHeight: 28});
         this.load.spritesheet('moldormBossEnemyBody', rutaImgEnemies + 'MoldormBodys.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('EnemyDeath', rutaImgEnemies + 'deathEnemy.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('rollingBone', rutaImgEnemies + 'RollingBones.png'       ,{frameWidth: 24, frameHeight: 16});
+        this.load.spritesheet('spike', rutaImgEnemies + 'Spike.png'       ,{frameWidth: 16, frameHeight: 16});
         
         //Items
         this.load.spritesheet('atkPowerUp',rutaImgItems + 'PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
@@ -297,6 +300,7 @@ class gameState extends Phaser.Scene{
         //Key Block
         this.keyBlock = new KeyBlock(this, 680,336);
         
+       
         // Doors
         this.doors = this.physics.add.group();
         //Key Doors
@@ -304,6 +308,8 @@ class gameState extends Phaser.Scene{
         this.doors.add(new KeyDoor(this, 792, 440, this.Directions.LEFT));
         //Boss Doors
         this.doors.add(new MasterKeyDoor(this, 1040, 256));
+         //One Way Door
+        this.doors.add(new OneWayDoor(this,719,511))
         
         //Voids
         this.voids = this.add.group()

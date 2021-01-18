@@ -16,6 +16,7 @@ class SpikedPrefab extends EnemyBase{
     
     Update()
     {
+        
             var currentPos = new Phaser.Math.Vector2(this.body);
 
             if(this.isVulnerable)
@@ -38,6 +39,7 @@ class SpikedPrefab extends EnemyBase{
                     this.body.stop();
                 }
             }
+            
     }
     
     CreateAnims()
@@ -46,13 +48,13 @@ class SpikedPrefab extends EnemyBase{
             key: 'SpikedWalk',
             frames: this.scene.anims.generateFrameNumbers('spikedBeetle', { start: 0, end: 1 }),
             frameRate: 5,
-            repeat: -1
+            repeat: 0
         });
         this.scene.anims.create({
             key: 'SpikedDown',
             frames: this.scene.anims.generateFrameNumbers('spikedBeetle', { start: 2, end: 3 }),
             frameRate: 5,
-            repeat: -1
+            repeat: 0
         });
     }
     
