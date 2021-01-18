@@ -38,8 +38,8 @@ class CameraManager
     GenerateEnemies()
     {
         
-        this.newEnemy = new HardHatPrefab(this.scene, 160 * 2 + 48 + 8 , 128 * 5 + 32);
-        this.newEnemy = new HardHatPrefab(this.scene, 160 * 2 + 96 + 8 , 128 * 5 + 32);
+        //this.newEnemy = new HardHatPrefab(this.scene, 160 * 2 + 48 + 8 , 128 * 5 + 32);
+        //this.newEnemy = new HardHatPrefab(this.scene, 160 * 2 + 96 + 8 , 128 * 5 + 32);
         this.scene.enemies.add(new HardHatPrefab(this.scene, 160 * 2 + 48 + 8 , 128 * 5 + 32));
         this.scene.enemies.add(new HardHatPrefab(this.scene, 160 * 2 + 96 + 8 , 128 * 5 + 32));
         
@@ -47,6 +47,26 @@ class CameraManager
         this.scene.enemies.add(new GreenZolPrefab(this.scene, 160 * 1 + 32 + 8 , 128 * 5 + 64));
         this.scene.enemies.add(new GreenZolPrefab(this.scene, 160 * 1 + 64 + 8 , 128 * 5 + 48));
         this.scene.enemies.add(new GreenZolPrefab(this.scene, 160 * 1 + 64 + 8 , 128 * 5 + 64));
+        
+        this.scene.enemies.add(new RedZolPrefab(this.scene, 160 * 3 + 32 + 8 , 128 * 4 + 80));
+        this.scene.enemies.add(new RedZolPrefab(this.scene, 160 * 3 + 112 + 8 , 128 * 4 + 80));
+        this.scene.enemies.add(new HardHatPrefab(this.scene, 160 * 3 + 64 + 8 , 128 * 4 + 16));
+        
+        this.scene.enemies.add(new BatPrefab(this.scene, 160 * 4 + 64 + 8 , 128 * 4 + 80));
+        this.scene.enemies.add(new BatPrefab(this.scene, 160 * 4 + 80 + 8 , 128 * 4 + 80));
+        this.scene.enemies.add(new SkeletonPrefab(this.scene, 160 * 4 + 48 + 8 , 128 * 4 + 64));
+        this.scene.enemies.add(new SkeletonPrefab(this.scene, 160 * 4 + 96 + 8 , 128 * 4 + 64));
+        
+        this.scene.enemies.add(new BatPrefab(this.scene, 160 * 2 + 64 + 8 , 128 * 4 + 48));
+        this.scene.enemies.add(new BatPrefab(this.scene, 160 * 2 + 80 + 8 , 128 * 4 + 48));
+        this.scene.enemies.add(new BatPrefab(this.scene, 160 * 2 + 64 + 8 , 128 * 4 + 64));
+        this.scene.enemies.add(new BatPrefab(this.scene, 160 * 2 + 80 + 8 , 128 * 4 + 64));
+        
+        this.scene.enemies.add(new miniMoldormPrefab(this.scene, 160 * 2 + 64 + 8 , 128 * 3 + 32));
+        
+        this.scene.enemies.add(new miniMoldormPrefab(this.scene, 160 * 3 + 80 + 8 , 128 * 3 + 48));
+        this.scene.enemies.add(new SparkPrefab(this.scene, 160 * 3 + 64 + 8 , 128 * 3 + 16 + 8));
+        this.scene.enemies.add(new SparkPrefab(this.scene, 160 * 3 + 112 + 8 , 128 * 3 + 96 + 8));
         //this.scene.enemies.children.each(function(){this.destroy();}, this);
         //Comprobar sala, generar nuevos enemigos
     }
