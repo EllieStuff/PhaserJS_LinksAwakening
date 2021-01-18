@@ -206,11 +206,8 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     {
         
         this.ShieldColManager.UpdateOnTrigger();
-        
-        
-        if(this.ShieldColManager.GetCollisionState() == this.ShieldColManager.CollisionState.ENTERED_COLLISION)
-        {
-            switch(this.moveDir)
+         
+        switch(this.moveDir)
             {
                 case this.Directions.LEFT:
                     this.hitboxB = this.scene.physics.add.sprite(this.body.x + 2,this.body.y,'hitboxShield').setOrigin(0.5).setScale(1);
@@ -233,11 +230,15 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
                     break;
 
             } 
+        
+        if(this.ShieldColManager.GetCollisionState() == this.ShieldColManager.CollisionState.ENTERED_COLLISION)
+        {
+           
         }
             
         
         
-        //this.hitboxB.destroy();
+        this.hitboxB.destroy();
         
     }
     
