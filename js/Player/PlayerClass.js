@@ -47,15 +47,18 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.falling = false;
         this.lastSavePosition = new Phaser.Math.Vector2(positionX, positionY)
         this.mustRefreshSavePos = true;
-        this.enemiesKilled = 0
+        this.enemiesKilled = 1
         this.beeping = false
-        
+        this.canMove = true
+        this.isVulnerable = true
         
         
         this.animator = new PlayerAnimator(scene, positionX, positionY);
+        this.shield = new PlayerShield(scene);
+        this.sword = new PlayerSword(scene);
         
+        this.wallsColManager = new CollisionManager(scene);
         this.ladderColManager = new CollisionManager(scene);
-        this.ShieldColManager = new CollisionManager(scene);
         //this.voidsColManager = new CollisionManager(scene);
         
         this.InitCollisions();
@@ -63,10 +66,35 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     }
     
     InitCollisions(){
-        this.scene.physics.add.collider(this, this.scene.walls);
+        this.scene.physics.add.collider(this, this.scene.walls, this.CollideWalls, null, this);
         this.scene.physics.add.collider(this, this.scene.platWalls);
         this.scene.physics.add.collider(this, this.scene.platFloor);
         //this.scene.physics.add.overlap(this, this.scene.voids, this.Fall, null, this);
+        
+    }
+    
+    CollideWalls(){
+        if(this.active){
+            this.wallsColManager.UpdateOnTrigger()
+        }
+        
+    }
+    
+    SetPushingAnimation(){
+        if(this.wallsColManager.GetCollisionState() == this.wallsColManager.CollisionState.COLLIDING){
+            if(this.moveDir == this.scene.Directions.DOWN && this.body.blocked.down){
+                this.currentAnim = 'pushDown'
+            }
+            else if(this.moveDir == this.scene.Directions.LEFT && this.body.blocked.left){
+                this.currentAnim = 'pushLeft'
+            }
+            else if(this.moveDir == this.scene.Directions.RIGHT && this.body.blocked.right){
+                this.currentAnim = 'pushRight'
+            }
+            else if(this.moveDir == this.scene.Directions.UP && this.body.blocked.up){
+                this.currentAnim = 'pushUp'
+            }
+        }
         
     }
     
@@ -146,7 +174,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         }
     }
     
-    GetDamaged(_dmgTaken)
+    GetDamaged(_dmgTaken, _enemyX, _enemyY)
     {
         if(!this.isJumping){
             this.health -= _dmgTaken/this.defense;
@@ -269,40 +297,33 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     
     SetShieldHitbox()
     {
-        
-        this.ShieldColManager.UpdateOnTrigger();
-         
         switch(this.moveDir)
-            {
-                case this.Directions.LEFT:
-                    this.hitboxB.body.x = this.animator.x - 3;
-                    this.hitboxB.body.y = this.animator.y + 2;
-                    break;
-
-                case this.Directions.RIGHT:
-                    this.hitboxB.body.x = this.animator.x + 7;
-                    this.hitboxB.body.y = this.animator.y + 2;
-                    break;
-
-                case this.Directions.DOWN:
-                    this.hitboxB.body.x = this.animator.x + 2;
-                    this.hitboxB.body.y = this.animator.y + 7;
-                    break;
-
-                case this.Directions.UP:
-                    this.hitboxB.body.x = this.animator.x + 2;
-                    this.hitboxB.body.y = this.animator.y - 3;
-                    break;
-
-                default:
-                    break;
-
-            } 
-        
-        if(this.ShieldColManager.GetCollisionState() == this.ShieldColManager.CollisionState.ENTERED_COLLISION)
         {
-           
-        }
+            case this.Directions.LEFT:
+                //this.hitboxB = this.scene.physics.add.sprite(this.body.x + 2,this.body.y,'hitboxShield').setOrigin(0.5).setScale(1);
+                this.shield.Update(this.x - 2, this.y)
+                break;
+
+            case this.Directions.RIGHT:
+                //this.hitboxB = this.scene.physics.add.sprite(this.body.x + 6,this.body.y,'hitboxShield').setOrigin(0.5).setScale(1);
+                this.shield.Update(this.x + 6, this.y)
+                break;
+
+            case this.Directions.DOWN:
+                //this.hitboxB = this.scene.physics.add.sprite(this.body.x + 4,this.body.y + 2,'hitboxShield').setOrigin(0.5).setScale(1);
+                this.shield.Update(this.x - 2, this.y + 2)
+                break;
+
+            case this.Directions.UP:
+                //this.hitboxB = this.scene.physics.add.sprite(this.body.x + 4,this.body.y - 2,'hitboxShield').setOrigin(0.5).setScale(1);
+                this.shield.Update(this.x + 2, this.y - 2)
+                break;
+
+            default:
+                break;
+
+        } 
+        //this.hitboxB.destroy();
             
         
         
@@ -421,33 +442,47 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     Attack()
     {
         //this.animator.anims.setTimeScale(0.5);
+        this.sword.Attack()
+        
+        console.log(this.moveDir)
         switch(this.moveDir){
             case this.Directions.LEFT:
                 this.currentAnim = 'playerAttackLeft';
-                this.hitboxA = this.scene.physics.add.sprite(this.body.x - 4,this.body.y - 8,'hitboxAttack').setOrigin(0.5).setScale(1);
+                this.sword.Update(this.x - 4, this.y - 8)
+                //this.hitboxA = this.scene.physics.add.sprite(this.body.x - 4,this.body.y - 8,'hitboxAttack').setOrigin(0.5).setScale(1);
                 break;
 
             case this.Directions.RIGHT:
                 this.currentAnim = 'playerAttackRight';
-                this.hitboxA = this.scene.physics.add.sprite(this.body.x + 12,this.body.y - 8,'hitboxAttack').setOrigin(0.5).setScale(1);
+                this.sword.Update(this.x + 12, this.y - 8)
+                //this.hitboxA = this.scene.physics.add.sprite(this.body.x + 12,this.body.y - 8,'hitboxAttack').setOrigin(0.5).setScale(1);
                 break;
 
             case this.Directions.DOWN:
                 this.currentAnim = 'playerAttackDown';
-                this.hitboxA = this.scene.physics.add.sprite(this.body.x - 4,this.body.y + 8,'hitboxAttack').setOrigin(0.5).setScale(1);
+                this.sword.Update(this.body.x - 4, this.y + 8)
+                //this.hitboxA = this.scene.physics.add.sprite(this.body.x - 4,this.body.y + 8,'hitboxAttack').setOrigin(0.5).setScale(1);
                 break;
 
             case this.Directions.UP:
                 this.currentAnim = 'playerAttackUp';
-                this.hitboxA = this.scene.physics.add.sprite(this.body.x + 12,this.body.y - 8,'hitboxAttack').setOrigin(0.5).setScale(1);
+                this.sword.Update(this.body.x + 12, this.y - 8)
+                //this.hitboxA = this.scene.physics.add.sprite(this.body.x + 12,this.body.y - 8,'hitboxAttack').setOrigin(0.5).setScale(1);
                 break;
 
             default:
+                console.log("smth went wrong")
                 break;
         }
+        
         this.body.velocity.x = 0;
         this.body.velocity.y = 0;
-        this.scene.time.addEvent({delay: 240, callback: function(){this.atkCharged = false;this.hitboxA.destroy();}, callbackScope: this, repeat: 0});
+        var rnd = Phaser.Math.Between(1, 4)
+        if(rnd == 1) this.scene.soundManager.PlayFX('swordSlash1_FX')
+        else if(rnd == 2) this.scene.soundManager.PlayFX('swordSlash2_FX')
+        else if(rnd == 3) this.scene.soundManager.PlayFX('swordSlash3_FX')
+        else if(rnd == 4) this.scene.soundManager.PlayFX('swordSlash4_FX')
+        this.scene.time.addEvent({delay: 250, callback: function(){this.atkCharged = false;this.sword.ChargedAttack;/*ToDo: playAnim*/}, callbackScope: this, repeat: 0});
             
     }
     
@@ -516,7 +551,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
             }
         
         //MOVEMENT
-        if(!this.isJumping)
+        if(!this.isJumping && this.canMove)
         {
             
             if(this.assignA == "Sword")
@@ -538,7 +573,12 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
                 {
                     if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.L))   //MOVE WITH SHIELD UP
                     {
-                        this.shieldUp = true;
+                        if(!this.shieldUp){
+                            this.shieldUp = true;
+                            this.isVulnerable = false;
+                            this.shield.Enable()
+                            this.scene.soundManager.PlayFX('shield_FX')
+                        }
 
                         if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.A))
                         {
@@ -580,9 +620,12 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
                     }
                     else                            //MOVE WITH SHIELD DOWN
                     {
-
-                        this.shieldUp = false;
-
+                        if(this.shieldUp){
+                            this.shieldUp = false;
+                            this.isVulnerable = true;
+                            this.shield.Disable()
+                        }
+                        
                         if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.A))
                         {
                             this.currentAnim = 'walkleftS';
@@ -618,6 +661,8 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
                             this.body.velocity.y = 0;
                            
                         }
+                        
+                        this.SetPushingAnimation()
                         if(!this.IsMoving())
                             this.SetIdleAnimS();
                          
@@ -701,7 +746,12 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         if(this.onFloor && !this.onLadders){
             if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.L))   //MOVE WITH SHIELD UP
             {
-                this.shieldUp = true;
+                if(!this.shieldUp){
+                    this.shieldUp = true;
+                    this.isVulnerable = false;
+                    this.shield.Enable()
+                    this.scene.soundManager.PlayFX('shield_FX')
+                }
 
                 if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.A))
                 {
@@ -722,7 +772,11 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
             }
             else                            //MOVE WITH SHIELD DOWN
             {
-                this.shieldUp = false;
+                if(this.shieldUp){
+                    this.shieldUp = false;
+                    this.isVulnerable = true;
+                    this.shield.Disable()
+                }
 
                 if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.A))
                 {
@@ -756,3 +810,91 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
 }
 
 
+
+class PlayerShield extends Phaser.GameObjects.Sprite{
+    
+    constructor(scene)
+    {
+		super(scene, 0, 0, 'hitbox');
+		scene.add.existing(this);
+        scene.physics.add.existing(this);
+        this.setOrigin(0.5).setScale(1);
+        this.setDepth(scene.DrawDepths.PLAYER);
+        this.enabled = false
+        
+    }
+    
+    Enable(){
+        if(!this.enabled){
+            this.enabled = true
+            this.visible = true
+            this.active = true
+        }
+    }
+    
+    Disable(){
+        if(this.enabled){
+            this.active = false
+            this.visible = false
+            this.enabled = false
+            this.x = this.y = 0
+        }
+    }
+    
+    Update(_posX, _posY){
+        if(this.active && this.enabled){
+            this.x = _posX
+            this.y = _posY
+        }
+    }
+    
+}
+
+class PlayerSword extends Phaser.GameObjects.Sprite{
+    
+    constructor(scene)
+    {
+		super(scene, 0, 0, 'hitboxAttack');
+		scene.add.existing(this);
+        scene.physics.add.existing(this);
+        this.setOrigin(0.5).setScale(1);
+        this.setDepth(scene.DrawDepths.PLAYER);
+        this.enabled = false
+        this.buffer = 0
+        
+    }
+    
+    Attack(){
+        this.enabled = true
+        this.visible = true
+        this.active = true
+        this.buffer++
+        this.scene.time.addEvent({delay: 250, callback: this.Disable, callbackScope: this, repeat: 0});
+    }
+    
+    Disable(){
+        this.buffer--
+        
+        if(this.buffer == 0 && this.enabled
+          /*&& !this.scene.player.atkCharged*/){
+            this.active = false
+            this.visible = false
+            this.enabled = false
+            this.x = this.y = 0
+        }
+    }
+    
+    ChargedAttack(){
+        //ToDo
+    }
+    
+    Update(_posX, _posY){
+        if(this.active && this.enabled){
+            this.x = _posX
+            this.y = _posY
+        }
+    }
+    
+}
+    
+    

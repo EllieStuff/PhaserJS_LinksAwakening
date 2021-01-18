@@ -16,6 +16,7 @@ class BladePrefab extends EnemyBase{
         this.targetPosUp = new Phaser.Math.Vector2(this.initPosition.x, this.initPosition.y - 1 * 100);
         this.returning = false;
         this.canFall = false
+        this.canBeRepeled = false
         
         this.epsilon = 10;
         this.stopped = true;

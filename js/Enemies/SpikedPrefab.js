@@ -3,7 +3,7 @@ class SpikedPrefab extends EnemyBase{
     constructor(scene, positionX, positionY)
     {
 		super(scene, positionX, positionY, 'HardHat');
-        this.health = 0;
+        this.health = 1;
         this.isVulnerable = false;
         this.damage = 4;
         this.seeRange = 100;
@@ -22,11 +22,6 @@ class SpikedPrefab extends EnemyBase{
             if(this.isVulnerable)
             {
                 this.anims.play('SpikedDown', true);
-
-                if((this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) || this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.L)) && !this.collided)
-                {
-                        //KILL
-                }
             }
             else
             {
@@ -40,13 +35,6 @@ class SpikedPrefab extends EnemyBase{
                 else if (!this.collided)
                 {
                     this.body.stop();
-                }
-
-
-                if((this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) || this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.L)) && !this.collided && this.charging)
-                {
-                    this.isVulnerable = true;
-                    this.GetRepeled();
                 }
             }
         }
@@ -68,12 +56,42 @@ class SpikedPrefab extends EnemyBase{
         });
     }
     
+    GetDamaged(){
+        this.swordColManager.UpdateOnTrigger();
+        
+        if(this.swordColManager.colState == this.swordColManager.CollisionState.ENTERED_COLLISION
+          && this.isVulnerable){
+            var dir = new Phaser.Math.Vector2(this.x - this.scene.player.x, this.y - this.scene.player.y).normalize()
+            var impulse = 200
+            this.body.velocity = new Phaser.Math.Vector2(dir.x * impulse, dir.y * impulse)
+            this.active = false
+            
+            this.scene.time.addEvent({delay: 100, callback: function(){this.body.stop(); this.collided = false; this.active = true}, callbackScope: this, repeat: 0});
+            
+            if(this.scene.player.enemiesKilled % 30 == 0 || this.scene.player.enemiesKilled % 12 == 0){
+                this.scene.soundManager.PlayFX('enemyHitPowerUp_FX')
+            }
+            else{
+                this.scene.soundManager.PlayFX('enemyHit_FX')
+            }
+        }
+    }
+    
     GetRepeled()
     {
+        this.shieldColManager.UpdateOnTrigger();
         
-       this.collided = true;
-       this.MoveTowards(this.scene.player, -this.speed*4);
-       this.scene.time.addEvent({delay: 250, callback: function(){this.body.stop(); this.collided = false;}, callbackScope: this, repeat: 0});
+        if(this.shieldColManager.colState == this.shieldColManager.CollisionState.ENTERED_COLLISION){
+            this.isVulnerable = true;
+            this.scene.soundManager.PlayFX('shieldDeflect_FX')
+            
+            var dir = new Phaser.Math.Vector2(this.x - this.scene.player.x, this.y - this.scene.player.y).normalize()
+            var impulse = 100
+            this.body.velocity = new Phaser.Math.Vector2(dir.x * impulse, dir.y * impulse)
+            this.active = false
+            
+            this.scene.time.addEvent({delay: 200, callback: function(){this.body.stop(); this.collided = false; this.active = true}, callbackScope: this, repeat: 0});
+        }
     }
     DashToPlayer()
     {

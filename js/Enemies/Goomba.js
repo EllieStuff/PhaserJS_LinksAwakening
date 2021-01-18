@@ -57,7 +57,6 @@ class GoombaPrefab extends EnemyBase{
     
     DamagePlayer(){
         if(this.scene.player.body.facing == Phaser.Physics.Arcade.FACING_DOWN){
-            console.log("1");
             this.anims.play('goombaStomped');
             this.scene.player.PlatformerJump();
 
@@ -65,11 +64,22 @@ class GoombaPrefab extends EnemyBase{
             this.active = false;
         }
         else{
-            console.log("2");
             this.playerColManager.UpdateOnTrigger();
-
-            if(this.playerColManager.colState == this.playerColManager.CollisionState.ENTERED_COLLISION)
-                this.scene.player.GetDamaged(this.attack);
+        
+        if(this.playerColManager.colState == this.playerColManager.CollisionState.ENTERED_COLLISION
+          && this.scene.player.isVulnerable && !this.scene.player.isJumping){
+            this.scene.player.GetDamaged(this.attack);
+            this.scene.soundManager.PlayFX(this.dmgSoundEffect)
+            
+            var dir = new Phaser.Math.Vector2(this.scene.player.x - this.x, this.scene.player.y - this.y).normalize()
+            var impulse = 70
+            this.scene.player.body.velocity = new Phaser.Math.Vector2(dir.x * impulse, dir.y * impulse)
+            this.scene.player.canMove = false
+            this.scene.player.isVulnerable = false
+            this.scene.player.currentAnim = 'playerHit'
+            
+            this.scene.time.addEvent({delay: 300, callback: function(){this.body.stop(); this.scene.player.canMove = true; this.scene.player.isVulnerable = true; }, callbackScope: this, repeat: 0});
+        }
         }
     }
     
@@ -82,13 +92,6 @@ class GoombaPrefab extends EnemyBase{
         else{
             this.body.velocity.y = 0;
         }
-        
-        /*if(this.body.blocked.up){
-            this.anims.play('goombaStomped');
-            this.scene.player.PlatformerJump();
-
-            this.scene.time.addEvent({delay: 500, callback: this.GetDamaged, callbackScope: this, repeat: 0});
-        }*/
         
     }
     

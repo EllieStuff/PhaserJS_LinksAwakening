@@ -9,7 +9,7 @@ class MoldormBossPrefab extends EnemyBase{
         
         this.damage = 2;
         this.health = 1;
-        this.isVulnerable = true;
+        this.isVulnerable = false;
         this.speed = 40;
         this.seeRange = 50;  
         this.updating = true;
@@ -20,6 +20,7 @@ class MoldormBossPrefab extends EnemyBase{
         this.isWaiting = false;
         this.waitingDelay = 750;
         this.canFall = false
+        this.canBeRepeled = false
         this.tail1 = new MoldormBossBodyPrefab(scene, positionX + 20, positionY, 'moldormBossEnemyBody', 3);
         this.tail2 = new MoldormBossBodyPrefab(scene, positionX + 30, positionY, 'moldormBossEnemyBody', 3);
         this.tail3 = new MoldormBossBodyPrefab(scene, positionX + 40, positionY, 'moldormBossEnemyBody', 3);

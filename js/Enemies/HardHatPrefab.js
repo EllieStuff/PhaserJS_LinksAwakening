@@ -29,11 +29,7 @@ class HardHatPrefab extends EnemyBase{
             {
                 this.body.stop();
             }
-
-            if((this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) || this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.L)) && !this.collided)
-            {
-                this.GetRepeled();
-            }
+            
         }
     }
     
@@ -47,12 +43,32 @@ class HardHatPrefab extends EnemyBase{
         });
     }
     
-    GetRepeled()
+    GetDamaged(){
+        this.swordColManager.UpdateOnTrigger();
+        
+        if(this.swordColManager.colState == this.swordColManager.CollisionState.ENTERED_COLLISION){
+            var dir = new Phaser.Math.Vector2(this.x - this.scene.player.x, this.y - this.scene.player.y).normalize()
+            var impulse = 300
+            this.body.velocity = new Phaser.Math.Vector2(dir.x * impulse, dir.y * impulse)
+            this.active = false
+            
+            this.scene.time.addEvent({delay: 100, callback: function(){this.body.stop(); this.collided = false; this.active = true}, callbackScope: this, repeat: 0});
+            
+            if(this.scene.player.enemiesKilled % 30 == 0 || this.scene.player.enemiesKilled % 12 == 0){
+                this.scene.soundManager.PlayFX('enemyHitPowerUp_FX')
+            }
+            else{
+                this.scene.soundManager.PlayFX('enemyHit_FX')
+            }
+        }
+    }
+    
+    /*GetRepeled()
     {
         
        this.collided = true;
        this.MoveTowards(this.scene.player, -this.speed*4);
        this.scene.time.addEvent({delay: 250, callback: function(){this.body.stop(); this.collided = false;}, callbackScope: this, repeat: 0});
-    }
+    }*/
     
 }

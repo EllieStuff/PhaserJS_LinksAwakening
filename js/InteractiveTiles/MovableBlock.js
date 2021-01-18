@@ -1,4 +1,5 @@
 
+//ToDo: Posar-li animacio i FX
 
 class MovableBlock extends Phaser.GameObjects.Sprite{
     
@@ -110,6 +111,7 @@ class MovableBlock extends Phaser.GameObjects.Sprite{
                 //console.log("this: " + this.body.x + ", " + this.body.y);
 
                 this.moving = true;
+                this.scene.soundManager.PlayFX('rockPush_FX')
             }
             
         }

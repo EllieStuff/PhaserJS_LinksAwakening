@@ -25,16 +25,12 @@ class GreenZolPrefab extends EnemyBase{
                 this.anims.play('GreenZolAppear');
                 
             }
-    
-            if((this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) || this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.L)) && !this.hiding)
-            {
-                this.GetRepeled();
-            }
-        
         if(!this.hiding && !this.charging)
         {
             this.charging = true;
             this.scene.time.addEvent({delay: 2000, callback: this.DashToPlayer(), callbackScope: this, repeat: 0});
+        }
+
         }
 
     }
@@ -62,13 +58,6 @@ class GreenZolPrefab extends EnemyBase{
 
     }
     
-    GetRepeled()
-    {
-        
-       this.collided = true;
-       this.MoveTowards(this.scene.player, -this.speed*2);
-       this.scene.time.addEvent({delay: 350, callback: function(){this.body.stop(); this.collided = false;}, callbackScope: this, repeat: 0});
-    }
     DashToPlayer()
     {
         this.body.stop();
@@ -98,13 +87,12 @@ class RedZolPrefab extends EnemyBase{
     Update()
     {
         var currentPos = new Phaser.Math.Vector2(this.body);
-    
-            if((this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) || this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.L)) && !this.hiding)
-            {
-                this.GetRepeled();
-            }
+        
         if(currentPos.distance(this.scene.player.body) < this.seeRange && this.hiding)
-            this.MoveTowards(this.scene.player, this.speed * 0.3);
+        {
+            this.hiding = false;
+
+        }
 
     }
     
@@ -118,11 +106,12 @@ class RedZolPrefab extends EnemyBase{
         });
     }
     
-    GetRepeled()
+    DashToPlayer()
     {
-        
-       this.collided = true;
-       this.MoveTowards(this.scene.player, -this.speed*4);
-       this.scene.time.addEvent({delay: 150, callback: function(){this.body.stop(); this.collided = false;}, callbackScope: this, repeat: 0});
+        this.charging = true;
+        this.body.stop();
+        this.MoveTowards(this.scene.player, this.speed * 2.5);
+        this.scene.time.addEvent({delay: 450, callback: function(){this.body.stop(); this.charging = false;}, callbackScope: this, repeat: 0});
     }
+    
 }
