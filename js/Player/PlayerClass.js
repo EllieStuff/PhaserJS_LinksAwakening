@@ -45,9 +45,12 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.lastSavePosition = new Phaser.Math.Vector2(positionX, positionY)
         this.mustRefreshSavePos = true;
         
+        
+        
         this.animator = new PlayerAnimator(scene, positionX, positionY);
         
         this.ladderColManager = new CollisionManager(scene);
+        this.ShieldColManager = new CollisionManager(scene);
         //this.voidsColManager = new CollisionManager(scene);
         
         this.InitCollisions();
@@ -202,31 +205,39 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     SetShieldHitbox()
     {
         
+        this.ShieldColManager.UpdateOnTrigger();
         
-        switch(this.moveDir)
+        
+        if(this.ShieldColManager.GetCollisionState() == this.ShieldColManager.CollisionState.ENTERED_COLLISION)
         {
-            case this.Directions.LEFT:
-                this.hitboxB = this.scene.physics.add.sprite(this.body.x + 2,this.body.y,'hitboxShield').setOrigin(0.5).setScale(1);
-                break;
+            switch(this.moveDir)
+            {
+                case this.Directions.LEFT:
+                    this.hitboxB = this.scene.physics.add.sprite(this.body.x + 2,this.body.y,'hitboxShield').setOrigin(0.5).setScale(1);
+                    break;
 
-            case this.Directions.RIGHT:
-                this.hitboxB = this.scene.physics.add.sprite(this.body.x + 6,this.body.y,'hitboxShield').setOrigin(0.5).setScale(1);
-                break;
+                case this.Directions.RIGHT:
+                    this.hitboxB = this.scene.physics.add.sprite(this.body.x + 6,this.body.y,'hitboxShield').setOrigin(0.5).setScale(1);
+                    break;
 
-            case this.Directions.DOWN:
-                this.hitboxB = this.scene.physics.add.sprite(this.body.x + 4,this.body.y + 2,'hitboxShield').setOrigin(0.5).setScale(1);
-                break;
+                case this.Directions.DOWN:
+                    this.hitboxB = this.scene.physics.add.sprite(this.body.x + 4,this.body.y + 2,'hitboxShield').setOrigin(0.5).setScale(1);
+                    break;
 
-            case this.Directions.UP:
+                case this.Directions.UP:
 
-                this.hitboxB = this.scene.physics.add.sprite(this.body.x + 4,this.body.y - 2,'hitboxShield').setOrigin(0.5).setScale(1);
-                break;
+                    this.hitboxB = this.scene.physics.add.sprite(this.body.x + 4,this.body.y - 2,'hitboxShield').setOrigin(0.5).setScale(1);
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
 
-        } 
-        this.hitboxB.destroy();
+            } 
+        }
+            
+        
+        
+        //this.hitboxB.destroy();
         
     }
     
