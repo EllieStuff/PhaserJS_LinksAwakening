@@ -27,6 +27,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('playerSlash'         ,rutaImgLink + 'LinkSlash.png'          ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerFall'          ,rutaImgLink + 'fallAnim.png'           ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerPush'          ,rutaImgLink + 'pushAnim.png'           ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerHitAnim'           ,rutaImgLink + 'hitAnim.png'            ,{frameWidth: 16, frameHeight: 16});
         //Enemies
         this.load.spritesheet('HardHat'      ,rutaImgEnemies   + 'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('enemySkeleton',rutaImgEnemies   + 'EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
@@ -120,7 +121,6 @@ class gameState extends Phaser.Scene{
             //Player
         this.load.audio('linkBounce_FX', rutaFX             + 'LA_Link_Bounce.wav'); //---
         this.load.audio('linkDying_FX', rutaFX              + 'LA_Link_Dying.wav');
-        this.load.audio('linkHurt_FX', rutaFX               + 'LA_Link_Hurt.wav');
         this.load.audio('linkJump_FX', rutaFX               + 'LA_Link_Jump.wav');
         this.load.audio('linkPickUp_FX', rutaFX             + 'LA_Link_PickUp.wav');
         //this.load.audio('linkRebound_FX', rutaFX            + 'LA_Link_Rebound.wav'); // No se on ha d'anar
