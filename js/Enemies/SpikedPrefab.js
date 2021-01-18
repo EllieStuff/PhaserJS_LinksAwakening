@@ -2,7 +2,7 @@ class SpikedPrefab extends EnemyBase{
     
     constructor(scene, positionX, positionY)
     {
-		super(scene, positionX, positionY, 'HardHat');
+		super(scene, positionX, positionY, 'spikedBeetle');
         this.health = 1;
         this.isVulnerable = false;
         this.damage = 4;
@@ -16,7 +16,6 @@ class SpikedPrefab extends EnemyBase{
     
     Update()
     {
-        if(this.active && !this.falling){
             var currentPos = new Phaser.Math.Vector2(this.body);
 
             if(this.isVulnerable)
@@ -28,16 +27,17 @@ class SpikedPrefab extends EnemyBase{
                 if(currentPos.distance(this.scene.player.body) < this.seeRange && !this.collided)
                 {
                     if(!this.charging)
+                    {
                         this.MoveTowards(this.scene.player, this.speed * 0.5);                    
-                        this.scene.time.addEvent({delay: 3000, callback: this.GetRepeled(), callbackScope: this, repeat: 0});
-                    this.anims.play('SpikedWalk', true);
+                        this.anims.play('SpikedWalk', true); 
+                    }
+                    
                 }
                 else if (!this.collided)
                 {
                     this.body.stop();
                 }
             }
-        }
     }
     
     CreateAnims()

@@ -58,9 +58,11 @@ class GreenZolPrefab extends EnemyBase{
     
     DashToPlayer()
     {
+        this.anims.play('GreenZolApproach');
         this.body.stop();
         this.MoveTowards(this.scene.player, this.speed * 1.5);
-        this.scene.time.addEvent({delay: 450, callback: function(){this.body.stop(); this.charging = false;}, callbackScope: this, repeat: 0});
+        this.scene.time.addEvent({delay: 450, callback: function(){this.body.stop();}, callbackScope: this, repeat: 0});
+        this.scene.time.addEvent({delay: 2000, callback: function(){this.charging = false;}, callbackScope: this, repeat: 0});
     }
     
 }
