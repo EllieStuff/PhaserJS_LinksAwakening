@@ -40,13 +40,17 @@ class CameraManager
         
         this.newEnemy = new this.levelEnemies[0][0].type(this.scene, this.camPosX +this.levelEnemies[0][0].initX, this.camPosY + this.levelEnemies[0][0].initY)
         this.scene.enemies.add(this.newEnemy);     //no quiere hacer clear uwu
-       // this.scene.enemies.children.each(function(){this.destroy();}, this);
+        this.scene.enemies.children.each(function(){this.destroy();}, this);
         //Comprobar sala, generar nuevos enemigos
     }
     
     
     Update()
     {
+        if(this.scene.enemies.size <= 0)
+        {
+            
+        }
         
         if(this.changeTile)
         {
@@ -81,6 +85,7 @@ class CameraManager
             
             this.changeTile = false;
         }
+        
     }
     
 }

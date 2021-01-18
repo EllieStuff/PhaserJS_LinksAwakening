@@ -241,8 +241,6 @@ class gameState extends Phaser.Scene{
         this.owlText = this.add.text(config.width, config.height, this.owlString, { fontFamily: 'Arial', fontSize: '25px',   color:'#fff' }).setOrigin(1);
         this.counter = 0;
         
-        //this.cameras.main.setLerp(0.01);
-        //this.cameras.main.setScroll(160*2 + 80,128*5 + 64);
         //Init HUD
         this.LoadHud();
         //Init Start Menu
