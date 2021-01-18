@@ -300,7 +300,7 @@ class gameState extends Phaser.Scene{
     
     loadChests() {
         var posX, posY, chest;
-        var j = 0;
+        /*var j = 0;
         for(var i = 0; i < this.data.layers[15].data.length; i++){
             if(this.data.layers[15].data[i] == 95){
                 posX = ((i+1) - (70*j) - 1) * 16;
@@ -310,7 +310,31 @@ class gameState extends Phaser.Scene{
                 chest = new ChestPrefab(this, posX, posY);
             }
             if((i + 1)%this.data.layers[15].width == 0 && i > 0) j++;
-        }
+        }*/
+        posX = 544;
+        posY = 272;
+        chest = new ChestPrefab(this, posX, posY,"BossKey");
+        posX = 64;
+        posY = 288;
+        chest = new ChestPrefab(this, posX, posY,"Pluma");
+        posX = 928;
+        posY = 288;
+        chest = new ChestPrefab(this, posX, posY,"Container");
+        posX = 448;
+        posY = 416;
+        chest = new ChestPrefab(this, posX, posY,"BlueRupee");
+        posX = 544;
+        posY = 416;
+        chest = new ChestPrefab(this, posX, posY,"Key");
+        posX = 608;
+        posY = 544;
+        chest = new ChestPrefab(this, posX, posY,"Key");
+        posX = 768;
+        posY = 544;
+        chest = new ChestPrefab(this, posX, posY,"RedRupee");
+        posX = 208;
+        posY = 688;
+        chest = new ChestPrefab(this, posX, posY,"RedRupee");
     }
     
     loadVoids() {
