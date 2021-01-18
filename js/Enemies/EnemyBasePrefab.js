@@ -22,6 +22,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         this.falling = false
         this.canFall = true
         this.dmgSoundEffect = 'linkHurt_FX'
+        this.canBeRepeled = true
         
         this.playerColManager = new CollisionManager(scene);
         this.swordColManager = new CollisionManager(scene);
@@ -45,8 +46,8 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         this.scene.physics.add.overlap(this, this.scene.player, this.DamagePlayer, null, this);
         this.scene.physics.add.collider(this, this.scene.walls);
         this.scene.physics.add.overlap(this, this.scene.voids, this.OverlapVoids, null, this);
-        //this.scene.physics.add.collider(this, this.scene.player.shield, this.GetRepeled, null, this);   //Prq l'escut repeli una mica els enemics, l'impuls dependra d'una variable del enemy
-        //this.scene.physics.add.collider(this, this.scene.player.sword, this.GetDamaged, null, this);    //Prq l'espasa danyi els enemics, el mal dependra del attack del player i de si ha carregat l'atac giratori
+        this.scene.physics.add.overlap(this, this.scene.player.shield, this.GetRepeled, null, this);   //Prq l'escut repeli una mica els enemics, l'impuls dependra d'una variable del enemy
+        this.scene.physics.add.overlap(this, this.scene.player.sword, this.GetDamaged, null, this);    //Prq l'espasa danyi els enemics, el mal dependra del attack del player i de si ha carregat l'atac giratori
     }
     
     CreateGlobalAnims(){
@@ -112,9 +113,19 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     DamagePlayer(){
         this.playerColManager.UpdateOnTrigger();
         
-        if(this.playerColManager.colState == this.playerColManager.CollisionState.ENTERED_COLLISION){
+        if(this.playerColManager.colState == this.playerColManager.CollisionState.ENTERED_COLLISION
+          && this.scene.player.isVulnerable && !this.scene.player.isJumping){
             this.scene.player.GetDamaged(this.attack);
             this.scene.soundManager.PlayFX(this.dmgSoundEffect)
+            
+            var dir = new Phaser.Math.Vector2(this.scene.player.x - this.x, this.scene.player.y - this.y).normalize()
+            var impulse = 70
+            this.scene.player.body.velocity = new Phaser.Math.Vector2(dir.x * impulse, dir.y * impulse)
+            this.scene.player.canMove = false
+            this.scene.player.isVulnerable = false
+            this.scene.player.currentAnim = 'playerHit'
+            
+            this.scene.time.addEvent({delay: 300, callback: function(){this.body.stop(); this.scene.player.canMove = true; this.scene.player.isVulnerable = true; }, callbackScope: this, repeat: 0});
         }
     }
     
@@ -122,8 +133,16 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     {
         this.shieldColManager.UpdateOnTrigger();
         
-        if(this.shieldColManager.colState == this.shieldColManager.CollisionState.ENTERED_COLLISION){
-            //Do things
+        if(this.shieldColManager.colState == this.shieldColManager.CollisionState.ENTERED_COLLISION
+          && this.canBeRepeled){
+            this.scene.soundManager.PlayFX('shieldDeflect_FX')
+            
+            var dir = new Phaser.Math.Vector2(this.x - this.scene.player.x, this.y - this.scene.player.y).normalize()
+            var impulse = 100
+            this.body.velocity = new Phaser.Math.Vector2(dir.x * impulse, dir.y * impulse)
+            this.active = false
+            
+            this.scene.time.addEvent({delay: 200, callback: function(){this.body.stop(); this.collided = false; this.active = true}, callbackScope: this, repeat: 0});
         }
     }
     
@@ -131,8 +150,16 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     {
         this.swordColManager.UpdateOnTrigger();
         
-        if(this.swordColManager.colState == this.swordColManager.CollisionState.ENTERED_COLLISION){
+        if(this.swordColManager.colState == this.swordColManager.CollisionState.ENTERED_COLLISION
+          && this.isVulnerable){
             this.health -= this.scene.player.attack;
+            var dir = new Phaser.Math.Vector2(this.x - this.scene.player.x, this.y - this.scene.player.y).normalize()
+            var impulse = 200
+            this.body.velocity = new Phaser.Math.Vector2(dir.x * impulse, dir.y * impulse)
+            this.active = false
+            
+            this.scene.time.addEvent({delay: 100, callback: function(){this.body.stop(); this.collided = false; this.active = true}, callbackScope: this, repeat: 0});
+            
             if(this.scene.player.enemiesKilled % 30 == 0 || this.scene.player.enemiesKilled % 12 == 0){
                 this.scene.soundManager.PlayFX('enemyHitPowerUp_FX')
             }

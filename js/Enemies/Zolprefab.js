@@ -18,16 +18,11 @@ class GreenZolPrefab extends EnemyBase{
     {
         var currentPos = new Phaser.Math.Vector2(this.body);
         
-            if(currentPos.distance(this.scene.player.body) < this.seeRange && this.hiding)
-            {
-                this.hiding = false;
-                
-            }
-    
-            if((this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) || this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.L)) && !this.hiding)
-            {
-                this.GetRepeled();
-            }
+        if(currentPos.distance(this.scene.player.body) < this.seeRange && this.hiding)
+        {
+            this.hiding = false;
+
+        }
 
     }
     
@@ -47,13 +42,6 @@ class GreenZolPrefab extends EnemyBase{
         });
     }
     
-    GetRepeled()
-    {
-        
-       this.collided = true;
-       this.MoveTowards(this.scene.player, -this.speed*4);
-       this.scene.time.addEvent({delay: 250, callback: function(){this.body.stop(); this.collided = false;}, callbackScope: this, repeat: 0});
-    }
     DashToPlayer()
     {
         this.charging = true;
@@ -85,16 +73,11 @@ class RedZolPrefab extends EnemyBase{
     {
         var currentPos = new Phaser.Math.Vector2(this.body);
         
-            if(currentPos.distance(this.scene.player.body) < this.seeRange && this.hiding)
-            {
-                this.hiding = false;
-                
-            }
-    
-            if((this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) || this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.L)) && !this.hiding)
-            {
-                this.GetRepeled();
-            }
+        if(currentPos.distance(this.scene.player.body) < this.seeRange && this.hiding)
+        {
+            this.hiding = false;
+
+        }
 
     }
     
@@ -114,13 +97,6 @@ class RedZolPrefab extends EnemyBase{
         });
     }
     
-    GetRepeled()
-    {
-        
-       this.collided = true;
-       this.MoveTowards(this.scene.player, -this.speed*4);
-       this.scene.time.addEvent({delay: 250, callback: function(){this.body.stop(); this.collided = false;}, callbackScope: this, repeat: 0});
-    }
     DashToPlayer()
     {
         this.charging = true;

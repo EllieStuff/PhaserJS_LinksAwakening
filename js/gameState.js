@@ -24,8 +24,9 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('playerAttack'        ,rutaImgLink + 'LinkAttack.png'         ,{frameWidth: 48, frameHeight: 48});
         this.load.spritesheet('playerSpin'          ,rutaImgLink + 'LinkSpinA.png'          ,{frameWidth: 48, frameHeight: 48});
         this.load.spritesheet('playerCharge'        ,rutaImgLink + 'LinkCharge.png'         ,{frameWidth: 48, frameHeight: 48});
-        this.load.spritesheet('playerSlash'     ,rutaImgLink + 'LinkSlash.png'   ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('playerFall'      ,rutaImgLink + 'fallAnim.png'    ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerSlash'         ,rutaImgLink + 'LinkSlash.png'          ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerFall'          ,rutaImgLink + 'fallAnim.png'           ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerPush'          ,rutaImgLink + 'pushAnim.png'           ,{frameWidth: 16, frameHeight: 16});
         //Enemies
         this.load.spritesheet('HardHat'      ,rutaImgEnemies   + 'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('enemySkeleton',rutaImgEnemies   + 'EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
@@ -129,6 +130,15 @@ class gameState extends Phaser.Scene{
         //this.load.audio('linkThrow_FX', rutaFX              + 'LA_Link_Throw.wav'); // Crec que no s'ha de posar
         this.load.audio('linkFall_FX', rutaFX               + 'LA_Link_Fall.wav');
         this.load.audio('linkLowHealth_FX', rutaFX          + 'LA_LowHealth.wav');
+        this.load.audio('shield_FX', rutaFX                 + 'LA_Shield.wav');
+        this.load.audio('shieldDeflect_FX', rutaFX          + 'LA_Shield_Deflect.wav'); //---
+        this.load.audio('swordCharge_FX', rutaFX            + 'LA_Sword_Charge.wav'); //---
+        this.load.audio('swordSlash1_FX', rutaFX            + 'LA_Sword_Slash1.wav');
+        this.load.audio('swordSlash2_FX', rutaFX            + 'LA_Sword_Slash2.wav');
+        this.load.audio('swordSlash3_FX', rutaFX            + 'LA_Sword_Slash3.wav');
+        this.load.audio('swordSlash4_FX', rutaFX            + 'LA_Sword_Slash4.wav');
+        this.load.audio('swordSpin_FX', rutaFX              + 'LA_Sword_Spin.wav'); //---
+        this.load.audio('swordTap_FX', rutaFX               + 'LA_Sword_Tap.wav'); //---
             //items
         this.load.audio('compassSignal_FX', rutaFX          + 'LA_Dungeon_Signal.wav'); // - ToDo: averiguar com va aixo
         this.load.audio('getHeartContainer_FX', rutaFX      + 'LA_Fanfare_HeartContainer.wav');
@@ -149,10 +159,23 @@ class gameState extends Phaser.Scene{
         this.load.audio('teleport_FX', rutaFX               + 'LA_Dungeon_Teleport.wav'); // - ToDo: mirar si posarem el tp al final
         this.load.audio('teleportAppear_FX', rutaFX         + 'LA_Dungeon_Teleport_Appear.wav'); // - ToDo: ""
         this.load.audio('groundCrumbling_FX', rutaFX        + 'LA_Ground_Crumble.wav');
+        this.load.audio('rockPush_FX', rutaFX               + 'LA_Rock_Push.wav'); // - Testing
+        this.load.audio('stairs_FX', rutaFX                 + 'LA_Stairs.wav'); //---
             //Events
         this.load.audio('transportOut_FX', rutaFX           + 'LA_Dungeon_TransportOut.wav'); //--- //Quan agafes l'instrument i et fa fora de la dungeon
         this.load.audio('error_FX', rutaFX                  + 'LA_Error.wav'); //---
+        this.load.audio('secret1_FX', rutaFX                + 'LA_Secret1.wav'); //---
+        this.load.audio('secret2_FX', rutaFX                + 'LA_Secret2.wav'); //---
+        this.load.audio('textDone_FX', rutaFX               + 'LA_Text_Done.wav'); //---
+        this.load.audio('textLetter_FX', rutaFX             + 'LA_Text_Letter.wav'); //---
+            //Menus
         this.load.audio('titleAppear_FX', rutaFX            + 'LA_TitleAppear.wav');
+        this.load.audio('menuCursor_FX', rutaFX             + 'LA_Menu_Cursor.wav'); //---
+        this.load.audio('menuSelect_FX', rutaFX             + 'LA_Menu_Select.wav'); //---
+        this.load.audio('pauseMenuOpen_FX', rutaFX          + 'LA_PauseMenu_Open.wav'); //---
+        this.load.audio('pauseMenuClose_FX', rutaFX         + 'LA_PauseMenu_Close.wav'); //---
+        this.load.audio('menuCursor_FX', rutaFX             + 'LA_Menu_Cursor.wav'); //---
+        
         
         //OST
         this.load.audio('intro_OST', rutaOST                  + '01. Intro.mp3');

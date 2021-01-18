@@ -17,6 +17,14 @@ class PlayerAnimator extends Phaser.GameObjects.Sprite{
     
     CreateAnims()
     {
+        //PLAYER HIT
+        this.scene.anims.create({
+            key: 'playerHit',
+            frames: this.scene.anims.generateFrameNumbers('playerHitAnim', { start: 0, end: 1 }),
+            frameRate: 20,
+            repeat: -1
+        });
+        
         //PLAYER WITHOUT SHIELD
         this.scene.anims.create({
             key: 'walkdown',
@@ -43,6 +51,31 @@ class PlayerAnimator extends Phaser.GameObjects.Sprite{
             repeat: 0
         });
         
+        //PLAYER PUSHING SMTH
+        this.scene.anims.create({
+            key: 'pushDown',
+            frames: this.scene.anims.generateFrameNumbers('playerPush', { start: 0, end: 1 }),
+            frameRate: 8,
+            repeat: 0
+        });
+        this.scene.anims.create({
+            key: 'pushLeft',
+            frames: this.scene.anims.generateFrameNumbers('playerPush', { start: 2, end: 3 }),
+            frameRate: 8,
+            repeat: 0
+        });
+        this.scene.anims.create({
+            key: 'pushRight',
+            frames: this.scene.anims.generateFrameNumbers('playerPush', { start: 4, end: 5 }),
+            frameRate: 8,
+            repeat: 0
+        });
+        this.scene.anims.create({
+            key: 'pushUp',
+            frames: this.scene.anims.generateFrameNumbers('playerPush', { start: 6, end: 7 }),
+            frameRate: 8,
+            repeat: 0
+        });
         
         //PLAYER WITH SHIELD
         this.scene.anims.create({

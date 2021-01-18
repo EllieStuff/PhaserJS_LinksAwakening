@@ -20,6 +20,7 @@ class SparkPrefab extends EnemyBase{
         this.canEnterExitWallBehaviour = true
         this.canFall = false
         this.dmgSoundEffect = 'linkShock_FX'
+        this.canBeRepeled = false
         
         this.currentWallPos = new Phaser.Math.Vector2(positionX, positionY)
         
@@ -219,6 +220,34 @@ class SparkPrefab extends EnemyBase{
                 console.log("smth is wrong")
                 break;
         }
+    }
+    
+    DamagePlayer(){
+        this.playerColManager.UpdateOnTrigger();
+        
+        if(this.playerColManager.colState == this.playerColManager.CollisionState.ENTERED_COLLISION
+          && ((this.scene.player.isVulnerable && !this.scene.player.isJumping)
+          || this.scene.player.shieldUp)){
+            this.scene.player.GetDamaged(this.attack);
+            this.scene.soundManager.PlayFX(this.dmgSoundEffect)
+            
+            var dir = new Phaser.Math.Vector2(this.scene.player.x - this.x, this.scene.player.y - this.y).normalize()
+            var impulse = 70
+            this.scene.player.body.velocity = new Phaser.Math.Vector2(dir.x * impulse, dir.y * impulse)
+            this.scene.player.canMove = false
+            this.scene.player.isVulnerable = false
+            this.scene.player.currentAnim = 'playerHit'
+            
+            this.scene.time.addEvent({delay: 300, callback: function(){this.body.stop(); this.scene.player.canMove = true; this.scene.player.isVulnerable = true; }, callbackScope: this, repeat: 0});
+        }
+    }
+    
+    GetDamaged(){
+        this.DamagePlayer()
+    }
+    
+    GetRepeled(){
+        this.DamagePlayer()
     }
     
     
