@@ -54,6 +54,7 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('blueRupee' ,rutaImgItems + 'BlueRupee.png'  ,{frameWidth: 8,  frameHeight: 16});
         this.load.spritesheet('redRupee'  ,rutaImgItems + 'RedRupee.png'   ,{frameWidth: 8,  frameHeight: 16});
         this.load.spritesheet('smallHeart',rutaImgItems + 'SmallHeart.png' ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('HeartContainer',rutaImgItems + 'HeartContainer.png' ,{frameWidth: 16, frameHeight: 16});
         
         //Interactive Tiles
         this.load.spritesheet('movableBlock',rutaImgInteractiveTiles        + 'Block.png'                  ,{frameWidth: 16, frameHeight: 16});
@@ -130,7 +131,7 @@ class gameState extends Phaser.Scene{
         this.load.audio('linkLowHealth_FX', rutaFX          + 'LA_LowHealth.wav');
             //items
         this.load.audio('compassSignal_FX', rutaFX          + 'LA_Dungeon_Signal.wav'); // - ToDo: averiguar com va aixo
-        this.load.audio('getHeartContainer_FX', rutaFX      + 'LA_Fanfare_HeartContainer.wav'); //---
+        this.load.audio('getHeartContainer_FX', rutaFX      + 'LA_Fanfare_HeartContainer.wav');
         this.load.audio('getFanfareItem_FX', rutaFX         + 'LA_Fanfare_Item.wav'); //---
         this.load.audio('getFanfareItemExtended_FX', rutaFX + 'LA_Fanfare_Item_Extended.wav'); //---
         this.load.audio('getItem1_FX', rutaFX               + 'LA_Get_Item.wav'); //--- Crec que aquest i el d'abaix son per agafar items secundaris de cofres
@@ -212,6 +213,7 @@ class gameState extends Phaser.Scene{
         this.items.add(new PowerUpDef(this,config.width/2 + 10,config.height/2 + 10));
         this.items.add(new Key(this,config.width/2 - 20,config.height/2 + 10));
         this.items.add(new MasterKey(this,config.width/2 + 10,config.height/2 -20));
+        this.items.add(new HContainer(this, 160*3 + 16, 128*5+16));
         
         
         
@@ -254,8 +256,7 @@ class gameState extends Phaser.Scene{
         //this.player = this.physics.add;
         this.player = new PlayerPrefab(this,555,725);
         this.player.active = false;
-        //this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0,5).setScale(1);
-        
+        //this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0,5).setScale(1);   
     }
     
     CreateInteractiveTiles(){
