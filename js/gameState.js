@@ -16,158 +16,173 @@ class gameState extends Phaser.Scene{
         
         // Load Images
         //Player
-        this.load.spritesheet('playerMove'          ,rutaImgLink + 'WAnim.png'              ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('playerMoveShield'    ,rutaImgLink + 'WShieldAnim.png'        ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('playerShieldUp'      ,rutaImgLink + 'shieldAnim.png'         ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('playerJump'          ,rutaImgLink + 'jumpAnim.png'           ,{frameWidth: 16, frameHeight: 32});
-        this.load.spritesheet('playerPlatformerJump',rutaImgLink + 'platformerJumpAnim.png' ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('playerAttack'        ,rutaImgLink + 'LinkAttack.png'         ,{frameWidth: 48, frameHeight: 48});
-        this.load.spritesheet('playerSpin'          ,rutaImgLink + 'LinkSpinA.png'          ,{frameWidth: 48, frameHeight: 48});
-        this.load.spritesheet('playerCharge'        ,rutaImgLink + 'LinkCharge.png'         ,{frameWidth: 48, frameHeight: 48});
-        this.load.spritesheet('playerSlash'     ,rutaImgLink + 'LinkSlash.png'   ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('playerFall'      ,rutaImgLink + 'fallAnim.png'    ,{frameWidth: 16, frameHeight: 16});
+        this.load.setPath(rutaImgLink);
+        this.load.spritesheet('playerMove'          ,'WAnim.png'              ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerMoveShield'    ,'WShieldAnim.png'        ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerShieldUp'      ,'shieldAnim.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerJump'          ,'jumpAnim.png'           ,{frameWidth: 16, frameHeight: 32});
+        this.load.spritesheet('playerPlatformerJump','platformerJumpAnim.png' ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerAttack'        ,'LinkAttack.png'         ,{frameWidth: 48, frameHeight: 48});
+        this.load.spritesheet('playerSpin'          ,'LinkSpinA.png'          ,{frameWidth: 48, frameHeight: 48});
+        this.load.spritesheet('playerCharge'        ,'LinkCharge.png'         ,{frameWidth: 48, frameHeight: 48});
+        this.load.spritesheet('playerSlash'     ,'LinkSlash.png'   ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('playerFall'      ,'fallAnim.png'    ,{frameWidth: 16, frameHeight: 16});
         //Enemies
-        this.load.spritesheet('HardHat'      ,rutaImgEnemies   + 'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('enemySkeleton',rutaImgEnemies   + 'EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('auxSkeleton'  ,rutaImgEnemies   + 'EsqueletoJumpAnim.png' ,{frameWidth: 16, frameHeight: 32});
-        this.load.spritesheet('spikedBeetle' ,rutaImgEnemies   + 'SpikedBeetle.png'      ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('pokerEnemy'   ,rutaImgEnemies   + 'PokerEnemy.png'        ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('BladeTrap', rutaImgEnemies      + 'BladeTrap.png'         ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('batEnemy', rutaImgEnemies       + 'KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('goomba', rutaImgEnemies         + 'Goomba.png'            ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('redZol', rutaImgEnemies         + 'RedZol.png'            ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('greenZol', rutaImgEnemies       + 'GreenZol.png'            ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('sparkEnemy', rutaImgEnemies   + 'SparkAnim.png'         ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('enemyFallingAnim', rutaImgEnemies + 'EnemyFallingAnim.png'       ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('moldormEnemy', rutaImgEnemies + 'MiniMoldorm.png'       ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('moldormEnemyBody1', rutaImgEnemies + 'MoldormBody1.png'       ,{frameWidth: 12, frameHeight: 12});
-        this.load.spritesheet('moldormEnemyBody2', rutaImgEnemies + 'MoldormBody2.png'       ,{frameWidth: 10, frameHeight: 10});
-        this.load.spritesheet('moldormBossEnemy', rutaImgEnemies + 'MoldormHeads.png'       ,{frameWidth: 28, frameHeight: 28});
-        this.load.spritesheet('moldormBossEnemyBody', rutaImgEnemies + 'MoldormBodys.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.setPath(rutaImgEnemies);
+        this.load.spritesheet('HardHat'      ,'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('enemySkeleton','EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('auxSkeleton'  ,'EsqueletoJumpAnim.png' ,{frameWidth: 16, frameHeight: 32});
+        this.load.spritesheet('spikedBeetle' ,'SpikedBeetle.png'      ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('pokerEnemy'   ,'PokerEnemy.png'        ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('BladeTrap','BladeTrap.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('batEnemy','KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('goomba','Goomba.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('redZol','RedZol.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('greenZol','GreenZol.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('sparkEnemy','SparkAnim.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('enemyFallingAnim','EnemyFallingAnim.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('moldormEnemy','MiniMoldorm.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('moldormEnemyBody1','MoldormBody1.png'       ,{frameWidth: 12, frameHeight: 12});
+        this.load.spritesheet('moldormEnemyBody2','MoldormBody2.png'       ,{frameWidth: 10, frameHeight: 10});
+        this.load.spritesheet('moldormBossEnemy','MoldormHeads.png'       ,{frameWidth: 28, frameHeight: 28});
+        this.load.spritesheet('moldormBossEnemyBody','MoldormBodys.png'       ,{frameWidth: 16, frameHeight: 16});
         
         //Items
-        this.load.spritesheet('atkPowerUp',rutaImgItems + 'PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('defPowerUp',rutaImgItems + 'PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('key'       ,rutaImgItems + 'Key.png'        ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('masterKey' ,rutaImgItems + 'MasterKey.png'  ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('rocFeather',rutaImgItems + 'RocFeather.png' ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('blueRupee' ,rutaImgItems + 'BlueRupee.png'  ,{frameWidth: 8,  frameHeight: 16});
-        this.load.spritesheet('redRupee'  ,rutaImgItems + 'RedRupee.png'   ,{frameWidth: 8,  frameHeight: 16});
-        this.load.spritesheet('smallHeart',rutaImgItems + 'SmallHeart.png' ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('HeartContainer',rutaImgItems + 'HeartContainer.png' ,{frameWidth: 16, frameHeight: 16});
+        this.load.setPath(rutaImgItems);
+        this.load.spritesheet('atkPowerUp','PowerUp_Atk.png',{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('defPowerUp','PowerUp_Def.png',{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('key'       ,'Key.png'        ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('masterKey' ,'MasterKey.png'  ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('rocFeather','RocFeather.png' ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('blueRupee' ,'BlueRupee.png'  ,{frameWidth: 8,  frameHeight: 16});
+        this.load.spritesheet('redRupee'  ,'RedRupee.png'   ,{frameWidth: 8,  frameHeight: 16});
+        this.load.spritesheet('smallHeart','SmallHeart.png' ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('HeartContainer','HeartContainer.png' ,{frameWidth: 16, frameHeight: 16});
         
         //Interactive Tiles
-        this.load.spritesheet('movableBlock',rutaImgInteractiveTiles        + 'Block.png'                  ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('keyDoor',rutaImgInteractiveTiles             + 'KeyDoorAnim.png'            ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('masterKeyDoor',rutaImgInteractiveTiles       + 'BossKeyDoor.png'            ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('eventDoor',rutaImgInteractiveTiles           + 'EventDoor.png'              ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('oneWayDoor',rutaImgInteractiveTiles          + 'OneWayDoorAnim.png'         ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('oneWayDoorBackwards',rutaImgInteractiveTiles + 'OneWayDoorBackwardsAnim.png',{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('tpStairs',rutaImgInteractiveTiles            + 'TP_Stairs.png'              ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('smallLadders',rutaImgInteractiveTiles        + 'SmallLadders.png'           ,{frameWidth: 16, frameHeight: 56});
-        this.load.spritesheet('largeLadders',rutaImgInteractiveTiles        + 'LargeLadders.png'           ,{frameWidth: 16, frameHeight: 112});
-        this.load.spritesheet('keyBlock',rutaImgInteractiveTiles            + 'KeyBlock.png'               ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('simpleVoid',rutaImgInteractiveTiles          + 'SimpleVoid.png'               ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('bossVoid',rutaImgInteractiveTiles            + 'BossVoid.png'               ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('breakableFloor',rutaImgInteractiveTiles       + 'BreakableFloor.png'               ,{frameWidth: 16, frameHeight: 16});
+        this.load.setPath(rutaImgInteractiveTiles);
+        this.load.spritesheet('movableBlock','Block.png'                  ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('keyDoor','KeyDoorAnim.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('masterKeyDoor','BossKeyDoor.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('eventDoor','EventDoor.png'              ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('oneWayDoor','OneWayDoorAnim.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('oneWayDoorBackwards','OneWayDoorBackwardsAnim.png',{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('tpStairs','TP_Stairs.png'              ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('smallLadders','SmallLadders.png'           ,{frameWidth: 16, frameHeight: 56});
+        this.load.spritesheet('largeLadders','LargeLadders.png'           ,{frameWidth: 16, frameHeight: 112});
+        this.load.spritesheet('keyBlock','KeyBlock.png'               ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('simpleVoid','SimpleVoid.png'             ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('bossVoid','BossVoid.png'               ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('breakableFloor','BreakableFloor.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('chest','Chest.png'                  ,{frameWidth: 16, frameHeight: 16});
         
         //HUD
-        this.load.image('bgHUD',rutaImgHUD + 'HUD_bg.png');
-        this.load.image('rupieHUD',rutaImgHUD + 'Rupie_UI.png');
-        this.load.spritesheet('heartsUI',rutaImgHUD + 'Hearts_UI.png',{frameWidth: 8, frameHeight: 8});
-        this.load.spritesheet('numbersUI',rutaImgHUD + 'Numbers_UI.png',{frameWidth: 8, frameHeight: 8});
-        this.load.spritesheet('ObjectHUD',rutaImgHUD + 'Objects_HUD.png',{frameWidth: 24, frameHeight: 16});
+        this.load.setPath(rutaImgHUD);
+        this.load.image('bgHUD','HUD_bg.png');
+        this.load.image('rupieHUD','Rupie_UI.png');
+        this.load.spritesheet('heartsUI','Hearts_UI.png',{frameWidth: 8, frameHeight: 8});
+        this.load.spritesheet('numbersUI','Numbers_UI.png',{frameWidth: 8, frameHeight: 8});
+        this.load.spritesheet('ObjectHUD','Objects_HUD.png',{frameWidth: 24, frameHeight: 16});
         
         //Others
-        this.load.spritesheet('emptySprite', 'assets/img/Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
-        this.load.image('hitbox', rutaImgLink + 'HitboxLink.png');
-        this.load.image('hitboxAttack', rutaImgLink + 'LinkAttackHit.png');
-        this.load.image('hitboxShield', rutaImgLink + 'ShieldHitbox.png');
-        this.load.image('startMenu', rutaImgMenus + 'Intro Links Awakening.png');
+        this.load.setPath("assets/img/");
+        this.load.spritesheet('emptySprite', 'Empty_Sprite.png', {frameWidth: 16, frameHeight: 16});
+        this.load.setPath(rutaImgLink);
+        this.load.image('hitbox','HitboxLink.png');
+        this.load.image('hitboxAttack','LinkAttackHit.png');
+        this.load.image('hitboxShield','ShieldHitbox.png');
+        this.load.setPath(rutaImgMenus);
+        this.load.image('startMenu','Intro Links Awakening.png');
         
         
         // Dungeon
-        this.load.image('blocks', rutaImgTiles + 'DungeonBlockSheet.png');
-        this.load.image('objects', rutaImgTiles + 'dungeonTiles1.png');
-        this.load.image('fences', rutaImgTiles + 'vallas.png');
-        this.load.image('Blocks', rutaImgTiles + 'DungeonBlockSheet - copia.png');
-        this.load.image('torches', 'assets/img/objAnims/' + 'LitAnim.png');
-        this.load.tilemapTiledJSON('dungeon', 'maps/insideMap.json');
-        this.load.tilemapTiledJSON('platformerDungeon', 'maps/2dVerticalMap.json');
+        this.load.setPath(rutaImgTiles);
+        this.load.image('blocks','DungeonBlockSheet.png');
+        this.load.image('objects','dungeonTiles1.png');
+        this.load.image('fences','vallas.png');
+        this.load.image('Blocks','DungeonBlockSheet - copia.png');
+        this.load.setPath("assets/img/objAnims/");
+        this.load.image('torches','LitAnim.png');
+        this.load.setPath("maps/");
+        this.load.tilemapTiledJSON('dungeon', 'insideMap.json');
+        this.load.json('json', 'insideMap.json');
+        this.load.tilemapTiledJSON('platformerDungeon', '2dVerticalMap.json');
         
         
         // Load Audios
         //FX
             //Bosses - ToDo
-        this.load.audio('bossBursting_FX', rutaFX           + 'LA_Boss_Bursting.wav');
-        this.load.audio('bossBurstingFast1_FX', rutaFX      + 'LA_Boss_Bursting_Fast1.wav');
-        this.load.audio('bossBurstingFast2_FX', rutaFX      + 'LA_Boss_Bursting_Fast2.wav');
-        this.load.audio('bossDying_FX', rutaFX              + 'LA_Boss_Die.wav');
-        this.load.audio('bossExploding_FX', rutaFX          + 'LA_Boss_Explode.wav');
-        this.load.audio('bossHit_FX', rutaFX                + 'LA_Boss_Hit.wav');
-        this.load.audio('bossSegmentExplode_FX', rutaFX     + 'LA_Moldorm_SegmentExplode.wav');
-        this.load.audio('bossSpeedy_FX', rutaFX             + 'LA_Moldorm_Speedy.wav');
-        this.load.audio('miniBossRoller_FX', rutaFX         + 'LA_RollingBones_Roller.wav');
+        this.load.setPath(rutaFX);
+        this.load.audio('bossBursting_FX','LA_Boss_Bursting.wav');
+        this.load.audio('bossBurstingFast1_FX','LA_Boss_Bursting_Fast1.wav');
+        this.load.audio('bossBurstingFast2_FX','LA_Boss_Bursting_Fast2.wav');
+        this.load.audio('bossDying_FX','LA_Boss_Die.wav');
+        this.load.audio('bossExploding_FX','LA_Boss_Explode.wav');
+        this.load.audio('bossHit_FX','LA_Boss_Hit.wav');
+        this.load.audio('bossSegmentExplode_FX','LA_Moldorm_SegmentExplode.wav');
+        this.load.audio('bossSpeedy_FX','LA_Moldorm_Speedy.wav');
+        this.load.audio('miniBossRoller_FX','LA_RollingBones_Roller.wav');
             //Enemies
-        this.load.audio('bladeTrap_FX', rutaFX              + 'LA_BladeTrap.wav');
-        this.load.audio('enemyDying_FX', rutaFX             + 'LA_Enemy_Die.wav'); // - Testing
-        this.load.audio('enemyDyingPowerUp_FX', rutaFX      + 'LA_Enemy_Die_Power.wav'); // - Testing
-        this.load.audio('enemyFalling_FX', rutaFX           + 'LA_Enemy_Fall.wav');
-        this.load.audio('enemyHit_FX', rutaFX               + 'LA_Enemy_Hit.wav'); // - Testing
-        this.load.audio('enemyHitPowerUp_FX', rutaFX        + 'LA_Enemy_Hit_Power.wav'); // - Testing
-        this.load.audio('enemyJumping_FX', rutaFX           + 'LA_Enemy_Jump.wav'); // - ToDo: esta en esquelet, falta en miniboss
+        this.load.audio('bladeTrap_FX','LA_BladeTrap.wav');
+        this.load.audio('enemyDying_FX','LA_Enemy_Die.wav'); // - Testing
+        this.load.audio('enemyDyingPowerUp_FX','LA_Enemy_Die_Power.wav'); // - Testing
+        this.load.audio('enemyFalling_FX','LA_Enemy_Fall.wav');
+        this.load.audio('enemyHit_FX','LA_Enemy_Hit.wav'); // - Testing
+        this.load.audio('enemyHitPowerUp_FX','LA_Enemy_Hit_Power.wav'); // - Testing
+        this.load.audio('enemyJumping_FX','LA_Enemy_Jump.wav'); // - ToDo: esta en esquelet, falta en miniboss
             //Player
-        this.load.audio('linkBounce_FX', rutaFX             + 'LA_Link_Bounce.wav'); //---
-        this.load.audio('linkDying_FX', rutaFX              + 'LA_Link_Dying.wav');
-        this.load.audio('linkHurt_FX', rutaFX               + 'LA_Link_Hurt.wav');
-        this.load.audio('linkJump_FX', rutaFX               + 'LA_Link_Jump.wav');
-        this.load.audio('linkPickUp_FX', rutaFX             + 'LA_Link_PickUp.wav');
+        this.load.audio('linkBounce_FX','LA_Link_Bounce.wav'); //---
+        this.load.audio('linkDying_FX','LA_Link_Dying.wav');
+        this.load.audio('linkHurt_FX','LA_Link_Hurt.wav');
+        this.load.audio('linkJump_FX','LA_Link_Jump.wav');
+        this.load.audio('linkPickUp_FX','LA_Link_PickUp.wav');
         //this.load.audio('linkRebound_FX', rutaFX            + 'LA_Link_Rebound.wav'); // No se on ha d'anar
         //this.load.audio('linkRun_FX', rutaFX                + 'LA_Link_Run.wav'); // Crec que no s'ha de posar, que es per les botes pegas
-        this.load.audio('linkHurt_FX', rutaFX               + 'LA_Link_Hurt.wav');
-        this.load.audio('linkShock_FX', rutaFX              + 'LA_Link_Shock.wav');
+        this.load.audio('linkHurt_FX','LA_Link_Hurt.wav');
+        this.load.audio('linkShock_FX','LA_Link_Shock.wav');
         //this.load.audio('linkThrow_FX', rutaFX              + 'LA_Link_Throw.wav'); // Crec que no s'ha de posar
-        this.load.audio('linkFall_FX', rutaFX               + 'LA_Link_Fall.wav');
-        this.load.audio('linkLowHealth_FX', rutaFX          + 'LA_LowHealth.wav');
+        this.load.audio('linkFall_FX','LA_Link_Fall.wav');
+        this.load.audio('linkLowHealth_FX','LA_LowHealth.wav');
             //items
-        this.load.audio('compassSignal_FX', rutaFX          + 'LA_Dungeon_Signal.wav'); // - ToDo: averiguar com va aixo
-        this.load.audio('getHeartContainer_FX', rutaFX      + 'LA_Fanfare_HeartContainer.wav');
-        this.load.audio('getFanfareItem_FX', rutaFX         + 'LA_Fanfare_Item.wav'); //---
-        this.load.audio('getFanfareItemExtended_FX', rutaFX + 'LA_Fanfare_Item_Extended.wav'); //---
-        this.load.audio('getItem1_FX', rutaFX               + 'LA_Get_Item.wav'); //--- Crec que aquest i el d'abaix son per agafar items secundaris de cofres
-        this.load.audio('getItem2_FX', rutaFX               + 'LA_Get_Item2.wav'); //---
-        this.load.audio('getPowerUp_FX', rutaFX             + 'LA_Get_PowerUp.wav');
-        this.load.audio('getRupee_FX', rutaFX               + 'LA_Get_Rupee.wav');
-        this.load.audio('getSirenInstrument_FX', rutaFX     + 'LA_Get_SirenInstrument.wav'); //---
-        this.load.audio('getSword_FX', rutaFX               + 'LA_Get_Sword.wav'); //---
-        this.load.audio('getFullMoonCello_FX', rutaFX       + 'LA_SirensInstrument_FullMoonCello.wav'); //---
+        this.load.audio('compassSignal_FX','LA_Dungeon_Signal.wav'); // - ToDo: averiguar com va aixo
+        this.load.audio('getHeartContainer_FX','LA_Fanfare_HeartContainer.wav');
+        this.load.audio('getFanfareItem_FX','LA_Fanfare_Item.wav'); //---
+        this.load.audio('getFanfareItemExtended_FX','LA_Fanfare_Item_Extended.wav'); //---
+        this.load.audio('getItem1_FX','LA_Get_Item.wav'); //--- Crec que aquest i el d'abaix son per agafar items secundaris de cofres
+        this.load.audio('getItem2_FX','LA_Get_Item2.wav'); //---
+        this.load.audio('getPowerUp_FX','LA_Get_PowerUp.wav');
+        this.load.audio('getRupee_FX','LA_Get_Rupee.wav');
+        this.load.audio('getSirenInstrument_FX','LA_Get_SirenInstrument.wav'); //---
+        this.load.audio('getSword_FX','LA_Get_Sword.wav'); //---
+        this.load.audio('getFullMoonCello_FX','LA_SirensInstrument_FullMoonCello.wav'); //---
             //Tilemap
-        this.load.audio('openChest_FX', rutaFX              + 'LA_Chest_Open.wav'); // - ToDo
-        this.load.audio('doorSlam_FX', rutaFX               + 'LA_Dungeon_DoorSlam.wav'); // - Testing
-        this.load.audio('oneWayDoor_FX', rutaFX             + 'LA_Dungeon_OneWayDoor.wav'); // - Testing
-        this.load.audio('triggerSwitch_FX', rutaFX          + 'LA_Dungeon_Switch.wav'); // - ToDo
-        this.load.audio('teleport_FX', rutaFX               + 'LA_Dungeon_Teleport.wav'); // - ToDo: mirar si posarem el tp al final
-        this.load.audio('teleportAppear_FX', rutaFX         + 'LA_Dungeon_Teleport_Appear.wav'); // - ToDo: ""
-        this.load.audio('groundCrumbling_FX', rutaFX        + 'LA_Ground_Crumble.wav');
+        this.load.audio('openChest_FX','LA_Chest_Open.wav'); // - ToDo
+        this.load.audio('doorSlam_FX','LA_Dungeon_DoorSlam.wav'); // - Testing
+        this.load.audio('oneWayDoor_FX','LA_Dungeon_OneWayDoor.wav'); // - Testing
+        this.load.audio('triggerSwitch_FX','LA_Dungeon_Switch.wav'); // - ToDo
+        this.load.audio('teleport_FX','LA_Dungeon_Teleport.wav'); // - ToDo: mirar si posarem el tp al final
+        this.load.audio('teleportAppear_FX','LA_Dungeon_Teleport_Appear.wav'); // - ToDo: ""
+        this.load.audio('groundCrumbling_FX','LA_Ground_Crumble.wav');
             //Events
-        this.load.audio('transportOut_FX', rutaFX           + 'LA_Dungeon_TransportOut.wav'); //--- //Quan agafes l'instrument i et fa fora de la dungeon
-        this.load.audio('error_FX', rutaFX                  + 'LA_Error.wav'); //---
-        this.load.audio('titleAppear_FX', rutaFX            + 'LA_TitleAppear.wav');
+        this.load.audio('transportOut_FX','LA_Dungeon_TransportOut.wav'); //--- //Quan agafes l'instrument i et fa fora de la dungeon
+        this.load.audio('error_FX','LA_Error.wav'); //---
+        this.load.audio('titleAppear_FX','LA_TitleAppear.wav');
         
         //OST
-        this.load.audio('intro_OST', rutaOST                  + '01. Intro.mp3');
-        this.load.audio('title_OST', rutaOST                  + '02. Title.mp3');
-        this.load.audio('playerSelect_OST', rutaOST           + '03. Player Select.mp3');
-        this.load.audio('playerSelectZelda_OST', rutaOST      + '04. Player Select ZELDA.mp3');
-        this.load.audio('overworld_OST', rutaOST              + '10. Overworld.mp3');
-        this.load.audio('powerUp_OST', rutaOST                + '17. Piece Of Power _ Guardian Acorn.mp3');
-        this.load.audio('tailCave_OST', rutaOST               + '19. Level 1 - Tail Cave.mp3');
-        this.load.audio('sideScrolling_OST', rutaOST          + '20. Sidescrolling.mp3');
-        this.load.audio('miniBoss_OST', rutaOST               + '21. Mini Boss Battle.mp3');
-        this.load.audio('boss_OST', rutaOST                   + '22. Boss Battle.mp3');
-        this.load.audio('bossDefeated_OST', rutaOST           + '23. Boss Defeated.mp3');
-        this.load.audio('instrumentsOfTheSirens_OST', rutaOST + '24. Instrument Of The Sirens.mp3');
-        this.load.audio('fullMoonCello_OST', rutaOST          + '25. The Full Moon Cello.mp3');
+        this.load.setPath(rutaOST);
+        this.load.audio('intro_OST','01. Intro.mp3');
+        this.load.audio('title_OST','02. Title.mp3');
+        this.load.audio('playerSelect_OST','03. Player Select.mp3');
+        this.load.audio('playerSelectZelda_OST','04. Player Select ZELDA.mp3');
+        this.load.audio('overworld_OST','10. Overworld.mp3');
+        this.load.audio('powerUp_OST','17. Piece Of Power _ Guardian Acorn.mp3');
+        this.load.audio('tailCave_OST','19. Level 1 - Tail Cave.mp3');
+        this.load.audio('sideScrolling_OST','20. Sidescrolling.mp3');
+        this.load.audio('miniBoss_OST','21. Mini Boss Battle.mp3');
+        this.load.audio('boss_OST','22. Boss Battle.mp3');
+        this.load.audio('bossDefeated_OST','23. Boss Defeated.mp3');
+        this.load.audio('instrumentsOfTheSirens_OST','24. Instrument Of The Sirens.mp3');
+        this.load.audio('fullMoonCello_OST','25. The Full Moon Cello.mp3');
         
 	}
 	create(){
@@ -186,6 +201,8 @@ class gameState extends Phaser.Scene{
         //Load Map
         this.LoadMap();
         this.LoadPlatformerMap();
+        
+        this.data = this.cache.json.get('json');
         
         this.soundManager = new SoundManager(this)
         
@@ -261,6 +278,25 @@ class gameState extends Phaser.Scene{
         //this.player = this.physics.add.sprite(config.width/2,config.height/2,'playerMove').setOrigin(0,5).setScale(1);   
     }
     
+    loadChests() {
+        var posX, posY, chest;
+        var j = 0;
+        for(var i = 0; i < this.data.layers[15].data.length; i++){
+            if(this.data.layers[15].data[i] == 95){
+                posX = ((i+1) - (70*j) - 1) * 16;
+                posY = (j*16);
+                console.log(posY);
+                console.log(posX);
+                chest = new ChestPrefab(this, posX, posY);
+            }
+            if((i + 1)%this.data.layers[15].width == 0 && i > 0) j++;
+        }
+    }
+    
+    loadVoids() {
+        
+    }
+    
     CreateInteractiveTiles(){
         //TP Stairs
         this.tpStairsPair1 = new TPStairsPair(this, 72, 592, 40, 0);
@@ -291,6 +327,9 @@ class gameState extends Phaser.Scene{
         this.voids.add(new BossVoid(this, config.width / 2 + 8, config.height / 2 + 48))
         this.voids.add(new SimpleVoid(this, config.width / 2 - 8, config.height / 2 + 48))
         this.voids.add(new BreakableFloor(this, config.width / 2 - 24, config.height / 2 + 48))
+        
+        // Chests
+        this.loadChests();
         
     }
     
