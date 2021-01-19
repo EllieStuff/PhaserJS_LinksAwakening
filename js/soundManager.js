@@ -37,6 +37,7 @@ class SoundManager {
             this.scene.sound.add('boss_OST').setVolume(this.OST_VOLUME).setLoop(true),
             this.scene.sound.add('instrumentsOfTheSirens_OST').setVolume(this.OST_VOLUME).setLoop(true),
             this.scene.sound.add('fullMoonCello_OST').setVolume(this.OST_VOLUME).setLoop(true),
+            this.scene.sound.add('gameOver_OST').setVolume(this.OST_VOLUME).setLoop(true),
         ];
         
     }

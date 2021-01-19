@@ -1,6 +1,6 @@
 class PokerPrefab extends EnemyBase{
     
-    constructor(scene, positionX, positionY)
+    constructor(scene, posX, posY,)
     {
 		super(scene, positionX, positionY, 'pokerEnemy');
         this.health = 2;
@@ -45,6 +45,19 @@ class PokerPrefab extends EnemyBase{
         }
         
         //CHECK IF ALL HAVE SAME FRAME OF ANIMATION, ASK RICHARD
+    }
+    
+    AnimationChecker(e1,e2,e3)
+    {
+        if(e1.Endeffect == e2.Endeffect == e3.Endeffect)
+        {
+            e1.matchtype == e2.matchtype == e3.matchtype = true;
+        }
+        else
+        {
+            e1.collided == e2.collided = e3.collided = false;
+        }
+        
     }
     
     CreateAnims()

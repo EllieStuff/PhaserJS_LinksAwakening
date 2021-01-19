@@ -184,6 +184,11 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
                 this.beeping = true
                 this.LowHealthBeep()
             }
+            
+            if(this.health < 0)
+            {
+                this.health = 0;
+            }
             this.scene.hudBG.setHearts(this.health);
             //this.scene.soundManager.PlayFX('linkHurt_FX')
             //console.log("Player Health: " + this.health);

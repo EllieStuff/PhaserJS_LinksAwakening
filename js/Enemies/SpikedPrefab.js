@@ -18,7 +18,7 @@ class SpikedPrefab extends EnemyBase{
     
     Update()
     {
-        
+        /*
         var currentPos = new Phaser.Math.Vector2(this.body);
 
         if(this.isVulnerable)
@@ -43,26 +43,29 @@ class SpikedPrefab extends EnemyBase{
         }
         
         this.RoomManagement()
-            
+            */
     }
     
     CreateAnims()
     {
+        /*
         this.scene.anims.create({
             key: 'SpikedWalk',
             frames: this.scene.anims.generateFrameNumbers('spikedBeetle', { start: 0, end: 1 }),
-            frameRate: 5,
+            frameRate: 4,
             repeat: 0
         });
         this.scene.anims.create({
             key: 'SpikedDown',
             frames: this.scene.anims.generateFrameNumbers('spikedBeetle', { start: 2, end: 3 }),
-            frameRate: 5,
+            frameRate: 4,
             repeat: 0
         });
+        */
     }
     
     GetDamaged(){
+        /*
         this.swordColManager.UpdateOnTrigger();
         
         if(this.swordColManager.colState == this.swordColManager.CollisionState.ENTERED_COLLISION
@@ -81,10 +84,12 @@ class SpikedPrefab extends EnemyBase{
                 this.scene.soundManager.PlayFX('enemyHit_FX')
             }
         }
+        */
     }
     
     GetRepeled()
     {
+        /*
         this.shieldColManager.UpdateOnTrigger();
         
         if(this.shieldColManager.colState == this.shieldColManager.CollisionState.ENTERED_COLLISION){
@@ -98,13 +103,16 @@ class SpikedPrefab extends EnemyBase{
             
             this.scene.time.addEvent({delay: 200, callback: function(){this.body.stop(); this.collided = false; this.active = true}, callbackScope: this, repeat: 0});
         }
+        */
     }
     DashToPlayer()
     {
+        /*
         this.charging = true;
         this.body.stop();
         this.MoveTowards(this.scene.player, this.speed * 2.5);
         this.scene.time.addEvent({delay: 450, callback: function(){this.body.stop(); this.charging = false;}, callbackScope: this, repeat: 0});
+        */
     }
     
 }

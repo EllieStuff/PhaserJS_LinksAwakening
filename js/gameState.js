@@ -211,7 +211,7 @@ class gameState extends Phaser.Scene{
         this.load.audio('bossDefeated_OST','23. Boss Defeated.mp3');
         this.load.audio('instrumentsOfTheSirens_OST','24. Instrument Of The Sirens.mp3');
         this.load.audio('fullMoonCello_OST','25. The Full Moon Cello.mp3');
-        this.load.audio('gameOver_OST','82. Game Over.mp3kkkkss');
+        this.load.audio('gameOver_OST','82. Game Over.mp3');
         
 	}
 	create(){
@@ -725,8 +725,8 @@ class gameState extends Phaser.Scene{
         }
         if(this.player.health <= 0)
         {
-           this.overScreen = this.add.image(this.cameraManager.camPosX , this.cameraManager.camPosY, 'overMenu').setOrigin(0).setScale(1, 1.06).setDepth(this.DrawDepths.MENU)
            this.soundManager.PlayOST('gameOver_OST');
+           this.overScreen = this.add.image(this.cameraManager.camPosX , this.cameraManager.camPosY, 'overMenu').setOrigin(0).setScale(1, 1.06).setDepth(this.DrawDepths.MENU)
            this.scene.pause();
         }
 	}
