@@ -710,7 +710,6 @@ class gameState extends Phaser.Scene{
             this.cameraManager.directionChange =  this.Directions.DOWN;
             this.cameraManager.changeTile = true;
         }  
-        this.hudBG.setPosition(this.camPosX,this.camPosY + 128);
         var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
         this.ShowText(sampleText, sampleText.length);
         
