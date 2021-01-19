@@ -23,6 +23,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         this.canFall = true
         this.dmgSoundEffect = 'linkHurt_FX'
         this.canBeRepeled = true
+        this.isJumping = false
         
         this.playerColManager = new CollisionManager(scene);
         this.swordColManager = new CollisionManager(scene);
@@ -78,7 +79,9 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     }
     
     Fall(){
-        if(!this.falling && this.isVulnerable){
+        console.log('aa')
+        if(!this.falling && !this.isJumping){
+            console.log('ab')
             this.falling = true
             //this.active = false
             //this.body.stop()
@@ -86,7 +89,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
             this.scene.soundManager.PlayFX('enemyFalling_FX')
             this.scene.player.enemiesKilled++;
             this.scene.time.addEvent({delay: 1000, callback: function(){ this.body.stop() }, callbackScope: this, repeat: 0});
-            this.scene.time.addEvent({delay: 3000, callback: function(){this.x = this.y = 0; this.active = this. visible = false; }, callbackScope: this, repeat: 0});
+            this.scene.time.addEvent({delay: 1000, callback: function(){this.x = this.y = 0; this.active = this. visible = false; }, callbackScope: this, repeat: 0});
 
             
         }

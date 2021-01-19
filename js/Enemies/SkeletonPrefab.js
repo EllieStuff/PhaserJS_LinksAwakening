@@ -57,6 +57,7 @@ class SkeletonPrefab extends EnemyBase{
                 {
                     this.body.stop();
                     this.isVulnerable = false;
+                    this.isJumping = true
                     this.canJump = false;
                     this.auxSkeleton.active = true;
                     this.anims.play('skeletonJump');
@@ -82,6 +83,7 @@ class SkeletonPrefab extends EnemyBase{
                 //this.scene.physics.pause();
                 this.body.stop();
                 this.isVulnerable = true;
+                this.isJumping = false
                 this.setFrame(0);
                 this.scene.time.addEvent({delay: 1000, callback: function(){this.canJump=true;}, callbackScope: this, repeat: 0});
             }

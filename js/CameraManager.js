@@ -123,23 +123,23 @@ class CameraManager
             {
                case this.scene.Directions.LEFT:
                     this.camPosX -= 160;
-                    this.tileX--;
+                    this.TileX--;
                     
                 break;
 
             case this.scene.Directions.RIGHT:
                     this.camPosX += 160;
-                    this.tileX++;
+                    this.TileX++;
                 break;
 
             case this.scene.Directions.DOWN:
                     this.camPosY += 128;
-                    this.tileY++;
+                    this.TileY++;
                 break;
 
             case this.scene.Directions.UP:
                     this.camPosY -= 128;
-                    this.tileY--;
+                    this.TileY--;
                 break;
 
             default:

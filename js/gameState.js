@@ -211,7 +211,7 @@ class gameState extends Phaser.Scene{
         this.load.audio('bossDefeated_OST','23. Boss Defeated.mp3');
         this.load.audio('instrumentsOfTheSirens_OST','24. Instrument Of The Sirens.mp3');
         this.load.audio('fullMoonCello_OST','25. The Full Moon Cello.mp3');
-        this.load.audio('gameOver_OST','82. Game Over.mp3');
+        this.load.audio('gameOver_OST','82. Game Over.mp3kkkkss');
         
 	}
 	create(){
@@ -224,11 +224,13 @@ class gameState extends Phaser.Scene{
         this.LoadPlatformerMap();
         //Player
         this.CreatePlayer();
+        //Voids
+        this.loadVoids();
         //Enemies
         this.CreateEnemies();
         //Set up camera
         this.cameras.main.setBounds(0, 0, this.width, this.height);
-        this.cameras.main.startFollow(this.player);
+        //this.cameras.main.startFollow(this.player);
         this.cameraManager = new CameraManager(this);
         this.cameras.main.centerOn(this.cameraManager.camPosX + config.width/2,this.cameraManager.camPosY + config.height/2);
         
@@ -529,12 +531,6 @@ class gameState extends Phaser.Scene{
          //One Way Door
         this.doors.add(new OneWayDoor(this,719,511))
         
-        //Voids
-        this.loadVoids();
-        /*this.voids = this.add.group()
-        this.voids.add(new BossVoid(this, config.width / 2 + 8, config.height / 2 + 48))
-        this.voids.add(new SimpleVoid(this, config.width / 2 - 8, config.height / 2 + 48))
-        this.voids.add(new BreakableFloor(this, config.width / 2 - 24, config.height / 2 + 48))*/
         
         // Chests
         this.loadChests();
