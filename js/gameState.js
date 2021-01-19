@@ -257,19 +257,7 @@ class gameState extends Phaser.Scene{
         
         
         this.items = this.physics.add.group();
-        /*
-        this.items.add(new PowerUpAtk(this,config.width/2 - 20,config.height/2 - 20));
-        this.items.add(new PowerUpDef(this,config.width/2 + 10,config.height/2 + 10));
-        this.items.add(new Key(this,config.width/2 - 20,config.height/2 + 10));
-        this.items.add(new MasterKey(this,config.width/2 + 10,config.height/2 -20));
-        this.items.add(new HContainer(this, 160*3 + 16, 128*5+16));
-        */
-        
-        //Texts
-        this.owlString = "HOLA MUNDO";
-        this.owlText = this.add.text(config.width, config.height, this.owlString, { fontFamily: 'Arial', fontSize: '25px',   color:'#fff' }).setOrigin(1);
-        this.counter = 0;
-        
+
         //Init HUD
         this.LoadHud();
         //Init Start Menu
@@ -710,10 +698,7 @@ class gameState extends Phaser.Scene{
         {
             this.cameraManager.directionChange =  this.Directions.DOWN;
             this.cameraManager.changeTile = true;
-        }  
-        var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
-        this.ShowText(sampleText, sampleText.length);
-        
+        }          
         
         if(this.startMenu.visible && this.inputs.GetAnyKey()){
             this.startMenu.visible = false
