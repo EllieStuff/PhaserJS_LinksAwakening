@@ -207,6 +207,7 @@ class gameState extends Phaser.Scene{
         this.load.audio('bossDefeated_OST','23. Boss Defeated.mp3');
         this.load.audio('instrumentsOfTheSirens_OST','24. Instrument Of The Sirens.mp3');
         this.load.audio('fullMoonCello_OST','25. The Full Moon Cello.mp3');
+        this.load.audio('gameOver_OST','82. Game Over.mp3');
         
 	}
 	create(){
@@ -223,7 +224,7 @@ class gameState extends Phaser.Scene{
         this.CreateEnemies();
         //Set up camera
         this.cameras.main.setBounds(0, 0, this.width, this.height);
-        //this.cameras.main.startFollow(this.player);
+        this.cameras.main.startFollow(this.player);
         this.cameraManager = new CameraManager(this);
         this.cameras.main.centerOn(this.cameraManager.camPosX + config.width/2,this.cameraManager.camPosY + config.height/2);
         
@@ -257,26 +258,6 @@ class gameState extends Phaser.Scene{
         this.items.add(new HContainer(this, 160*3 + 16, 128*5+16));
         
         
-        
-        //this.atkPU = new PowerUpsBase(this,config.width/2 - 10,config.height/2 - 10, 'atkPowerUp');
-        
-        
-        // COLISIONES
-        //Colliders And Overlaps will init on each enemy, item, etc. or wathever is needed.
-        
-        //Colliders
-        //this.physics.add.collider(this.player, this.doors, this.doors.Open, null, this);
-        //this.physics.add.collider(this.player, this.bonfires);
-        //this.physics.add.collider(this.player, this.chests, this.chests.Open, null, this);
-        //this.physics.add.collider(this.player.sword, this.crystals, this.crystals.Break, null, this);
-        //this.physics.add.collider(this.player, this.fences);
-        
-        //Overlaps
-        //this.physics.add.overlap(this.player, this.voids, this.player.Fall, null, this);
-        //this.physics.add.overlap(this.player, this.stairs, this.player.WalkStairs, null, this);
-        //this.physics.add.overlap(this.player, this.tpStairs, this.tpStairs.ChangePlayerLocation, null, this);
-        //this.physics.add.overlap(this.player, this.floorButton, this.floorButton.Trigger, null, this);
-        
         //Texts
         this.owlString = "HOLA MUNDO";
         this.owlText = this.add.text(config.width, config.height, this.owlString, { fontFamily: 'Arial', fontSize: '25px',   color:'#fff' }).setOrigin(1);
@@ -302,6 +283,7 @@ class gameState extends Phaser.Scene{
         var posX, posY, chest;
         var j = 0;
         for(var i = 0; i < this.data.layers[15].data.length; i++){
+            console.log('b');
             if(this.data.layers[15].data[i] == 95){
                 posX = ((i+1) - (70*j) - 1) * 16;
                 posY = (j*16);
@@ -314,18 +296,181 @@ class gameState extends Phaser.Scene{
     }
     
     loadVoids() {
-        var posX, posY, chest;
+        this.voids = this.add.group()
+        //Sala 1,3
+        this.voids.add(new SimpleVoid(this, 16, 272));
+        this.voids.add(new SimpleVoid(this, 112, 272));
+        this.voids.add(new SimpleVoid(this, 128, 272));
+        this.voids.add(new SimpleVoid(this, 16, 288));
+        this.voids.add(new SimpleVoid(this, 112, 288));
+        this.voids.add(new SimpleVoid(this, 128, 288));
+        this.voids.add(new SimpleVoid(this, 16, 304));
+        this.voids.add(new SimpleVoid(this, 112, 304));
+        this.voids.add(new SimpleVoid(this, 128, 304));
+        this.voids.add(new SimpleVoid(this, 16, 320));
+        this.voids.add(new SimpleVoid(this, 32, 320));
+        this.voids.add(new SimpleVoid(this, 48, 320));
+        this.voids.add(new SimpleVoid(this, 80, 320));
+        this.voids.add(new SimpleVoid(this, 96, 320));
+        this.voids.add(new SimpleVoid(this, 112, 320));
+        this.voids.add(new SimpleVoid(this, 128, 320));
+        //Sala 2,2
+        this.voids.add(new SimpleVoid(this, 208, 144));
+        this.voids.add(new SimpleVoid(this, 256, 144));
+        this.voids.add(new SimpleVoid(this, 192, 160));
+        this.voids.add(new SimpleVoid(this, 272, 160));
+        //Sala 3,2
+        this.voids.add(new SimpleVoid(this, 352, 208));
+        this.voids.add(new SimpleVoid(this, 368, 208));
+        //Sala 3,3
+        this.voids.add(new SimpleVoid(this, 416, 272));
+        this.voids.add(new SimpleVoid(this, 352, 288));
+        this.voids.add(new SimpleVoid(this, 416, 288));
+        this.voids.add(new SimpleVoid(this, 400, 304));
+        this.voids.add(new SimpleVoid(this, 416, 304));
+        this.voids.add(new SimpleVoid(this, 416, 320));
+        this.voids.add(new SimpleVoid(this, 416, 336));
+        this.voids.add(new SimpleVoid(this, 432, 336));
+        //Sala 3,4
+        this.voids.add(new SimpleVoid(this, 352, 432));
+        this.voids.add(new SimpleVoid(this, 432, 432));
+        this.voids.add(new SimpleVoid(this, 352, 448));
+        this.voids.add(new SimpleVoid(this, 432, 448));
+        this.voids.add(new SimpleVoid(this, 336, 464));
+        this.voids.add(new SimpleVoid(this, 336, 480));
+        this.voids.add(new SimpleVoid(this, 352, 480));
+        this.voids.add(new SimpleVoid(this, 368, 480));
+        this.voids.add(new SimpleVoid(this, 416, 480));
+        this.voids.add(new SimpleVoid(this, 432, 480));
+        this.voids.add(new SimpleVoid(this, 448, 480));
+        //Sala 3,5
+        this.voids.add(new BreakableFloor(this, 352, 528));
+        this.voids.add(new BreakableFloor(this, 368, 528));
+        this.voids.add(new BreakableFloor(this, 416, 528));
+        this.voids.add(new BreakableFloor(this, 432, 528));
+        this.voids.add(new BreakableFloor(this, 336, 544));
+        this.voids.add(new BreakableFloor(this, 448, 544));
+        this.voids.add(new BreakableFloor(this, 336, 560));
+        this.voids.add(new BreakableFloor(this, 336, 576));
+        this.voids.add(new BreakableFloor(this, 336, 592));
+        this.voids.add(new BreakableFloor(this, 448, 592));
+        this.voids.add(new BreakableFloor(this, 352, 608));
+        this.voids.add(new BreakableFloor(this, 368, 608));
+        this.voids.add(new BreakableFloor(this, 416, 608));
+        this.voids.add(new BreakableFloor(this, 432, 608));
+        this.voids.add(new BreakableFloor(this, 448, 608));
+        //Sala 3,6
+        this.voids.add(new SimpleVoid(this, 352, 656));
+        this.voids.add(new SimpleVoid(this, 368, 656));
+        this.voids.add(new SimpleVoid(this, 384, 656));
+        this.voids.add(new SimpleVoid(this, 400, 656));
+        this.voids.add(new SimpleVoid(this, 416, 656));
+        this.voids.add(new SimpleVoid(this, 432, 656));
+        this.voids.add(new SimpleVoid(this, 336, 672));
+        this.voids.add(new SimpleVoid(this, 448, 672));
+        this.voids.add(new SimpleVoid(this, 336, 720));
+        this.voids.add(new SimpleVoid(this, 448, 720));
+        this.voids.add(new SimpleVoid(this, 352, 736));
+        this.voids.add(new SimpleVoid(this, 368, 736));
+        this.voids.add(new SimpleVoid(this, 384, 736));
+        this.voids.add(new SimpleVoid(this, 400, 736));
+        this.voids.add(new SimpleVoid(this, 416, 736));
+        this.voids.add(new SimpleVoid(this, 432, 736));
+        //Sala 4,3 - 5,3
+        this.voids.add(new SimpleVoid(this, 528, 320));
+        this.voids.add(new SimpleVoid(this, 544, 320));
+        this.voids.add(new SimpleVoid(this, 560, 320));
+        this.voids.add(new SimpleVoid(this, 512, 336));
+        this.voids.add(new SimpleVoid(this, 528, 336));
+        this.voids.add(new SimpleVoid(this, 560, 336));
+        this.voids.add(new SimpleVoid(this, 576, 336));
+        this.voids.add(new SimpleVoid(this, 592, 336));
+        this.voids.add(new SimpleVoid(this, 608, 336));
+        //Sala 4,5
+        this.voids.add(new SimpleVoid(this, 528, 544));
+        this.voids.add(new SimpleVoid(this, 576, 544));
+        this.voids.add(new SimpleVoid(this, 528, 560));
+        this.voids.add(new SimpleVoid(this, 576, 560));
+        this.voids.add(new SimpleVoid(this, 528, 576));
+        this.voids.add(new SimpleVoid(this, 544, 576));
+        this.voids.add(new SimpleVoid(this, 560, 576));
+        this.voids.add(new SimpleVoid(this, 576, 576));
+        //Sala 6,3
+        this.voids.add(new SimpleVoid(this, 720, 320));
+        this.voids.add(new SimpleVoid(this, 720, 336));
+        this.voids.add(new SimpleVoid(this, 720, 352));
+        //Sala 6,5
+        this.voids.add(new SimpleVoid(this, 656, 528));
+        this.voids.add(new SimpleVoid(this, 656, 544));
+        this.voids.add(new SimpleVoid(this, 656, 592));
+        this.voids.add(new SimpleVoid(this, 656, 608));
+        //Sala 7,4
+        this.voids.add(new SimpleVoid(this, 912, 416));
+        this.voids.add(new SimpleVoid(this, 928, 416));
+        this.voids.add(new SimpleVoid(this, 912, 432));
+        this.voids.add(new SimpleVoid(this, 912, 448));
+        this.voids.add(new SimpleVoid(this, 912, 464));
+        this.voids.add(new SimpleVoid(this, 928, 464));
+        //Sala 8,2
+        this.voids.add(new BossVoid(this, 976, 144));
+        this.voids.add(new BossVoid(this, 992, 144));
+        this.voids.add(new BossVoid(this, 1072, 144));
+        this.voids.add(new BossVoid(this, 1088, 144));
+        this.voids.add(new BossVoid(this, 976, 160));
+        this.voids.add(new BossVoid(this, 1088, 160));
+        this.voids.add(new BossVoid(this, 976, 176));
+        this.voids.add(new BossVoid(this, 1088, 176));
+        this.voids.add(new BossVoid(this, 976, 192));
+        this.voids.add(new BossVoid(this, 1088, 192));
+        this.voids.add(new BossVoid(this, 976, 208));
+        this.voids.add(new BossVoid(this, 1088, 208));
+        this.voids.add(new BossVoid(this, 976, 224));
+        this.voids.add(new BossVoid(this, 992, 224));
+        this.voids.add(new BossVoid(this, 1072, 224));
+        this.voids.add(new BossVoid(this, 1088, 224));
+        
+        
+        /*
+        this.voids = this.add.group()
+        
+        var posX, posY
+        var jsonHeight = 48
+        var jsonWidth = 70
         var j = 0;
-        for(var i = 0; i < this.data.layers[15].data.length; i++){
-            if(this.data.layers[15].data[i] == 95){
-                posX = ((i+1) - (70*j) - 1) * 16;
+        for(var i = 0; i < this.data.layers[4].data.length; i++){
+            if(this.data.layers[4].data[i] == 22 || this.data.layers[4].data[i] == 33){
+                console.log(1);
+                posX = ((i+1) - (jsonWidth*j) - 1) * 16;
                 posY = (j*16);
                 console.log(posY);
                 console.log(posX);
-                chest = new ChestPrefab(this, posX, posY);
+                this.void.add(new SimpleVoid(this, posX, posY));
             }
-            if((i + 1)%this.data.layers[15].width == 0 && i > 0) j++;
+            
+            if((i + 1)%jsonHeight == 0 && i > 0) j++;
         }
+        
+        j = 0;
+        for(var i = 0; i < this.data.layers[5].data.length; i++){
+            if(this.data.layers[5].data[i] == 40){
+                console.log(2)
+                posX = ((i+1) - (jsonWidth*j) - 1) * 16;
+                posY = (j*16);
+                console.log(posY);
+                console.log(posX);
+                this.void.add(new BossVoid(this, posX, posY));
+            }
+            if(this.data.layers[17].data[i] == 107){
+                posX = ((i+1) - (jsonWidth*j) - 1) * 16;
+                posY = (j*16);
+                console.log(posY);
+                console.log(posX);
+                this.void.add(new BreakableFloor(this, posX, posY));
+            }
+            
+            if((i + 1)%jsonHeight == 0 && i > 0) j++;
+        }
+        */
     }
     
     CreateInteractiveTiles(){
@@ -354,10 +499,11 @@ class gameState extends Phaser.Scene{
         this.doors.add(new MasterKeyDoor(this, 1040, 256));
         
         //Voids
-        this.voids = this.add.group()
+        this.loadVoids();
+        /*this.voids = this.add.group()
         this.voids.add(new BossVoid(this, config.width / 2 + 8, config.height / 2 + 48))
         this.voids.add(new SimpleVoid(this, config.width / 2 - 8, config.height / 2 + 48))
-        this.voids.add(new BreakableFloor(this, config.width / 2 - 24, config.height / 2 + 48))
+        this.voids.add(new BreakableFloor(this, config.width / 2 - 24, config.height / 2 + 48))*/
         
         // Chests
         this.loadChests();
@@ -535,7 +681,7 @@ class gameState extends Phaser.Scene{
             this.cameraManager.directionChange =  this.Directions.DOWN;
             this.cameraManager.changeTile = true;
         }  
-        //this.hudBG.setPosition(this.camPosX,this.camPosY + 128);
+        this.hudBG.setPosition(this.camPosX,this.camPosY + 128);
         var sampleText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.\nQuisque aliquet consectetur malesuada.\nEtiam libero nisi, consequat a arcu a, commodo eleifend diam.";
         this.ShowText(sampleText, sampleText.length);
         

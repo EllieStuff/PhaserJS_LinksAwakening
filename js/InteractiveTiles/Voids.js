@@ -8,7 +8,7 @@ class SimpleVoid extends Phaser.GameObjects.Sprite{
         //this.functionToTrigger = functionToTrigger;
 		scene.add.existing(this);
         scene.physics.add.existing(this);
-        this.setOrigin(0.5,0).setScale(1);
+        this.setOrigin(0,0).setScale(1);
         this.setDepth(scene.DrawDepths.INTERACTIVE_TILES);
         this.body.setImmovable(true);
         
@@ -67,7 +67,7 @@ class BossVoid extends Phaser.GameObjects.Sprite{
         //this.functionToTrigger = functionToTrigger;
 		scene.add.existing(this);
         scene.physics.add.existing(this);
-        this.setOrigin(0.5,0).setScale(1);
+        this.setOrigin(0,0).setScale(1);
         this.setDepth(scene.DrawDepths.INTERACTIVE_TILES);
         this.body.setImmovable(true);
         
@@ -111,7 +111,7 @@ class BreakableFloor extends Phaser.GameObjects.Sprite{
         //this.functionToTrigger = functionToTrigger;
 		scene.add.existing(this);
         scene.physics.add.existing(this);
-        this.setOrigin(0.5,0).setScale(1);
+        this.setOrigin(0,0).setScale(1);
         this.setDepth(scene.DrawDepths.INTERACTIVE_TILES);
         this.body.setImmovable(true);
         

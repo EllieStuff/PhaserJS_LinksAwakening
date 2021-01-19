@@ -67,6 +67,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
     
     InitCollisions(){
         this.scene.physics.add.collider(this, this.scene.walls, this.CollideWalls, null, this);
+        this.scene.physics.add.collider(this, this.scene.fences);
         this.scene.physics.add.collider(this, this.scene.platWalls);
         this.scene.physics.add.collider(this, this.scene.platFloor);
         //this.scene.physics.add.overlap(this, this.scene.voids, this.Fall, null, this);

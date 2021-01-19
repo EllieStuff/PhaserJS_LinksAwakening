@@ -16,12 +16,12 @@ class SoundManager {
         this.OST_VOLUME = 0.3
         this.FX_VOLUME = 0.3
         
-        this.soundTracksLength = 12
+        this.soundTracksLength = 13
         this.soundTracks = [
             new SoundTrackData(0, 'intro_OST'), new SoundTrackData(1, 'title_OST'), new SoundTrackData(2, 'playerSelect_OST'), new SoundTrackData(3, 'playerSelectZelda_OST'), 
             new SoundTrackData(4, 'overworld_OST'), new SoundTrackData(5, 'powerUp_OST'), new SoundTrackData(6, 'tailCave_OST'), new SoundTrackData(7, 'sideScrolling_OST'), 
             new SoundTrackData(8, 'miniBoss_OST'), new SoundTrackData(9, 'boss_OST'), 
-            new SoundTrackData(10, 'instrumentsOfTheSirens_OST'), new SoundTrackData(11, 'fullMoonCello_OST')
+            new SoundTrackData(10, 'instrumentsOfTheSirens_OST'), new SoundTrackData(11, 'fullMoonCello_OST'), new SoundTrackData(12, 'gameOver_OST')
         ];
         
         this.OST = [
