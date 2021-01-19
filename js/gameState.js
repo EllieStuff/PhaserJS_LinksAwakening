@@ -30,26 +30,27 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('playerPush'          ,'pushAnim.png'           ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerHitAnim'           ,'hitAnim.png'            ,{frameWidth: 16, frameHeight: 16});
         //Enemies
-        this.load.spritesheet('HardHat'      ,rutaImgEnemies   + 'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('enemySkeleton',rutaImgEnemies   + 'EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('auxSkeleton'  ,rutaImgEnemies   + 'EsqueletoJumpAnim.png' ,{frameWidth: 16, frameHeight: 32});
-        this.load.spritesheet('spikedBeetle' ,rutaImgEnemies   + 'SpikedBeetle.png'      ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('pokerEnemy'   ,rutaImgEnemies   + 'PokerEnemy.png'        ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('BladeTrap', rutaImgEnemies      + 'BladeTrap.png'         ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('batEnemy', rutaImgEnemies       + 'KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('goomba', rutaImgEnemies         + 'Goomba.png'            ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('redZol', rutaImgEnemies         + 'RedZol.png'            ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('greenZol', rutaImgEnemies       + 'GreenZol.png'            ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('sparkEnemy', rutaImgEnemies   + 'SparkAnim.png'         ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('enemyFallingAnim', rutaImgEnemies + 'EnemyFallingAnim.png'       ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('moldormEnemy', rutaImgEnemies + 'MiniMoldorm.png'       ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('moldormEnemyBody1', rutaImgEnemies + 'MoldormBody1.png'       ,{frameWidth: 12, frameHeight: 12});
-        this.load.spritesheet('moldormEnemyBody2', rutaImgEnemies + 'MoldormBody2.png'       ,{frameWidth: 10, frameHeight: 10});
-        this.load.spritesheet('moldormBossEnemy', rutaImgEnemies + 'MoldormHeads.png'       ,{frameWidth: 28, frameHeight: 28});
-        this.load.spritesheet('moldormBossEnemyBody', rutaImgEnemies + 'MoldormBodys.png'       ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('EnemyDeath', rutaImgEnemies + 'deathEnemy.png'       ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('rollingBone', rutaImgEnemies + 'RollingBones.png'       ,{frameWidth: 24, frameHeight: 16});
-        this.load.spritesheet('spike', rutaImgEnemies + 'Spike.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.setPath(rutaImgEnemies)
+        this.load.spritesheet('HardHat'      ,'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('enemySkeleton','EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('auxSkeleton'  ,'EsqueletoJumpAnim.png' ,{frameWidth: 16, frameHeight: 32});
+        this.load.spritesheet('spikedBeetle' ,'SpikedBeetle.png'      ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('pokerEnemy'   ,'PokerEnemy.png'        ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('BladeTrap','BladeTrap.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('batEnemy', 'KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('goomba', 'Goomba.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('redZol', 'RedZol.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('greenZol', 'GreenZol.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('sparkEnemy', 'SparkAnim.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('enemyFallingAnim', 'EnemyFallingAnim.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('moldormEnemy', 'MiniMoldorm.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('moldormEnemyBody1', 'MoldormBody1.png'       ,{frameWidth: 12, frameHeight: 12});
+        this.load.spritesheet('moldormEnemyBody2', 'MoldormBody2.png'       ,{frameWidth: 10, frameHeight: 10});
+        this.load.spritesheet('moldormBossEnemy', 'MoldormHeads.png'       ,{frameWidth: 28, frameHeight: 28});
+        this.load.spritesheet('moldormBossEnemyBody', 'MoldormBodys.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('EnemyDeath', 'deathEnemy.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('rollingBone', 'RollingBones.png'       ,{frameWidth: 24, frameHeight: 16});
+        this.load.spritesheet('spike', 'Spike.png'       ,{frameWidth: 16, frameHeight: 16});
         
         //Items
         this.load.setPath(rutaImgItems);
