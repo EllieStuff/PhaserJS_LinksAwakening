@@ -726,7 +726,7 @@ class gameState extends Phaser.Scene{
         if(this.player.health <= 0)
         {
            this.overScreen = this.add.image(this.cameraManager.camPosX , this.cameraManager.camPosY, 'overMenu').setOrigin(0).setScale(1, 1.06).setDepth(this.DrawDepths.MENU)
-           //this.soundManager.PlayOST('gameOver_OST');
+           this.soundManager.PlayOST('gameOver_OST');
            this.scene.pause();
         }
 	}
