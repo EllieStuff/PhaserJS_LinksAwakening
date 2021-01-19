@@ -1,6 +1,6 @@
 class BladePrefab extends EnemyBase{
     
-    constructor(scene, positionX, positionY)
+    constructor(scene, positionX, positionY, idX, idY)
     {
 		super(scene, positionX, positionY, 'BladeTrap');
         this.health = 0;
@@ -9,6 +9,7 @@ class BladePrefab extends EnemyBase{
         this.seeRange = 100;
         this.speed = 100;
         this.collided = false;
+        this.active = false;
         this.initPosition = new Phaser.Math.Vector2(positionX, positionY);
         this.targetPosRight = new Phaser.Math.Vector2(this.initPosition.x + 1 * 100, this.initPosition.y);
         this.targetPosLeft = new Phaser.Math.Vector2(this.initPosition.x - 1 * 100, this.initPosition.y);
@@ -17,7 +18,8 @@ class BladePrefab extends EnemyBase{
         this.returning = false;
         this.canFall = false
         this.canBeRepeled = false
-        
+        this.IDx = idX;
+        this.IDy = idY;
         this.epsilon = 10;
         this.stopped = true;
     } 
@@ -80,6 +82,17 @@ class BladePrefab extends EnemyBase{
         if(this.collided){
             this.stopped = true;
             this.body.stop();
+        }
+        
+        if(this.scene.cameraManager.TileX == this.IDx && this.scene.cameraManager.TileY == this.IDy && !this.active && !this.beenHere)
+        {
+            this.Activate();
+            this.beenHere = true;
+        }
+        else if ((this.scene.cameraManager.TileX != this.IDx || this.scene.cameraManager.TileY != this.IDy) && this.active && this.beenHere) 
+        {
+            this.Deactivate();
+            this.beenHere = false;
         }
     }
 }

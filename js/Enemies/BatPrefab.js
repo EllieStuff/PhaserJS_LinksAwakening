@@ -3,7 +3,7 @@
 
 class BatPrefab extends EnemyBase{
     
-    constructor(scene, positionX, positionY)
+    constructor(scene, positionX, positionY, idX, idY)
     {
 		super(scene, positionX, positionY, 'batEnemy');
         
@@ -17,7 +17,8 @@ class BatPrefab extends EnemyBase{
         this.canFall = false
         //this.onSlowStart = false;
         this.canBeRepeled = false
-        
+        this.IDx = idX;
+        this.IDy = idY;
         this.setFrame(1);
         
         this.BatStates = { IDLE: 0, WAITING: 1, FLYING_AROUND: 2 };
@@ -149,6 +150,16 @@ class BatPrefab extends EnemyBase{
                     this.anims.play('batIdle', true);
                 //}
             }
+        }
+        if(this.scene.cameraManager.TileX == this.IDx && this.scene.cameraManager.TileY == this.IDy && !this.active && !this.beenHere)
+        {
+            this.Activate();
+            this.beenHere = true;
+        }
+        else if ((this.scene.cameraManager.TileX != this.IDx || this.scene.cameraManager.TileY != this.IDy) && this.active && this.beenHere) 
+        {
+            this.Deactivate();
+            this.beenHere = false;
         }
         
     }

@@ -4,7 +4,7 @@
 
 class SparkPrefab extends EnemyBase{
     
-    constructor(scene, positionX, positionY)
+    constructor(scene, positionX, positionY, idX, idY)
     {
 		super(scene, positionX, positionY, 'hitbox');
         
@@ -12,6 +12,8 @@ class SparkPrefab extends EnemyBase{
         this.health = 1;
         this.isVulnerable = false;
         this.speed = 30;
+        this.IDx = idX;
+        this.IDy = idY;
         this.moveDir = scene.Directions.NONE;
         this.diagonalMoveDir = scene.Directions.NONE;
         this.lastBlocked = scene.Directions.NONE;
@@ -280,7 +282,31 @@ class SparkPrefab extends EnemyBase{
             this.sparkAnimator.Update(this.x, this.y)
             
         }
+        if(this.scene.cameraManager.TileX == this.IDx && this.scene.cameraManager.TileY == this.IDy && !this.active && !this.beenHere)
+        {
+            this.Activate();
+            this.beenHere = true;
+        }
+        else if ((this.scene.cameraManager.TileX != this.IDx || this.scene.cameraManager.TileY != this.IDy) && this.active && this.beenHere) 
+        {
+            this.Deactivate();
+            this.beenHere = false;
+        }
         
+    }
+    
+    Activate()
+    {
+        this.active = this.sparkAnimator.visible = true;
+        this.health = this.initHealth;
+        this.x = this.initPositionX;
+        this.y = this.initPositionY;
+    }
+    
+    Deactivate()
+    {
+        this.active = this.sparkAnimator.visible = false;
+        this.x = this.y = 0;
     }
     
     

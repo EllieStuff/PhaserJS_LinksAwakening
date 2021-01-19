@@ -2,7 +2,7 @@
 
 class SkeletonPrefab extends EnemyBase{
     
-    constructor(scene, positionX, positionY)
+    constructor(scene, positionX, positionY, idX, idY)
     {
 		super(scene, positionX, positionY, 'enemySkeleton');
         
@@ -11,6 +11,8 @@ class SkeletonPrefab extends EnemyBase{
         this.isVulnerable = true;
         this.canJump = true;
         this.speed = 30;
+        this.IDx = idX;
+        this.IDy = idY;
         this.fleeSpeed = -this.speed * 4;
         this.seeRange = 100;
         this.auxSkeleton = new AuxSkeleton(scene, positionX, positionY);
@@ -86,6 +88,16 @@ class SkeletonPrefab extends EnemyBase{
                 this.scene.time.addEvent({delay: 1000, callback: function(){this.canJump=true;}, callbackScope: this, repeat: 0});
             }
             
+        }
+        if(this.scene.cameraManager.TileX == this.IDx && this.scene.cameraManager.TileY == this.IDy && !this.active && !this.beenHere)
+        {
+            this.Activate();
+            this.beenHere = true;
+        }
+        else if ((this.scene.cameraManager.TileX != this.IDx || this.scene.cameraManager.TileY != this.IDy) && this.active && this.beenHere) 
+        {
+            this.Deactivate();
+            this.beenHere = false;
         }
         
     }

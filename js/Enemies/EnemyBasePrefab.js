@@ -27,7 +27,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         this.playerColManager = new CollisionManager(scene);
         this.swordColManager = new CollisionManager(scene);
         this.shieldColManager = new CollisionManager(scene);
-        
+        this.beenHere = false;
         
         this.InitCollisions();
         this.CreateGlobalAnims();
@@ -221,6 +221,21 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         }
         
     }
+    
+    Activate()
+    {
+        this.active = this.visible = true;
+        this.health = this.initHealth;
+        this.x = this.initPositionX;
+        this.y = this.initPositionY;
+    }
+    
+    Deactivate()
+    {
+        this.active = this.visible = false;
+        this.x = this.y = 0;
+    }
+    
     
     CollideWithPlayer(){}
     
