@@ -108,7 +108,7 @@ class gameState extends Phaser.Scene{
         this.load.image('fences','vallas.png');
         this.load.image('Blocks','DungeonBlockSheet - copia.png');
         this.load.setPath("assets/img/objAnims/");
-        this.load.image('torches','LitAnim.png');
+        this.load.image('antorchas','LitAnim.png');
         this.load.setPath("maps/");
         this.load.tilemapTiledJSON('dungeon', 'insideMap.json');
         this.load.json('json', 'insideMap.json');
@@ -434,6 +434,7 @@ class gameState extends Phaser.Scene{
         this.map.addTilesetImage('blocks');
         this.map.addTilesetImage('objects');
         this.map.addTilesetImage('fences');
+        this.map.addTilesetImage('antorchas');
         
         //Init blocks
         this.walls = this.add.group();
@@ -472,9 +473,9 @@ class gameState extends Phaser.Scene{
         this.floorButton = this.map.createStaticLayer('button', 'objects');
         this.map.setCollision(110,false,false,'button');
         
-        this.bonfires = this.map.createStaticLayer('hoguera', 'objects');
-        this.map.setCollision(89,true,false,'hoguera');
-        this.map.createStaticLayer('antorchas', 'objects');
+        this.bonfires = this.map.createStaticLayer('Antorchas', 'antorchas');
+        this.map.setCollision(89,true,false,'Antorchas');
+        this.map.createStaticLayer('Antorchas', 'antorchas');
         
         this.chests = this.map.createStaticLayer('chests', 'objects');
         this.map.setCollision(95,true,false,'chests');
