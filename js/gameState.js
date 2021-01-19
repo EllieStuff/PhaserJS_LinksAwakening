@@ -98,6 +98,7 @@ class gameState extends Phaser.Scene{
         this.load.image('hitboxShield','ShieldHitbox.png');
         this.load.setPath(rutaImgMenus);
         this.load.image('startMenu','Intro Links Awakening.png');
+        this.load.image('overMenu','GameOver.png');
         
         
         // Dungeon
@@ -579,10 +580,11 @@ class gameState extends Phaser.Scene{
             this.soundManager.PlayFX('titleAppear_FX')
             this.soundManager.PlayOST('tailCave_OST')
         }
-        if(this.player.health < 5)
+        if(this.player.health <= 0)
         {
-            this.scene.destroy();
-            
+           this.overScreen = this.add.image(this.cameraManager.camPosX , this.cameraManager.camPosY, 'overMenu').setOrigin(0).setScale(1, 1.06).setDepth(this.DrawDepths.MENU)
+           this.soundManager.PlayOST('gameOver_OST');
+           this.scene.pause();
         }
 	}
     
