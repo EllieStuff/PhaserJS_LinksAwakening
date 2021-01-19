@@ -257,7 +257,8 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         if(this.scene.cameraManager != null)
             this.scene.cameraManager.enemiesAlive--;
         this.active = this.visible = false;
-        this.x = this.y = 0;
+        this.x = 960;
+        this.y = 720;
     }
     
     

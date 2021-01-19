@@ -5,7 +5,7 @@ class HardHatPrefab extends EnemyBase{
     constructor(scene, positionX, positionY, idX, idY)
     {
 		super(scene, positionX, positionY, 'HardHat');
-        this.health = 1;
+        this.health = 0;
         this.isVulnerable = false;
         this.damage = 4;
         this.seeRange = 100;
@@ -19,6 +19,10 @@ class HardHatPrefab extends EnemyBase{
     
     Update()
     {
+        if(!this.active)
+        {
+            this.collided = false;
+        }
         if(this.active && !this.falling)
         {
             var currentPos = new Phaser.Math.Vector2(this.body);
@@ -26,7 +30,7 @@ class HardHatPrefab extends EnemyBase{
             if(currentPos.distance(this.scene.player.body) < this.seeRange && !this.collided)
             {
                 this.MoveTowards(this.scene.player, this.speed);
-                this.anims.play('hardhatWalk', true);
+                this.anims.play('hardhatWalk',true);
 
             }
             else if (!this.collided)
@@ -45,7 +49,7 @@ class HardHatPrefab extends EnemyBase{
             key: 'hardhatWalk',
             frames: this.scene.anims.generateFrameNumbers('HardHat', { start: 0, end: 1 }),
             frameRate: 5,
-            repeat: -1
+            repeat: 0
         });
     }
     
@@ -69,12 +73,5 @@ class HardHatPrefab extends EnemyBase{
         }
     }
     
-    /*GetRepeled()
-    {
-        
-       this.collided = true;
-       this.MoveTowards(this.scene.player, -this.speed*4);
-       this.scene.time.addEvent({delay: 250, callback: function(){this.body.stop(); this.collided = false;}, callbackScope: this, repeat: 0});
-    }*/
     
 }

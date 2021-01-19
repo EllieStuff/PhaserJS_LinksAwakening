@@ -257,12 +257,13 @@ class gameState extends Phaser.Scene{
         
         
         this.items = this.physics.add.group();
+        /*
         this.items.add(new PowerUpAtk(this,config.width/2 - 20,config.height/2 - 20));
         this.items.add(new PowerUpDef(this,config.width/2 + 10,config.height/2 + 10));
         this.items.add(new Key(this,config.width/2 - 20,config.height/2 + 10));
         this.items.add(new MasterKey(this,config.width/2 + 10,config.height/2 -20));
         this.items.add(new HContainer(this, 160*3 + 16, 128*5+16));
-        
+        */
         
         //Texts
         this.owlString = "HOLA MUNDO";

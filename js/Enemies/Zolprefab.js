@@ -32,7 +32,8 @@ class GreenZolPrefab extends EnemyBase{
         if(!this.hiding && !this.charging)
         {
             this.charging = true;
-            this.scene.time.addEvent({delay: 2000, callback: this.DashToPlayer(), callbackScope: this, repeat: 0});
+            this.DashToPlayer();
+            //this.scene.time.addEvent({delay: 2000, callback: this.DashToPlayer(), callbackScope: this, repeat: 0});
         }
         
         this.RoomManagement()
@@ -66,9 +67,11 @@ class GreenZolPrefab extends EnemyBase{
     {
         this.anims.play('GreenZolApproach');
         this.body.stop();
+       
+        this.scene.time.addEvent({delay: 2000, callback: function(){this.charging = false;}, callbackScope: this, repeat: 0});
         this.MoveTowards(this.scene.player, this.speed * 1.5);
         this.scene.time.addEvent({delay: 450, callback: function(){this.body.stop();}, callbackScope: this, repeat: 0});
-        this.scene.time.addEvent({delay: 2000, callback: function(){this.charging = false;}, callbackScope: this, repeat: 0});
+       
     }
     
 }
@@ -89,19 +92,21 @@ class RedZolPrefab extends EnemyBase{
         this.collided = false;
         this.hiding = true;
         this.anims.play('RedZolBasic', true);
+        this.Deactivate();
     }  
     
     
     Update()
     {
+        if(this.health > 0)
+        {
+            this.anims.play('RedZolBasic',true);
+        }
         var currentPos = new Phaser.Math.Vector2(this.body);
         
-        if(currentPos.distance(this.scene.player.body) < this.seeRange && this.hiding)
-        {
-            this.hiding = false;
+        this.MoveTowards(this.scene.player, this.speed * 0.3);
 
-        }
-
+        this.RoomManagement();
     }
     
     CreateAnims()
@@ -112,14 +117,6 @@ class RedZolPrefab extends EnemyBase{
             frameRate: 2,
             repeat: 0
         });
-    }
-    
-    DashToPlayer()
-    {
-        this.charging = true;
-        this.body.stop();
-        this.MoveTowards(this.scene.player, this.speed * 2.5);
-        this.scene.time.addEvent({delay: 450, callback: function(){this.body.stop(); this.charging = false;}, callbackScope: this, repeat: 0});
     }
     
 }
