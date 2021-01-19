@@ -5,7 +5,7 @@ class HardHatPrefab extends EnemyBase{
     constructor(scene, positionX, positionY, idX, idY)
     {
 		super(scene, positionX, positionY, 'HardHat');
-        this.health = 0;
+        this.health = 1;
         this.isVulnerable = false;
         this.damage = 4;
         this.seeRange = 100;
