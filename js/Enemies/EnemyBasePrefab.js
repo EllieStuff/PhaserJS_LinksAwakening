@@ -7,7 +7,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         scene.physics.add.existing(this);
         this.body.collideWorldBounds = true;
         scene.events.on('update', this.Update, this);
-        this.setOrigin(0.5,0).setScale(1);
+        this.setOrigin(0,-0.5).setScale(1);
         this.setDepth(scene.DrawDepths.ENEMIES);
         
         this.initPositionX = this.body.x;
@@ -215,33 +215,36 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     
     //ToDo: Mirar si funciona aqui i, si no, passar-ho al gameState que alla segur que si
     SpawnItem(){
-        if(this.scene.player.enemiesKilled % 30 == 0){
-            this.scene.items.add(new PowerUpAtk(this.scene, this.x, this.y))
-            this.scene.soundManager.PlayFX('enemyDyingPowerUp_FX')
-        }
-        else if(this.scene.player.enemiesKilled % 12 == 0){
-            this.scene.items.add(new PowerUpDef(this.scene, this.x, this.y))
-            this.scene.soundManager.PlayFX('enemyDyingPowerUp_FX')
-        }
-        else{
-            var rnd = Phaser.Math.Between(0, 11)
-            if(rnd < 1){
-                this.scene.items.add(new RedRupee(this.scene, this.x, this.y))
+        if(this.active){
+            if(this.scene.player.enemiesKilled % 30 == 0){
+                this.scene.items.add(new PowerUpAtk(this.scene, this.x, this.y))
+                this.scene.soundManager.PlayFX('enemyDyingPowerUp_FX')
             }
-            else if(rnd < 4){
-                this.scene.items.add(new BlueRupee(this.scene, this.x, this.y))
+            else if(this.scene.player.enemiesKilled % 12 == 0){
+                this.scene.items.add(new PowerUpDef(this.scene, this.x, this.y))
+                this.scene.soundManager.PlayFX('enemyDyingPowerUp_FX')
             }
-            else if(rnd < 7){
-                this.scene.items.add(new Heart(this.scene, this.x, this.y))
+            else{
+                var rnd = Phaser.Math.Between(0, 11)
+                if(rnd < 1){
+                    this.scene.items.add(new RedRupee(this.scene, this.x, this.y))
+                }
+                else if(rnd < 4){
+                    this.scene.items.add(new BlueRupee(this.scene, this.x, this.y))
+                }
+                else if(rnd < 7){
+                    this.scene.items.add(new Heart(this.scene, this.x, this.y))
+                }
+                this.scene.soundManager.PlayFX('enemyDying_FX')
             }
-            this.scene.soundManager.PlayFX('enemyDying_FX')
         }
         
     }
     
     Activate()
     {
-        this.scene.cameraManager.enemiesAlive++;
+        if(this.scene.cameraManager != null)
+            this.scene.cameraManager.enemiesAlive++;
         this.active = this.visible = true;
         this.health = this.initHealth;
         this.x = this.initPositionX;
@@ -251,7 +254,8 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     
     Deactivate()
     {
-        this.scene.cameraManager.enemiesAlive--;
+        if(this.scene.cameraManager != null)
+            this.scene.cameraManager.enemiesAlive--;
         this.active = this.visible = false;
         this.x = this.y = 0;
     }
