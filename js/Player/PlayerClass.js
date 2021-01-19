@@ -51,7 +51,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.beeping = false
         this.canMove = true
         this.isVulnerable = true
-        
+        this.canJump = false;
         
         this.animator = new PlayerAnimator(scene, positionX, positionY);
         this.shield = new PlayerShield(scene);
@@ -546,7 +546,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         this.hitboxB.body.x = this.body.x - 2;
         this.hitboxB.body.y = this.body.y - 6;
         //Jump
-        if(this.assignA == "Jump" && !this.isJumping)
+        /*if(this.assignA == "Jump" && !this.isJumping)
             {
                 if(this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K))
                 {
@@ -554,7 +554,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
                     this.Jump();
             
                 }
-            }
+            }*/
         
         //MOVEMENT
         if(!this.isJumping && this.canMove)
@@ -675,6 +675,9 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
                     }
                     
                 }
+                if(this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.J) && !this.isJumping && this.canJump){
+                    this.Jump();
+                }
                 if(this.assignA != "Shield" && this.assignB != "Shield")
                 {
                     if(this.scene.inputs.GetKeyPressed(this.scene.inputs.KeyCodes.A))
@@ -743,7 +746,7 @@ class PlayerPrefab extends Phaser.GameObjects.Sprite{
         }
         
         //Jump
-        if(this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.K) && (this.onFloor || this.onLadders))
+        if(this.scene.inputs.GetKeyDown(this.scene.inputs.KeyCodes.J) && (this.onFloor || this.onLadders) && this.canJump)
         {
             this.PlatformerJump();
         }

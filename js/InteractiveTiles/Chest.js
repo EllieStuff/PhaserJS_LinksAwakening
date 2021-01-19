@@ -48,6 +48,7 @@ class ChestPrefab extends Phaser.GameObjects.Sprite{
                 //Effect
                 if(this.item == "Pluma"){
                     // Se puede saltar
+                    this.scene.player.canJump = true;
                 }
                 else{
                     this.item.enabled = true;
