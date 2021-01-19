@@ -30,24 +30,27 @@ class gameState extends Phaser.Scene{
         this.load.spritesheet('playerPush'          ,'pushAnim.png'           ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('playerHitAnim'           ,'hitAnim.png'            ,{frameWidth: 16, frameHeight: 16});
         //Enemies
-        this.load.setPath(rutaImgEnemies);
+        this.load.setPath(rutaImgEnemies)
         this.load.spritesheet('HardHat'      ,'HardHatAnim.png'       ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('enemySkeleton','EsqueletoAnim.png'     ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('auxSkeleton'  ,'EsqueletoJumpAnim.png' ,{frameWidth: 16, frameHeight: 32});
         this.load.spritesheet('spikedBeetle' ,'SpikedBeetle.png'      ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('pokerEnemy'   ,'PokerEnemy.png'        ,{frameWidth: 16, frameHeight: 16});
         this.load.spritesheet('BladeTrap','BladeTrap.png'         ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('batEnemy','KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('goomba','Goomba.png'            ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('redZol','RedZol.png'            ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('greenZol','GreenZol.png'            ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('sparkEnemy','SparkAnim.png'         ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('enemyFallingAnim','EnemyFallingAnim.png'       ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('moldormEnemy','MiniMoldorm.png'       ,{frameWidth: 16, frameHeight: 16});
-        this.load.spritesheet('moldormEnemyBody1','MoldormBody1.png'       ,{frameWidth: 12, frameHeight: 12});
-        this.load.spritesheet('moldormEnemyBody2','MoldormBody2.png'       ,{frameWidth: 10, frameHeight: 10});
-        this.load.spritesheet('moldormBossEnemy','MoldormHeads.png'       ,{frameWidth: 28, frameHeight: 28});
-        this.load.spritesheet('moldormBossEnemyBody','MoldormBodys.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('batEnemy', 'KeeseAnim.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('goomba', 'Goomba.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('redZol', 'RedZol.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('greenZol', 'GreenZol.png'            ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('sparkEnemy', 'SparkAnim.png'         ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('enemyFallingAnim', 'EnemyFallingAnim.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('moldormEnemy', 'MiniMoldorm.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('moldormEnemyBody1', 'MoldormBody1.png'       ,{frameWidth: 12, frameHeight: 12});
+        this.load.spritesheet('moldormEnemyBody2', 'MoldormBody2.png'       ,{frameWidth: 10, frameHeight: 10});
+        this.load.spritesheet('moldormBossEnemy', 'MoldormHeads.png'       ,{frameWidth: 28, frameHeight: 28});
+        this.load.spritesheet('moldormBossEnemyBody', 'MoldormBodys.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('EnemyDeath', 'deathEnemy.png'       ,{frameWidth: 16, frameHeight: 16});
+        this.load.spritesheet('rollingBone', 'RollingBones.png'       ,{frameWidth: 24, frameHeight: 16});
+        this.load.spritesheet('spike', 'Spike.png'       ,{frameWidth: 16, frameHeight: 16});
         
         //Items
         this.load.setPath(rutaImgItems);
@@ -95,6 +98,7 @@ class gameState extends Phaser.Scene{
         this.load.image('hitboxShield','ShieldHitbox.png');
         this.load.setPath(rutaImgMenus);
         this.load.image('startMenu','Intro Links Awakening.png');
+        this.load.image('overMenu','GameOver.png');
         
         
         // Dungeon
@@ -104,7 +108,7 @@ class gameState extends Phaser.Scene{
         this.load.image('fences','vallas.png');
         this.load.image('Blocks','DungeonBlockSheet - copia.png');
         this.load.setPath("assets/img/objAnims/");
-        this.load.image('torches','LitAnim.png');
+        this.load.image('antorchas','LitAnim.png');
         this.load.setPath("maps/");
         this.load.tilemapTiledJSON('dungeon', 'insideMap.json');
         this.load.json('json', 'insideMap.json');
@@ -281,7 +285,7 @@ class gameState extends Phaser.Scene{
     
     loadChests() {
         var posX, posY, chest;
-        var j = 0;
+        /*var j = 0;
         for(var i = 0; i < this.data.layers[15].data.length; i++){
             console.log('b');
             if(this.data.layers[15].data[i] == 95){
@@ -292,7 +296,31 @@ class gameState extends Phaser.Scene{
                 chest = new ChestPrefab(this, posX, posY);
             }
             if((i + 1)%this.data.layers[15].width == 0 && i > 0) j++;
-        }
+        }*/
+        posX = 544;
+        posY = 272;
+        chest = new ChestPrefab(this, posX, posY,"BossKey");
+        posX = 64;
+        posY = 288;
+        chest = new ChestPrefab(this, posX, posY,"Pluma");
+        posX = 928;
+        posY = 288;
+        chest = new ChestPrefab(this, posX, posY,"Container");
+        posX = 448;
+        posY = 416;
+        chest = new ChestPrefab(this, posX, posY,"BlueRupee");
+        posX = 544;
+        posY = 416;
+        chest = new ChestPrefab(this, posX, posY,"Key");
+        posX = 608;
+        posY = 544;
+        chest = new ChestPrefab(this, posX, posY,"Key");
+        posX = 768;
+        posY = 544;
+        chest = new ChestPrefab(this, posX, posY,"RedRupee");
+        posX = 208;
+        posY = 688;
+        chest = new ChestPrefab(this, posX, posY,"RedRupee");
     }
     
     loadVoids() {
@@ -490,6 +518,7 @@ class gameState extends Phaser.Scene{
         //Key Block
         this.keyBlock = new KeyBlock(this, 680,336);
         
+       
         // Doors
         this.doors = this.physics.add.group();
         //Key Doors
@@ -497,6 +526,8 @@ class gameState extends Phaser.Scene{
         this.doors.add(new KeyDoor(this, 792, 440, this.Directions.LEFT));
         //Boss Doors
         this.doors.add(new MasterKeyDoor(this, 1040, 256));
+         //One Way Door
+        this.doors.add(new OneWayDoor(this,719,511))
         
         //Voids
         this.loadVoids();
@@ -549,6 +580,7 @@ class gameState extends Phaser.Scene{
         this.map.addTilesetImage('blocks');
         this.map.addTilesetImage('objects');
         this.map.addTilesetImage('fences');
+        this.map.addTilesetImage('antorchas');
         
         //Init blocks
         this.walls = this.add.group();
@@ -587,9 +619,9 @@ class gameState extends Phaser.Scene{
         this.floorButton = this.map.createStaticLayer('button', 'objects');
         this.map.setCollision(110,false,false,'button');
         
-        this.bonfires = this.map.createStaticLayer('hoguera', 'objects');
-        this.map.setCollision(89,true,false,'hoguera');
-        this.map.createStaticLayer('antorchas', 'objects');
+        this.bonfires = this.map.createStaticLayer('Antorchas', 'antorchas');
+        this.map.setCollision(89,true,false,'Antorchas');
+        this.map.createStaticLayer('Antorchas', 'antorchas');
         
         this.chests = this.map.createStaticLayer('chests', 'objects');
         this.map.setCollision(95,true,false,'chests');
@@ -661,6 +693,7 @@ class gameState extends Phaser.Scene{
     
 	update()
     {
+        
         if(this.player.body.position.x < this.cameraManager.camPosX)
         {
             this.cameraManager.directionChange =  this.Directions.LEFT;
@@ -694,7 +727,12 @@ class gameState extends Phaser.Scene{
             this.soundManager.PlayFX('titleAppear_FX')
             this.soundManager.PlayOST('tailCave_OST')
         }
-
+        if(this.player.health <= 0)
+        {
+           this.overScreen = this.add.image(this.cameraManager.camPosX , this.cameraManager.camPosY, 'overMenu').setOrigin(0).setScale(1, 1.06).setDepth(this.DrawDepths.MENU)
+           //this.soundManager.PlayOST('gameOver_OST');
+           this.scene.pause();
+        }
 	}
     
 }

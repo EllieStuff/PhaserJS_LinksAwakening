@@ -3,9 +3,9 @@ class GreenZolPrefab extends EnemyBase{
     constructor(scene, positionX, positionY)
     {
 		super(scene, positionX, positionY, 'greenZol');
-        this.health = 0;
-        this.isVulnerable = false;
-        this.damage = 4;
+        this.health = 2;
+        this.isVulnerable = true;
+        this.damage = 3;
         this.seeRange = 75;
         this.speed = 30;
         this.collided = false;
@@ -73,9 +73,9 @@ class RedZolPrefab extends EnemyBase{
     constructor(scene, positionX, positionY)
     {
 		super(scene, positionX, positionY, 'redZol');
-        this.health = 0;
-        this.isVulnerable = false;
-        this.damage = 4;
+        this.health = 1;
+        this.isVulnerable = true;
+        this.damage = 1;
         this.seeRange = 75;
         this.speed = 30;
         this.collided = false;
