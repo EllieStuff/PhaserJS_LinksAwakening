@@ -4,7 +4,7 @@
 
 class SparkPrefab extends EnemyBase{
     
-    constructor(scene, positionX, positionY)
+    constructor(scene, positionX, positionY, idX, idY)
     {
 		super(scene, positionX, positionY, 'hitbox');
         
@@ -12,6 +12,8 @@ class SparkPrefab extends EnemyBase{
         this.health = 1;
         this.isVulnerable = false;
         this.speed = 30;
+        this.IDx = idX;
+        this.IDy = idY;
         this.moveDir = scene.Directions.NONE;
         this.diagonalMoveDir = scene.Directions.NONE;
         this.lastBlocked = scene.Directions.NONE;
@@ -34,6 +36,8 @@ class SparkPrefab extends EnemyBase{
             new SparkAux(scene, positionX, positionY, -margins.x, margins.y, this.scene.Directions.DOWN_LEFT),
             new SparkAux(scene, positionX, positionY, margins.x, margins.y, this.scene.Directions.DOWN_RIGHT)
         ];
+        
+        this.Deactivate()
         
         this.wallsColManager = new CollisionManager(scene);
         
@@ -281,6 +285,22 @@ class SparkPrefab extends EnemyBase{
             
         }
         
+        this.RoomManagement()
+        
+    }
+    
+    Activate()
+    {
+        this.active = this.sparkAnimator.visible = true;
+        this.health = this.initHealth;
+        this.x = this.initPositionX;
+        this.y = this.initPositionY;
+    }
+    
+    Deactivate()
+    {
+        this.active = this.sparkAnimator.visible = false;
+        this.x = this.y = 0;
     }
     
     

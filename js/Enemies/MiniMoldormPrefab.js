@@ -3,7 +3,7 @@
 
 class miniMoldormPrefab extends EnemyBase{
     
-    constructor(scene, positionX, positionY)
+    constructor(scene, positionX, positionY, idX, idY)
     {
 		super(scene, positionX, positionY, 'moldormEnemy');
         
@@ -13,6 +13,8 @@ class miniMoldormPrefab extends EnemyBase{
         this.speed = 40;
         this.seeRange = 50;  
         this.updating = true;
+        this.IDx = idX;
+        this.IDy = idY;
         this.body.velocity.x = this.speed;
         this.setFrame(0);
         this.body.collideWordBounds = true;
@@ -22,6 +24,8 @@ class miniMoldormPrefab extends EnemyBase{
         this.canFall = false
         this.tail1 = new miniMoldormBodyPrefab(scene, positionX + 20, positionY, 'moldormEnemyBody1');
         this.tail2 = new miniMoldormBodyPrefab(scene, positionX + 30, positionY, 'moldormEnemyBody2');
+        
+        this.Deactivate()
         
     }
     
@@ -76,20 +80,26 @@ class miniMoldormPrefab extends EnemyBase{
         this.tail1.UpdateFollow(this.body, 9);
         this.tail2.UpdateFollow2(this.tail1, this.body, 1);
         
-    }
-    
-    Activate(){
-        this.tail1.active = this.tail2.active = false;
-        this.active = false;
-    }
-    
-    Deactivate(){
-        this.active = true;
-        this.tail1.active = this.tail2.active = true;
-        this.isWaiting = false;
+        this.RoomManagement()
+        
     }
     
     
+    Activate()
+    {
+        this.active = this.visible = true;
+        this.health = this.initHealth;
+        this.x = this.initPositionX;
+        this.y = this.initPositionY;
+        this.tail1.visible = this.tail2.visible = true;
+    }
+    
+    Deactivate()
+    {
+        this.active = this.visible = false;
+        this.x = this.y = 0;
+        this.tail1.visible = this.tail2.visible = false;
+    }
     
 }
 

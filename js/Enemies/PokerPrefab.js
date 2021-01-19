@@ -12,6 +12,8 @@ class PokerPrefab extends EnemyBase{
         this.Endeffect = ' ';
         this.matchtype = false;
         
+        this.Deactivate()
+        
     }  
     
     

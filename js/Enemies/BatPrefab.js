@@ -3,7 +3,7 @@
 
 class BatPrefab extends EnemyBase{
     
-    constructor(scene, positionX, positionY)
+    constructor(scene, positionX, positionY, idX, idY)
     {
 		super(scene, positionX, positionY, 'batEnemy');
         
@@ -17,8 +17,10 @@ class BatPrefab extends EnemyBase{
         this.canFall = false
         //this.onSlowStart = false;
         this.canBeRepeled = false
-        
+        this.IDx = idX;
+        this.IDy = idY;
         this.setFrame(1);
+        this.Deactivate()
         
         this.BatStates = { IDLE: 0, WAITING: 1, FLYING_AROUND: 2 };
         this.currState = this.BatStates.IDLE;
@@ -150,6 +152,8 @@ class BatPrefab extends EnemyBase{
                 //}
             }
         }
+        
+        this.RoomManagement()
         
     }
     

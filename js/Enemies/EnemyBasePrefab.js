@@ -23,12 +23,12 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         this.canFall = true
         this.dmgSoundEffect = 'linkHurt_FX'
         this.canBeRepeled = true
+        this.alive = true
         this.isJumping = false
         
         this.playerColManager = new CollisionManager(scene);
         this.swordColManager = new CollisionManager(scene);
         this.shieldColManager = new CollisionManager(scene);
-        
         
         this.InitCollisions();
         this.CreateGlobalAnims();
@@ -88,9 +88,10 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
             this.anims.play('enemyFalling')
             this.scene.soundManager.PlayFX('enemyFalling_FX')
             this.scene.player.enemiesKilled++;
-            this.scene.time.addEvent({delay: 1000, callback: function(){ this.body.stop() }, callbackScope: this, repeat: 0});
-            this.scene.time.addEvent({delay: 1000, callback: function(){this.x = this.y = 0; this.active = this. visible = false; }, callbackScope: this, repeat: 0});
-
+            this.alive = false
+            
+            this.scene.time.addEvent({delay: 800, callback: function(){ this.body.stop(); }, callbackScope: this, repeat: 0});
+            this.scene.time.addEvent({delay: 1000, callback: function(){this.Deactivate(); }, callbackScope: this, repeat: 0});
             
         }
         
@@ -161,7 +162,7 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         this.swordColManager.UpdateOnTrigger();
         
         if(this.swordColManager.colState == this.swordColManager.CollisionState.ENTERED_COLLISION
-          && this.isVulnerable){
+          && this.isVulnerable && this.active){
             this.health -= this.scene.player.attack;
             var dir = new Phaser.Math.Vector2(this.x - this.scene.player.x, this.y - this.scene.player.y).normalize()
             var impulse = 200
@@ -189,10 +190,23 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
     
     }
     
+    RoomManagement(){
+        if(this.scene.cameraManager.TileX == this.IDx && this.scene.cameraManager.TileY == this.IDy && !this.active && this.alive)
+        {
+            this.Activate();
+        }
+        else if ((this.scene.cameraManager.TileX != this.IDx || this.scene.cameraManager.TileY != this.IDy) && (this.active || !this.alive)) 
+        {
+            this.Deactivate();
+            this.alive = true
+        }
+    }
+    
     Die(){
         
         this.scene.player.enemiesKilled++;
-        this.scene.time.addEvent({delay: 300, callback: function(){this.x = this.y = 0; this.active = this. visible = false; }, callbackScope: this, repeat: 0});
+        this.alive = false
+        this.scene.time.addEvent({delay: 300, callback: function(){ this.Deactivate() }, callbackScope: this, repeat: 0});
         this.SpawnItem();
         //this.x = this.y = 0;
        // this.active = this.visible = false;
@@ -224,6 +238,24 @@ class EnemyBase extends Phaser.GameObjects.Sprite{
         }
         
     }
+    
+    Activate()
+    {
+        this.scene.cameraManager.enemiesAlive++;
+        this.active = this.visible = true;
+        this.health = this.initHealth;
+        this.x = this.initPositionX;
+        this.y = this.initPositionY;
+        this.alive = true
+    }
+    
+    Deactivate()
+    {
+        this.scene.cameraManager.enemiesAlive--;
+        this.active = this.visible = false;
+        this.x = this.y = 0;
+    }
+    
     
     CollideWithPlayer(){}
     

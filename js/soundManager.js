@@ -64,6 +64,7 @@ class SoundManager {
     }
     
     PlayFX(_soundEffect){
+        console.log(2)
         var newSound = this.scene.sound.add(_soundEffect).setVolume(this.FX_VOLUME)
         newSound.play()
     }

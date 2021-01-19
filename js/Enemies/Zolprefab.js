@@ -1,15 +1,19 @@
 class GreenZolPrefab extends EnemyBase{
     
-    constructor(scene, positionX, positionY)
+    constructor(scene, positionX, positionY, idX, idY)
     {
 		super(scene, positionX, positionY, 'greenZol');
         this.health = 2;
         this.isVulnerable = true;
         this.damage = 3;
+        this.IDx = idX;
+        this.IDy = idY;
         this.seeRange = 75;
         this.speed = 30;
         this.collided = false;
         this.hiding = true;
+        
+        this.Deactivate()
         
     }  
     
@@ -30,6 +34,8 @@ class GreenZolPrefab extends EnemyBase{
             this.charging = true;
             this.scene.time.addEvent({delay: 2000, callback: this.DashToPlayer(), callbackScope: this, repeat: 0});
         }
+        
+        this.RoomManagement()
 
     }
     
@@ -70,7 +76,7 @@ class GreenZolPrefab extends EnemyBase{
 
 class RedZolPrefab extends EnemyBase{
     
-    constructor(scene, positionX, positionY)
+    constructor(scene, positionX, positionY, idX, idY)
     {
 		super(scene, positionX, positionY, 'redZol');
         this.health = 1;
@@ -78,6 +84,8 @@ class RedZolPrefab extends EnemyBase{
         this.damage = 1;
         this.seeRange = 75;
         this.speed = 30;
+        this.IDx = idX;
+        this.IDy = idY;
         this.collided = false;
         this.hiding = true;
         this.anims.play('RedZolBasic', true);

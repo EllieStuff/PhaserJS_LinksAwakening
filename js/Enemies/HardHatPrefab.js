@@ -2,21 +2,25 @@
 
 class HardHatPrefab extends EnemyBase{
     
-    constructor(scene, positionX, positionY)
+    constructor(scene, positionX, positionY, idX, idY)
     {
 		super(scene, positionX, positionY, 'HardHat');
-        this.health = 0;
+        this.health = 1;
         this.isVulnerable = false;
         this.damage = 4;
         this.seeRange = 100;
         this.speed = 30;
         this.collided = false;
+        this.IDx = idX;
+        this.IDy = idY;
+        this.Deactivate()
     }  
     
     
     Update()
     {
-        if(this.active && !this.falling){
+        if(this.active && !this.falling)
+        {
             var currentPos = new Phaser.Math.Vector2(this.body);
 
             if(currentPos.distance(this.scene.player.body) < this.seeRange && !this.collided)
@@ -31,6 +35,8 @@ class HardHatPrefab extends EnemyBase{
             }
             
         }
+        
+        this.RoomManagement()
     }
     
     CreateAnims()

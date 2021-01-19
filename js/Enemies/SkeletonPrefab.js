@@ -2,7 +2,7 @@
 
 class SkeletonPrefab extends EnemyBase{
     
-    constructor(scene, positionX, positionY)
+    constructor(scene, positionX, positionY, idX, idY)
     {
 		super(scene, positionX, positionY, 'enemySkeleton');
         
@@ -11,11 +11,15 @@ class SkeletonPrefab extends EnemyBase{
         this.isVulnerable = true;
         this.canJump = true;
         this.speed = 30;
+        this.IDx = idX;
+        this.IDy = idY;
         this.fleeSpeed = -this.speed * 4;
         this.seeRange = 100;
         this.auxSkeleton = new AuxSkeleton(scene, positionX, positionY);
         this.auxSkeleton.visible = false;
         this.auxSkeleton.active = false;
+        
+        this.Deactivate()
         
     }
     
@@ -89,6 +93,8 @@ class SkeletonPrefab extends EnemyBase{
             }
             
         }
+        
+        this.RoomManagement()
         
     }
     
