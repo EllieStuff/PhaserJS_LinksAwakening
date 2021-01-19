@@ -16,7 +16,7 @@ class GoombaPrefab extends EnemyBase{
         this.IDx = idX;
         this.IDy = idY;
         this.body.velocity.x = this.speed;
-        this.active = false;
+        this.Deactivate()
         this.colManager = new CollisionManager(scene);
         
         this.anims.play('goombaWalk');
@@ -93,16 +93,8 @@ class GoombaPrefab extends EnemyBase{
         else{
             this.body.velocity.y = 0;
         }
-        if(this.scene.cameraManager.TileX == this.IDx && this.scene.cameraManager.TileY == this.IDy && !this.active && !this.beenHere)
-        {
-            this.Activate();
-            this.beenHere = true;
-        }
-        else if ((this.scene.cameraManager.TileX != this.IDx || this.scene.cameraManager.TileY != this.IDy) && this.active && this.beenHere) 
-        {
-            this.Deactivate();
-            this.beenHere = false;
-        }
+        
+        this.RoomManagement()
     }
     
     

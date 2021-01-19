@@ -22,6 +22,7 @@ class BladePrefab extends EnemyBase{
         this.IDy = idY;
         this.epsilon = 10;
         this.stopped = true;
+        this.Deactivate()
     } 
     
     Update()
@@ -84,15 +85,6 @@ class BladePrefab extends EnemyBase{
             this.body.stop();
         }
         
-        if(this.scene.cameraManager.TileX == this.IDx && this.scene.cameraManager.TileY == this.IDy && !this.active && !this.beenHere)
-        {
-            this.Activate();
-            this.beenHere = true;
-        }
-        else if ((this.scene.cameraManager.TileX != this.IDx || this.scene.cameraManager.TileY != this.IDy) && this.active && this.beenHere) 
-        {
-            this.Deactivate();
-            this.beenHere = false;
-        }
+        this.RoomManagement()
     }
 }

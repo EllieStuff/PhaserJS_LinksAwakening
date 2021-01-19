@@ -37,6 +37,8 @@ class SparkPrefab extends EnemyBase{
             new SparkAux(scene, positionX, positionY, margins.x, margins.y, this.scene.Directions.DOWN_RIGHT)
         ];
         
+        this.Deactivate()
+        
         this.wallsColManager = new CollisionManager(scene);
         
         
@@ -282,16 +284,8 @@ class SparkPrefab extends EnemyBase{
             this.sparkAnimator.Update(this.x, this.y)
             
         }
-        if(this.scene.cameraManager.TileX == this.IDx && this.scene.cameraManager.TileY == this.IDy && !this.active && !this.beenHere)
-        {
-            this.Activate();
-            this.beenHere = true;
-        }
-        else if ((this.scene.cameraManager.TileX != this.IDx || this.scene.cameraManager.TileY != this.IDy) && this.active && this.beenHere) 
-        {
-            this.Deactivate();
-            this.beenHere = false;
-        }
+        
+        this.RoomManagement()
         
     }
     

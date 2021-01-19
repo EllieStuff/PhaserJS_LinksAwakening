@@ -11,34 +11,38 @@ class SpikedPrefab extends EnemyBase{
         this.collided = false;
         this.charging = false;
         
+        this.Deactivate()
+        
     }  
     
     
     Update()
     {
         
-            var currentPos = new Phaser.Math.Vector2(this.body);
+        var currentPos = new Phaser.Math.Vector2(this.body);
 
-            if(this.isVulnerable)
+        if(this.isVulnerable)
+        {
+            this.anims.play('SpikedDown', true);
+        }
+        else
+        {
+            if(currentPos.distance(this.scene.player.body) < this.seeRange && !this.collided)
             {
-                this.anims.play('SpikedDown', true);
+                if(!this.charging)
+                {
+                    this.MoveTowards(this.scene.player, this.speed * 0.5);                    
+                    this.anims.play('SpikedWalk', true); 
+                }
+
             }
-            else
+            else if (!this.collided)
             {
-                if(currentPos.distance(this.scene.player.body) < this.seeRange && !this.collided)
-                {
-                    if(!this.charging)
-                    {
-                        this.MoveTowards(this.scene.player, this.speed * 0.5);                    
-                        this.anims.play('SpikedWalk', true); 
-                    }
-                    
-                }
-                else if (!this.collided)
-                {
-                    this.body.stop();
-                }
+                this.body.stop();
             }
+        }
+        
+        this.RoomManagement()
             
     }
     

@@ -25,6 +25,8 @@ class miniMoldormPrefab extends EnemyBase{
         this.tail1 = new miniMoldormBodyPrefab(scene, positionX + 20, positionY, 'moldormEnemyBody1');
         this.tail2 = new miniMoldormBodyPrefab(scene, positionX + 30, positionY, 'moldormEnemyBody2');
         
+        this.Deactivate()
+        
     }
     
     InitCollisions(){
@@ -78,16 +80,7 @@ class miniMoldormPrefab extends EnemyBase{
         this.tail1.UpdateFollow(this.body, 9);
         this.tail2.UpdateFollow2(this.tail1, this.body, 1);
         
-        if(this.scene.cameraManager.TileX == this.IDx && this.scene.cameraManager.TileY == this.IDy && !this.active && !this.beenHere)
-        {
-            this.Activate();
-            this.beenHere = true;
-        }
-        else if ((this.scene.cameraManager.TileX != this.IDx || this.scene.cameraManager.TileY != this.IDy) && this.active && this.beenHere) 
-        {
-            this.Deactivate();
-            this.beenHere = false;
-        }
+        this.RoomManagement()
         
     }
     

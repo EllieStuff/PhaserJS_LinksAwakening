@@ -20,6 +20,7 @@ class BatPrefab extends EnemyBase{
         this.IDx = idX;
         this.IDy = idY;
         this.setFrame(1);
+        this.Deactivate()
         
         this.BatStates = { IDLE: 0, WAITING: 1, FLYING_AROUND: 2 };
         this.currState = this.BatStates.IDLE;
@@ -151,16 +152,8 @@ class BatPrefab extends EnemyBase{
                 //}
             }
         }
-        if(this.scene.cameraManager.TileX == this.IDx && this.scene.cameraManager.TileY == this.IDy && !this.active && !this.beenHere)
-        {
-            this.Activate();
-            this.beenHere = true;
-        }
-        else if ((this.scene.cameraManager.TileX != this.IDx || this.scene.cameraManager.TileY != this.IDy) && this.active && this.beenHere) 
-        {
-            this.Deactivate();
-            this.beenHere = false;
-        }
+        
+        this.RoomManagement()
         
     }
     

@@ -19,6 +19,8 @@ class SkeletonPrefab extends EnemyBase{
         this.auxSkeleton.visible = false;
         this.auxSkeleton.active = false;
         
+        this.Deactivate()
+        
     }
     
     CreateAnims(){
@@ -89,16 +91,8 @@ class SkeletonPrefab extends EnemyBase{
             }
             
         }
-        if(this.scene.cameraManager.TileX == this.IDx && this.scene.cameraManager.TileY == this.IDy && !this.active && !this.beenHere)
-        {
-            this.Activate();
-            this.beenHere = true;
-        }
-        else if ((this.scene.cameraManager.TileX != this.IDx || this.scene.cameraManager.TileY != this.IDy) && this.active && this.beenHere) 
-        {
-            this.Deactivate();
-            this.beenHere = false;
-        }
+        
+        this.RoomManagement()
         
     }
     

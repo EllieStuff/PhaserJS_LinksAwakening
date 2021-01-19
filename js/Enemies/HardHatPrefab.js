@@ -11,9 +11,9 @@ class HardHatPrefab extends EnemyBase{
         this.seeRange = 100;
         this.speed = 30;
         this.collided = false;
-        this.active = false;
         this.IDx = idX;
         this.IDy = idY;
+        this.Deactivate()
     }  
     
     
@@ -35,16 +35,8 @@ class HardHatPrefab extends EnemyBase{
             }
             
         }
-        if(this.scene.cameraManager.TileX == this.IDx && this.scene.cameraManager.TileY == this.IDy && !this.active && !this.beenHere)
-        {
-            this.Activate();
-            this.beenHere = true;
-        }
-        else if ((this.scene.cameraManager.TileX != this.IDx || this.scene.cameraManager.TileY != this.IDy) && this.active && this.beenHere) 
-        {
-            this.Deactivate();
-            this.beenHere = false;
-        }
+        
+        this.RoomManagement()
     }
     
     CreateAnims()

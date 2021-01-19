@@ -12,7 +12,8 @@ class GreenZolPrefab extends EnemyBase{
         this.speed = 30;
         this.collided = false;
         this.hiding = true;
-        this.active = false;
+        
+        this.Deactivate()
         
     }  
     
@@ -33,16 +34,8 @@ class GreenZolPrefab extends EnemyBase{
             this.charging = true;
             this.scene.time.addEvent({delay: 2000, callback: this.DashToPlayer(), callbackScope: this, repeat: 0});
         }
-        if(this.scene.cameraManager.TileX == this.IDx && this.scene.cameraManager.TileY == this.IDy && !this.active && !this.beenHere)
-        {
-            this.Activate();
-            this.beenHere = true;
-        }
-        else if ((this.scene.cameraManager.TileX != this.IDx || this.scene.cameraManager.TileY != this.IDy) && this.active && this.beenHere) 
-        {
-            this.Deactivate();
-            this.beenHere = false;
-        }
+        
+        this.RoomManagement()
 
     }
     

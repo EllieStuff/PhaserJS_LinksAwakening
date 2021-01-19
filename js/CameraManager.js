@@ -23,6 +23,7 @@ class CameraManager
         this.camPosY = 128 * this.TileY;
         this.changeTile = false;
         this.directionChange = this.scene.Directions;
+        this.enemiesAlive = 0
         
         this.levelEnemies = 
             [
@@ -109,14 +110,13 @@ class CameraManager
         //Comprobar sala, generar nuevos enemigos
     }
     
+    RoomEmpty(){
+        return this.enemiesAlive <= 0
+    }
+    
     
     Update()
     {
-        if(this.scene.enemies.size <= 0)
-        {
-            
-        }
-        
         if(this.changeTile)
         {
             switch(this.directionChange)
